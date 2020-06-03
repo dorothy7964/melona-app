@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-// import { withNavigation } from 'react-navigation';
+import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.TouchableOpacity`
     padding-right: 20px;
@@ -8,8 +8,12 @@ const Container = styled.TouchableOpacity`
 
 const Text = styled.Text``;
 
-export default () => (
-    <Container>
-        <Text>Message</Text>
-    </Container>
-);
+export default () => {
+    const navigation = useNavigation();
+
+    return (
+        <Container onPress={() => navigation.navigate("MessageNavigation")}>
+            <Text>Message</Text>
+        </Container>
+    );
+};
