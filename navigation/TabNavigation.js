@@ -7,7 +7,7 @@ import Confirm from "../screens/Tabs/Confirm";
 import Search from "../screens/Tabs/Search";
 import Profile from "../screens/Tabs/Profile";
 import StackFactory from "./StackFactory";
-import { NavigationContainer } from '@react-navigation/native';
+import MessagesLink from '../components/MessagesLink';
 
 const TabNavigation = createBottomTabNavigator();
 
@@ -21,9 +21,12 @@ export default () => {
                     initialRoute: Home,
                     customConfig: {
                         title: "Home",
+                        headerRight: () => (
+                            <MessagesLink />
+                        ),
                         headerTitleStyle: {
                             alignSelf: "center"
-                        }
+                        },
                     }
                 }}
             />
