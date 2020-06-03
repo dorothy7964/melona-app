@@ -7,6 +7,7 @@ import Confirm from "../screens/Tabs/Confirm";
 import Search from "../screens/Tabs/Search";
 import Profile from "../screens/Tabs/Profile";
 import StackFactory from "./StackFactory";
+import { NavigationContainer } from '@react-navigation/native';
 
 const TabNavigation = createBottomTabNavigator();
 
@@ -42,12 +43,13 @@ export default () => {
             <TabNavigation.Screen
                 name="Add" 
                 component={View} 
-                listeners={{
+                listeners={({ navigation }) => ({
                     tabPress: e => {
                         e.preventDefault();
-                        console.log("add");
+                        navigation.navigate("PhotoNavigation")
                     }
-            }} />
+                })} 
+            />
             <TabNavigation.Screen
                 name="Search" 
                 component={StackFactory} 
