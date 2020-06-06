@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { TouchableOpacity } from "react-native";
 import constants from "../../constants";
-import Signup from "./Signup";
+import AuthButton from "../../components/AuthButton";
 
 const View = styled.View`
     justify-content: center;
@@ -16,26 +16,12 @@ const Image = styled.Image`
 
 const Touchable = styled.TouchableOpacity``;
 
-const SignUpBtn = styled.View`
-    background-color: ${props => props.theme.melonaColor};
-    width: ${constants.width / 2};
-    padding: 10px;
-    border-radius: 4px;
-    margin: 0px 50px;
-`;
-
-const SignUpBtnText = styled.Text`
-    color: white;
-    text-align: center;
-    font-weight: 600;
-`;
-
 const LoginLink = styled.View``;
 
 const LoginLinkText = styled.Text`
     color: ${props => props.theme.melonaColor};
     font-weight: 600;
-    margin-top: 20px;
+		margin-top: 20px;
 `;
 
 export default ({ navigation }) => (
@@ -44,11 +30,10 @@ export default ({ navigation }) => (
             resizeMode={"contain"}
             source={require("../../assets/logo.png")} 
         />
-        <Touchable onPress={() => navigation.navigate("Signup")}>
-            <SignUpBtn>
-                <SignUpBtnText>회원 가입</SignUpBtnText>
-            </SignUpBtn>
-        </Touchable>
+        <AuthButton 
+            onPress={() => navigation.navigate("Signup")}
+            text="회원 가입"
+        />
         <Touchable onPress={() => navigation.navigate("Login")}>
             <LoginLink>
                 <LoginLinkText>로그인</LoginLinkText>

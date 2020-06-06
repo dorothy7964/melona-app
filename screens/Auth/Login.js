@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import AuthButton from "../../components/AuthButton";
 
 const View = styled.View`
     justify-content: center;
@@ -7,10 +8,11 @@ const View = styled.View`
     flex: 1;
 `;
 
-const Text = styled.Text``;
-
 export default () => (
     <View>
-        <Text>Log In</Text>
+        <AuthButton
+            onPress={() => null}
+            text="로그인"
+        />
     </View>
 );
