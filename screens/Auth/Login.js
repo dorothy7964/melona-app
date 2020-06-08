@@ -14,9 +14,22 @@ const View = styled.View`
     flex: 1;
 `;
 
-export default () => {
+const Touchable = styled.TouchableOpacity``;
+
+const Wrapper = styled.View``;
+
+const Container = styled.View``;
+
+const Text = styled.Text`
+    color: ${props => props.theme.melonaColor};
+    font-weight: 600;
+    margin-top: 20px;
+`;
+
+export default ({ navigation }) => {
     const logIn = useLogIn();
     const [loading, setLoading] = useState(false);
+    const [forgetView, setForgetView] = useState(false);
     const emailInput = useInput("");
     const pwInput = useInput("");
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -44,10 +57,12 @@ export default () => {
             if (confirmPassword !== "" || confirmPassword !== false) {
                 logIn(confirmPassword);
             } else {
+                setForgetView(true);
                 Alert.alert("이메일과 비밀번호가 일치하지 않습니다.");
             }
         } catch (e){
             console.log(e);
+            setForgetView(true);
             Alert.alert("이메일과 비밀번호가 일치하지 않습니다.");
         } finally{
             setLoading(false);
@@ -75,6 +90,20 @@ export default () => {
                     text="로그인"
                     loading={loading}
                 />
+                {forgetView === true && (
+                    <Wrapper>
+                        <Touchable onPress={() => navigation.navigate("Confirm")}>
+                            <Container>
+                                <Text>비밀번호 찾기</Text>
+                            </Container>
+                        </Touchable>
+                        <Touchable onPress={() => navigation.navigate("Signup")}>
+                            <Container>
+                                <Text>회원가입 하기</Text>
+                            </Container>
+                        </Touchable>
+                    </Wrapper>
+                )}
             </View>
         </TouchableWithoutFeedback>
     );
