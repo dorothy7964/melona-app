@@ -23,7 +23,8 @@ const AuthInput = ({
     autoCapitalize="none",
     autoCorrect=true,
     secureTextEntry=false,
-    returnKeyType="done"
+    returnKeyType="done",
+    onSubmitEditing = () => null
 }) => (
     <Container>
         <TextInput 
@@ -35,6 +36,7 @@ const AuthInput = ({
             autoCorrect={autoCorrect}
             secureTextEntry={secureTextEntry}
             returnKeyType={returnKeyType}
+            onSubmitEditing={onSubmitEditing}
         />
     </Container>
 );
@@ -45,6 +47,7 @@ AuthInput.propTypes = {
     value: PropTypes.string.isRequired,
     autoCorrect: PropTypes.bool,
     secureTextEntry: PropTypes.bool,
+    onSubmitEditing: PropTypes.func,
     keyboardType: PropTypes.oneOf([
         "default",
         "number-pad",
