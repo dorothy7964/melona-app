@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { TouchableWithoutFeedback, Keyboard, Alert } from "react-native";
 import styled from "styled-components";
 import AuthButton from "../../components/AuthButton";
@@ -12,6 +12,7 @@ const View = styled.View`
 `;
 
 export default () => {
+    const [loading, setLoading] = useState(false);
     const emailInput = useInput("");
     const pwInput = useInput("");
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -23,6 +24,14 @@ export default () => {
             return Alert.alert("이메일 형식이 아닙니다.");
         } else if (!emailRegex.test(value)){
             return Alert.alert("해당 이메일이 유효하지 않습니다");
+        }
+        
+        try {
+            setLoading(true);
+        } catch (e){
+            console.log(e);
+        } finally{
+            setLoading(false);
         }
     };
 
@@ -45,6 +54,7 @@ export default () => {
                 <AuthButton
                     onPress={handleLogin}
                     text="로그인"
+                    loading={loading}
                 />
             </View>
         </TouchableWithoutFeedback>
