@@ -8,6 +8,7 @@ import { persistCache } from "apollo-cache-persist";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import ApolloClient from "apollo-boost";
 import { ThemeProvider } from "styled-components";
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { ApolloProvider } from 'react-apollo-hooks';
 import styles from "./styles";
 import apolloClientOptions from "./apollo";
@@ -47,6 +48,17 @@ export default function App() {
         }     
     };
 
+    // react-native-paper
+    const theme = {
+        ...DefaultTheme,
+        roundness: 2,
+        colors: {
+            ...DefaultTheme.colors,
+            primary: '#b9dd39',
+            accent: '#f1c40f',
+        }
+    };
+
     useEffect(() => {
         preLoad();
     }, []);
@@ -54,9 +66,11 @@ export default function App() {
     return loaded && client && isLoggedIn !== null ? (
         <ApolloProvider client={client}>
             <ThemeProvider theme={styles}>
-                <AuthProvider isLoggedIn={isLoggedIn}>
-                    <NavController />
-                </AuthProvider>
+                <PaperProvider theme={theme}>
+                    <AuthProvider isLoggedIn={isLoggedIn}>
+                        <NavController />
+                    </AuthProvider>
+                </PaperProvider>
             </ThemeProvider>
         </ApolloProvider>
     ) : (

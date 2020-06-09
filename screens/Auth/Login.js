@@ -5,6 +5,7 @@ import { useMutation } from "react-apollo-hooks";
 import { LOG_IN } from "./AuthQueries";
 import AuthButton from "../../components/AuthButton";
 import AuthInput from "../../components/AuthInput";
+import TextInputPaper from "../../components/TextInputPaper";
 import useInput from "../../hooks/useInput";
 import { useLogIn } from "../../AuthContext";
 
@@ -72,14 +73,14 @@ export default ({ navigation }) => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
-                <AuthInput
+                <TextInputPaper 
                     { ...emailInput }
                     placeholder="이메일"
                     keyboardType="email-address"
                     autoCorrect={false}
                     onSubmitEditing={handleLogin}
                 />
-                <AuthInput
+                <TextInputPaper 
                     { ...pwInput }
                     placeholder="비밀번호"
                     secureTextEntry={true}
