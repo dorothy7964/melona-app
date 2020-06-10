@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { TouchableOpacity } from "react-native";
 import constants from "../../constants";
-import AuthButton from "../../components/AuthButton";
+import ButtonPaper from "../../components/ButtonPaper";
 
 const View = styled.View`
     justify-content: center;
@@ -30,7 +30,7 @@ export default ({ navigation }) => (
             resizeMode={"contain"}
             source={require("../../assets/logo.png")} 
         />
-        <AuthButton 
+        <ButtonPaper 
             onPress={() => navigation.navigate("Signup")}
             text="회원 가입"
         />

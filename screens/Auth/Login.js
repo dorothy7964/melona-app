@@ -3,8 +3,7 @@ import { TouchableWithoutFeedback, Keyboard, Alert } from "react-native";
 import styled from "styled-components";
 import { useMutation } from "react-apollo-hooks";
 import { LOG_IN } from "./AuthQueries";
-import AuthButton from "../../components/AuthButton";
-import AuthInput from "../../components/AuthInput";
+import ButtonPaper from "../../components/ButtonPaper";
 import TextInputPaper from "../../components/TextInputPaper";
 import useInput from "../../hooks/useInput";
 import { useLogIn } from "../../AuthContext";
@@ -86,7 +85,7 @@ export default ({ navigation }) => {
                     secureTextEntry={true}
                     keyboardType="default"
                 />
-                <AuthButton
+                <ButtonPaper
                     onPress={handleLogin}
                     text="로그인"
                     loading={loading}

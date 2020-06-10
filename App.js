@@ -56,6 +56,7 @@ export default function App() {
             ...DefaultTheme.colors,
             primary: '#b9dd39',
             accent: '#f1c40f',
+            text: '#262626'
         }
     };
 
