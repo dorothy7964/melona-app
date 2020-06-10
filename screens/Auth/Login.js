@@ -39,6 +39,7 @@ export default ({ navigation }) => {
             password: pwInput.value
         }
     });
+    
     const handleLogin = async() => {
         const { value } = emailInput;
         if (value === ""){

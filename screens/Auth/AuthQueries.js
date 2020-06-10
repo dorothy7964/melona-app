@@ -5,3 +5,9 @@ export const LOG_IN = gql`
         confirmPassword(email: $email, password: $password)
     }
 `;
+
+export const REQUEST_SECRET = gql`
+    mutation requestSecret($email: String!) {
+        requestSecret(email: $email)
+    }
+`;
