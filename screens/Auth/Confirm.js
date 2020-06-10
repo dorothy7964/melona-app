@@ -38,14 +38,9 @@ export default ({ navigation }) => {
             const {
                 data: { requestSecret }
             } = await  requestSecretMutation();
-            console.log(requestSecret)
             if (requestSecret) {
                 Alert.alert("받은 편지함에 임시 비밀번호를 확인하십시오");
                 navigation.navigate("Login");
-            } else if (!requestSecret || requestSecret === false) {
-                setForgetView(true);
-                Alert.alert("아직 계정이 없습니다. 계정을 만드십시오.");
-                navigation.navigate("Signup");
             }
         } catch (e) {
             console.log(e);

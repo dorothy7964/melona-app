@@ -84,7 +84,6 @@ export default ({ navigation }) => {
                     { ...pwInput }
                     placeholder="비밀번호"
                     secureTextEntry={true}
-                    keyboardType="default"
                 />
                 <ButtonPaper
                     onPress={handleLogin}
