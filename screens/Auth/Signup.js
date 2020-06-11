@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TouchableWithoutFeedback, Keyboard, Alert } from "react-native";
+import * as Facebook from "expo-facebook";
 import styled from "styled-components";
 import { useMutation } from "react-apollo-hooks";
 import { CREATE_ACCOUNT } from "./AuthQueries";
@@ -11,6 +12,18 @@ const View = styled.View`
     justify-content: center;
     align-items: center;
     flex: 1;
+`;
+
+const InputContainer = styled.View`
+    margin-bottom: 10px;
+`;
+
+const FBContainer = styled.View`
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top-width: 1px;
+    border-color: ${props => props.theme.lightGreyColor};
+    border-style: solid;
 `;
 
 export default ({ navigation }) => {
@@ -74,36 +87,73 @@ export default ({ navigation }) => {
             setLoading(false);
         }
     };
+
+    // facebook connect
+    const fbLogin = async () => {
+        try {
+            setLoading(true);
+            const { type, token } = await Facebook.logInWithReadPermissionsAsync(
+                "2377660639193111", 
+                {
+                    permissions: ['public_profile', 'email'],
+                 }
+            );
+            if (type === 'success') {
+                const response = await fetch(
+                    `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email`
+                );
+                const { email } = await response.json();
+                emailInput.setValue(email);
+                const [userName] = email.split("@");
+                userNameInput.setValue(userName);
+                setLoading(false);
+            } else {
+                // type === 'cancel'
+            }
+        } catch ({ message }) {
+            alert(`Facebook Login Error: ${message}`);
+        }
+    };
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
-                <TextInputPaper
-                    { ...userNameInput }
-                    placeholder="유저 이름"
-                />
-                <TextInputPaper
-                    { ...emailInput }
-                    placeholder="이메일"
-                    keyboardType="email-address"
-                    autoCorrect={false}
-                    onSubmitEditing={handleSignup}
-                />
-                <TextInputPaper
-                    { ...passwordInput }
-                    placeholder="비밀번호"
-                    secureTextEntry={true}
-                />
-                <TextInputPaper
-                    { ...confirmPwInput }
-                    placeholder="비밀번호 확인"
-                    secureTextEntry={true}
-                />
+                <InputContainer>
+                    <TextInputPaper
+                        { ...userNameInput }
+                        placeholder="유저 이름"
+                    />
+                    <TextInputPaper
+                        { ...emailInput }
+                        placeholder="이메일"
+                        keyboardType="email-address"
+                        autoCorrect={false}
+                        onSubmitEditing={handleSignup}
+                    />
+                    <TextInputPaper
+                        { ...passwordInput }
+                        placeholder="비밀번호"
+                        secureTextEntry={true}
+                    />
+                    <TextInputPaper
+                        { ...confirmPwInput }
+                        placeholder="비밀번호 확인"
+                        secureTextEntry={true}
+                    />
+                </InputContainer>
                 <ButtonPaper
                     onPress={handleSignup}
                     text="회원 가입하기"
                     loading={loading}
                 />
+                <FBContainer>
+                    <ButtonPaper
+                        onPress={fbLogin}
+                        text="페이스북으로 연결"
+                        loading={false}
+                        primaryColor="#2D4DA7"
+                    />
+                </FBContainer>
             </View>
         </TouchableWithoutFeedback>
     );

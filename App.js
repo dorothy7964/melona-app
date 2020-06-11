@@ -51,7 +51,7 @@ export default function App() {
     // react-native-paper
     const theme = {
         ...DefaultTheme,
-        roundness: 2,
+        roundness: 5,
         colors: {
             ...DefaultTheme.colors,
             primary: '#b9dd39',
