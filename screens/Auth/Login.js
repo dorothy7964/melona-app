@@ -26,11 +26,11 @@ const Text = styled.Text`
     margin-top: 20px;
 `;
 
-export default ({ navigation }) => {
+export default ({ navigation, route }) => {
     const logIn = useLogIn();
     const [loading, setLoading] = useState(false);
     const [forgetView, setForgetView] = useState(false);
-    const emailInput = useInput("");
+    const emailInput = useInput(route.params.email);
     const pwInput = useInput("");
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const [confirmPasswordMutation ] = useMutation(LOG_IN, {

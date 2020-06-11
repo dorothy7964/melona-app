@@ -40,7 +40,7 @@ export default ({ navigation }) => {
             } = await  requestSecretMutation();
             if (requestSecret) {
                 Alert.alert("받은 편지함에 임시 비밀번호를 확인하십시오");
-                navigation.navigate("LoginAttach", { email: value });
+                navigation.navigate("Login", { email: value });
             }
         } catch (e) {
             console.log(e);

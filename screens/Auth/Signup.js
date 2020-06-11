@@ -73,7 +73,8 @@ export default ({ navigation }) => {
             } = await createAccountMutation();
             if (createAccount) {
                 Alert.alert("회원 가입이 되었습니다.");
-                navigation.navigate("LoginAttach", { email: value });
+                navigation.navigate("Login", { email });
+                return;
             }
         } catch (e) {
             if (e.message === "GraphQL error: 이미 있는 이름 입니다.") {
@@ -81,6 +82,8 @@ export default ({ navigation }) => {
             } else if (e.message === "GraphQL error: 이미 있는 이메일 입니다.") {
                return Alert.alert("이미 존재하는 이메일 입니다.");
             } else {
+                console.log("e",e);
+                console.log("message",e.message);
                 return Alert.alert("다시 작성해 주세요.");
             }
         } finally {

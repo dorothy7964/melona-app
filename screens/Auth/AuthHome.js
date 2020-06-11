@@ -34,7 +34,7 @@ export default ({ navigation }) => (
             onPress={() => navigation.navigate("Signup")}
             text="회원 가입"
         />
-        <Touchable onPress={() => navigation.navigate("Login")}>
+        <Touchable onPress={() => navigation.navigate("Login", { email: "" })}>
             <LoginLink>
                 <LoginLinkText>로그인</LoginLinkText>
             </LoginLink>
