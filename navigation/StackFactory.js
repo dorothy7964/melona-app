@@ -8,7 +8,7 @@ export default ({ route }) => {
     const { initialRoute, customConfig } = route.params;
 
     return (
-        <StackFactory.Navigator initialRouteName="Home">
+        <StackFactory.Navigator initialRouteName="Daddy">
             <StackFactory.Screen 
                 name={route.name} 
                 component={initialRoute} 

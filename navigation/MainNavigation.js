@@ -3,8 +3,9 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import TabNavigation from "./TabNavigation";
-import PhotoNavigation from "./PhotoNavigation";
-import MessageNavigation from "./MessageNavigation";
+import ConfirmNavigation from "./ConfirmNavigation";
+import WriteNavigation from "./WriteNavigation";
+import SearchNavigation from "./SearchNavigation";
 
 const MainNavigation = createStackNavigator();
 
@@ -20,13 +21,17 @@ export default () => {
                     component={TabNavigation} 
                 />
                 <MainNavigation.Screen 
-                    name="PhotoNavigation" 
-                    component={PhotoNavigation} 
-                 />
+                    name="ConfirmNavigation" 
+                    component={ConfirmNavigation} 
+                />
                 <MainNavigation.Screen 
-                    name="MessageNavigation" 
-                    component={MessageNavigation} 
-                 />
+                    name="SearchNavigation" 
+                    component={SearchNavigation} 
+                />
+                <MainNavigation.Screen 
+                    name="WriteNavigation" 
+                    component={WriteNavigation} 
+                />
             </MainNavigation.Navigator>
         </NavigationContainer>
     );

@@ -1,13 +1,12 @@
 import 'react-native-gesture-handler';
 import * as React from "react";
-import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "../screens/Tabs/Home";
-import Confirm from "../screens/Tabs/Confirm";
-import Search from "../screens/Tabs/Search";
+import Daddy from "../screens/Tabs/Daddy";
+import Daughter from "../screens/Tabs/Daughter";
+import Group from "../screens/Tabs/Group";
+import Message from "../screens/Tabs/Message";
 import Profile from "../screens/Tabs/Profile";
 import StackFactory from "./StackFactory";
-import MessagesLink from '../components/MessagesLink';
 
 const TabNavigation = createBottomTabNavigator();
 
@@ -15,15 +14,25 @@ export default () => {
     return (
         <TabNavigation.Navigator>
             <TabNavigation.Screen 
-                name="Home" 
+                name="갈 때 사갈게" 
                 component={StackFactory} 
                 initialParams={{
-                    initialRoute: Home,
+                    initialRoute: Daddy,
                     customConfig: {
-                        title: "Home",
-                        headerRight: () => (
-                            <MessagesLink />
-                        ),
+                        title: "갈 때 사갈게",
+                        headerTitleStyle: {
+                            alignSelf: "center"
+                        },
+                    }
+                }}
+            />
+            <TabNavigation.Screen 
+                name="올 때 사다줘" 
+                component={StackFactory} 
+                initialParams={{
+                    initialRoute: Daughter,
+                    customConfig: {
+                        title: "올 때 사다줘",
                         headerTitleStyle: {
                             alignSelf: "center"
                         },
@@ -31,12 +40,12 @@ export default () => {
                 }}
             />
             <TabNavigation.Screen
-                name="Confirm" 
+                name="그룹" 
                 component={StackFactory} 
                 initialParams={{
-                    initialRoute: Confirm,
+                    initialRoute: Group,
                     customConfig: {
-                        title: "Confirm",
+                        title: "그룹",
                         headerTitleStyle: {
                             alignSelf: "center"
                         }
@@ -44,22 +53,12 @@ export default () => {
                 }}
             />
             <TabNavigation.Screen
-                name="Add" 
-                component={View} 
-                listeners={({ navigation }) => ({
-                    tabPress: e => {
-                        e.preventDefault();
-                        navigation.navigate("PhotoNavigation")
-                    }
-                })} 
-            />
-            <TabNavigation.Screen
-                name="Search" 
+                name="메시지" 
                 component={StackFactory} 
                 initialParams={{
-                    initialRoute: Search,
+                    initialRoute: Message,
                     customConfig: {
-                        title: "Search",
+                        title: "메시지",
                         headerTitleStyle: {
                             alignSelf: "center"
                         }
@@ -67,12 +66,12 @@ export default () => {
                 }}
             />
             <TabNavigation.Screen
-                name="Profile" 
+                name="프로필" 
                 component={StackFactory} 
                 initialParams={{
                     initialRoute: Profile,
                     customConfig: {
-                        title: "Profile",
+                        title: "프로필",
                         headerTitleStyle: {
                             alignSelf: "center"
                         }
