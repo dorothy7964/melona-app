@@ -4,8 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import TabNavigation from "./TabNavigation";
 import ConfirmNavigation from "./ConfirmNavigation";
-import WriteNavigation from "./WriteNavigation";
 import SearchNavigation from "./SearchNavigation";
+import WriteNavigation from "./WriteNavigation";
 
 const MainNavigation = createStackNavigator();
 
