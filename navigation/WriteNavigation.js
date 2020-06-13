@@ -6,9 +6,9 @@ import DaughterWrite from "../screens/Write/DaughterWrite";
 
 const WriteNavigation = createStackNavigator();
 
-export default () => {
+export default ({ route: { params: { writeSelect } } }) => {
     return (
-        <WriteNavigation.Navigator initialRouteName="DaddyWrite" headerMode="none">
+        <WriteNavigation.Navigator initialRouteName={writeSelect} headerMode="none">
             <WriteNavigation.Screen name="DaddyWrite" component={DaddyWrite} />
             <WriteNavigation.Screen name="DaughterWrite" component={DaughterWrite} />
         </WriteNavigation.Navigator>

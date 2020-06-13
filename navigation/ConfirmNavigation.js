@@ -6,9 +6,9 @@ import Apply from "../screens/Confirm/Apply";
 
 const ConfirmNavigation = createStackNavigator();
 
-export default () => {
+export default ({ route: { params: { select } } }) => {
     return (
-        <ConfirmNavigation.Navigator initialRouteName="Buy" headerMode="none">
+        <ConfirmNavigation.Navigator initialRouteName={select} headerMode="none">
             <ConfirmNavigation.Screen name="Buy" component={Buy} />
             <ConfirmNavigation.Screen name="Apply" component={Apply} />
         </ConfirmNavigation.Navigator>
