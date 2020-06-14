@@ -2,6 +2,7 @@ import React, {  useState} from "react";
 import PropTypes from "prop-types";
 import { FAB, Portal, Provider } from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
+import styles from "../styles";
 
 const FABgroup =  ({ text, select, SearcheSelect, writeSelect }) => {
     const navigation = useNavigation();    
@@ -24,7 +25,7 @@ const FABgroup =  ({ text, select, SearcheSelect, writeSelect }) => {
                     icon={open ? 'close' : 'menu'}
                     color="#fff"
                     fabStyle={{
-                        backgroundColor: "#b9dd39"
+                        backgroundColor: styles.melonaColor
                     }}
                     actions={[
                         { icon: 'plus', onPress: () => navigation.navigate("WriteNavigation", { writeSelect }) },

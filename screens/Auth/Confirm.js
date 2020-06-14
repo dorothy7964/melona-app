@@ -13,9 +13,9 @@ const View = styled.View`
     flex: 1;
 `;
 
-export default ({ navigation }) => {
+export default ({ navigation, route }) => {
     const [loading, setLoading] = useState(false);
-    const emailInput = useInput("");
+    const emailInput = useInput(route.params.email);
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const [requestSecretMutation] = useMutation(REQUEST_SECRET, {
         variables: {

@@ -73,8 +73,7 @@ export default ({ navigation }) => {
             } = await createAccountMutation();
             if (createAccount) {
                 Alert.alert("회원 가입이 되었습니다.");
-                navigation.navigate("Login", { email });
-                return;
+                return navigation.navigate("Login", { email });
             }
         } catch (e) {
             if (e.message === "GraphQL error: 이미 있는 이름 입니다.") {

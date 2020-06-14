@@ -70,6 +70,18 @@ export default ({ navigation, route }) => {
         }
     };
 
+    const handleRoute = (route) => {
+        if (route === "Confirm") {
+            emailInput.setValue("");
+            pwInput.setValue("");
+            return navigation.navigate("Confirm", { email: emailInput.value });
+        } else if(route === "Signup") {
+            emailInput.setValue("");
+            pwInput.setValue("");
+            return navigation.navigate("Signup");
+        }
+    };
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
@@ -92,12 +104,12 @@ export default ({ navigation, route }) => {
                 />
                 {forgetView === true && (
                     <Wrapper>
-                        <Touchable onPress={() => navigation.navigate("Confirm")}>
+                        <Touchable onPress={() => handleRoute("Confirm")}>   
                             <Container>
                                 <Text>비밀번호 찾기</Text>
                             </Container>
                         </Touchable>
-                        <Touchable onPress={() => navigation.navigate("Signup")}>
+                        <Touchable onPress={() => handleRoute("Signup")}>
                             <Container>
                                 <Text>회원가입 하기</Text>
                             </Container>

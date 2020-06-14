@@ -4,6 +4,7 @@ import { Button } from 'react-native-paper';
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import constants from "../constants";
+import styles from "../styles";
 
 const View = styled.View`
     width: ${constants.width / 1.7};
@@ -23,7 +24,7 @@ const ButtonPaper = ({
     onPress, 
     text, 
     loading = false,
-    primaryColor = "#b9dd39"
+    primaryColor = styles.melonaColor
 }) => (
     <View>
         {loading
