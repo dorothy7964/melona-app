@@ -1,23 +1,76 @@
 import React from "react";
 import styled from "styled-components";
-import FABgroup from "../../components/FABgroup";
+import { gql } from "apollo-boost";
+import { useQuery } from "react-apollo-hooks";
+import Loader from "../../components/Loader";
 
-const View = styled.View`
-    justify-content: center;
-    align-items: center;
-    flex: 1;
+const SEE_BUYME = gql`
+    query seeBuyMe ($items: Int $pageNumber: Int) {
+        seeBuyMe (items: $items, pageNumber: $pageNumber) {
+            id
+            location
+            lastDate
+            isApply
+            isApplyWait
+            isApplyReadCheck
+            applysCount
+            commentCount
+            viewApply
+            anotherPage
+            applys {
+                id
+                apply
+                readCheck
+                user {
+                    userName
+                    avatar
+                }
+            }
+            user {
+                userName
+                avatar
+                isSelf
+           }
+            categorys {
+                id
+                text
+                contents {
+                    id
+                    text
+                    check
+                }
+            }
+        }
+    }
 `;
 
 const Text = styled.Text``;
 
-export default () => (
-    <View>
-        <Text>Daughter</Text>
-        <FABgroup 
-            text="올 때 사다줘 확인"
-            select="Apply" 
-            SearcheSelect="DaughterSearch"
-            writeSelect="DaughterWrite"
-        />
-    </View>
-);
+export default () => {
+    const [refreshing, setRefreshing] = useState(false);
+    const { data, loading, refetch } = useQuery(SEE_BUYME);
+    
+    const refresh = async () => {
+        try {
+            setRefreshing(true);
+            await refetch();
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setRefreshing(false);
+        }
+    };
+    
+    return (
+        <ScrollView 
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+            }
+        >
+            {loading
+                ?   <Loader /> 
+                :   <Text>Hello</Text>
+            }
+        </ScrollView>
+    );
+};
