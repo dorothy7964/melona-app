@@ -5,7 +5,7 @@ import styles from "../styles";
 
 const Text = styled.Text`
     color: ${props => props.color};
-    font-size: 12;
+    font-size: 12px;
 `;
 
 const NavText = ({
