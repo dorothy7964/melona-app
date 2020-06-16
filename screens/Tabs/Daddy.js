@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { ScrollView, RefreshControl } from "react-native";
-import styled from "styled-components";
 import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import Loader from "../../components/Loader";
+import Post from "../../components/Post";
 
 const SEE_BUY = gql`
     query seeBuy ($items: Int $pageNumber: Int) {
@@ -40,12 +40,10 @@ const SEE_BUY = gql`
     }
 `;
 
-const Text = styled.Text``;
-
 export default () => {
     const [refreshing, setRefreshing] = useState(false);
     const { data, loading, refetch } = useQuery(SEE_BUY);
-    
+
     const refresh = async () => {
         try {
             setRefreshing(true);
@@ -65,8 +63,10 @@ export default () => {
         >
             {loading
                 ?   <Loader /> 
-                :   <Text>Hello</Text>
-            }
+                :   (
+                    data && data.seeBuy &&
+                    data.seeBuy.map(post => <Post key={post.id} {...post} />)
+            )}
         </ScrollView>
     );
 };
