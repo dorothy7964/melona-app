@@ -35,11 +35,13 @@ const Touchable = styled.TouchableOpacity``;
 const Text = styled.Text``;
 
 const Post = ({ 
+    id,
     user,
     location,
     lastDate,
     anotherPage,
-    categorys
+    categorys,
+    viewApply
 }) => (
     <Container>
         <Card.Content>
@@ -55,13 +57,14 @@ const Post = ({
             />
             <ButtonBox>
                 <ButtonContainer firstButton={true}> 
-                    <Touchable>
-                        {user.isSelf
-                            ?   <PostViewBox />
-                            :   <PostApplyBox />
-                        }
-                        
-                    </Touchable>
+                    {user.isSelf
+                        ?   <PostViewBox 
+                                postId={id}
+                                viewApply={viewApply}
+                                anotherPage={anotherPage}
+                            />
+                        :   <PostApplyBox />
+                    }
                 </ButtonContainer>                 
                 <ButtonContainer>
                     <Touchable>
@@ -79,6 +82,7 @@ Post.propTypes = {
     lastDate : PropTypes.string.isRequired,
     anotherPage : PropTypes.bool.isRequired,
     categorys : PropTypes.array.isRequired,
+    viewApply : PropTypes.bool.isRequired,
     user: PropTypes.shape({
         avatar: PropTypes.string.isRequired,
         userName: PropTypes.string.isRequired,
