@@ -3,6 +3,7 @@ import { Card } from 'react-native-paper';
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import UserCard from "./UserCard";
+import PostCategory from "./PostCategory";
 
 const Container = styled(Card)`
     margin: 15px;
@@ -13,6 +14,8 @@ const Post = ({
     user,
     location,
     lastDate,
+    anotherPage,
+    categorys
 }) => (
     <Container>
         <Card.Content>
@@ -22,6 +25,10 @@ const Post = ({
                 location={location}
                 lastDate={lastDate}
             />
+            <PostCategory 
+                anotherPage={anotherPage}
+                categorys={categorys}
+            />
         </Card.Content>
     </Container>
 );
@@ -30,6 +37,8 @@ Post.propTypes = {
     id: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
     lastDate : PropTypes.string.isRequired,
+    anotherPage : PropTypes.bool.isRequired,
+    categorys : PropTypes.array.isRequired,
     user: PropTypes.shape({
         avatar: PropTypes.string.isRequired,
         userName: PropTypes.string.isRequired

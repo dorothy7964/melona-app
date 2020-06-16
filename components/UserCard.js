@@ -5,20 +5,17 @@ import styled from "styled-components";
 import NavIcon from "./NavIcon";
 import AvatarPaper from "./AvatarPaper";
 
+const Wrapper = styled.View`
+    flex-direction: column;
+`;
+
 const Header = styled.View`
     flex-direction: row;
     align-items: center;
 `;
 
-const Container = styled.View`
-    flex-direction: column;
+const HeaderContainer = styled.View`
     margin-left: 10px;
-`;
-
-const LocationContainer = styled.View`
-    justify-content: flex-end;
-    flex-direction: row;
-    margin-right: 10px;
 `;
 
 const Bold = styled.Text`
@@ -29,35 +26,42 @@ const Bold = styled.Text`
 
 const Touchable = styled.TouchableOpacity``;
 
-const Text = styled.Text`
+const LocationContainer = styled.View`
+    justify-content: flex-end;
+    flex-direction: row;
+`;
+
+const LocationText = styled.Text`
     margin-left: 5px;
 `;
 
 const UserCard = ({ avatar, userName, location, lastDate }) => (
-    <Header>
-        <Touchable>
-            <AvatarPaper avatar={avatar} />
-        </Touchable>
-        <Container>
+    <Wrapper>
+        <Header>
             <Touchable>
-                <Bold>{userName}</Bold>
+                <AvatarPaper avatar={avatar} />
             </Touchable>
-            <LocationContainer>
-                <Text>{location}</Text>
-                <Text>
-                    <NavIcon
-                        size={20}
-                        focused={false}
-                        name={Platform.OS === "ios" 
-                            ? "ios-airplane" 
-                            : "md-airplane"
-                        }
-                    />
-                </Text>
-                <Text>{lastDate}</Text>
-            </LocationContainer>
-        </Container>
-    </Header>
+            <HeaderContainer>
+                <Touchable>
+                    <Bold>{userName}</Bold>
+                </Touchable>
+            </HeaderContainer>
+        </Header>
+        <LocationContainer>
+            <LocationText>{location}</LocationText>
+            <LocationText>
+                <NavIcon
+                    size={20}
+                    focused={false}
+                    name={Platform.OS === "ios" 
+                        ? "ios-airplane" 
+                        : "md-airplane"
+                    }
+                />
+            </LocationText>
+            <LocationText>{lastDate}</LocationText>
+        </LocationContainer>
+    </Wrapper>
 );
 
 UserCard.propTypes = {
