@@ -26,12 +26,24 @@ const Bold = styled.Text`
 
 const Touchable = styled.TouchableOpacity``;
 
-const LocationContainer = styled.View`
+const Container = styled.View`
+    width: 100%;
+    margin-top: 10px;
     justify-content: flex-end;
     flex-direction: row;
+    overflow: hidden;
 `;
 
-const LocationText = styled.Text`
+const LocationContainer = styled.View`
+    align-items: flex-end;
+    margin-right: 5px;
+    flexGrow: 1;
+    flex: 1;
+`;
+
+const LocationText = styled.Text``;
+
+const LastDateText = styled.Text`
     margin-left: 5px;
 `;
 
@@ -47,20 +59,20 @@ const UserCard = ({ avatar, userName, location, lastDate }) => (
                 </Touchable>
             </HeaderContainer>
         </Header>
-        <LocationContainer>
-            <LocationText>{location}</LocationText>
-            <LocationText>
-                <NavIcon
-                    size={20}
-                    focused={false}
-                    name={Platform.OS === "ios" 
-                        ? "ios-airplane" 
-                        : "md-airplane"
-                    }
-                />
-            </LocationText>
-            <LocationText>{lastDate}</LocationText>
-        </LocationContainer>
+        <Container>
+            <LocationContainer>
+                <LocationText>{location}</LocationText>
+            </LocationContainer>
+            <NavIcon
+                size={20}
+                focused={false}
+                name={Platform.OS === "ios" 
+                    ? "ios-airplane" 
+                    : "md-airplane"
+                }
+            />
+            <LastDateText>{lastDate}</LastDateText>
+        </Container>
     </Wrapper>
 );
 
