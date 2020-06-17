@@ -37,6 +37,7 @@ const Text = styled.Text``;
 const Post = ({ 
     id,
     user,
+    applysCount,
     location,
     lastDate,
     anotherPage,
@@ -51,6 +52,7 @@ const Post = ({
             <UserCard 
                 avatar={user.avatar}
                 userName={user.userName}
+                applysCount={applysCount}
                 location={location}
                 lastDate={lastDate}
             />
@@ -87,6 +89,7 @@ const Post = ({
 
 Post.propTypes = {
     id: PropTypes.string.isRequired,
+    applysCount: PropTypes.number.isRequired,
     location: PropTypes.string.isRequired,
     lastDate : PropTypes.string.isRequired,
     anotherPage : PropTypes.bool.isRequired,
