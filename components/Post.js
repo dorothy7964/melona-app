@@ -41,7 +41,10 @@ const Post = ({
     lastDate,
     anotherPage,
     categorys,
-    viewApply
+    viewApply,
+    isApply,
+    isApplyWait,
+    isApplyReadCheck,
 }) => (
     <Container>
         <Card.Content>
@@ -63,7 +66,13 @@ const Post = ({
                                 viewApply={viewApply}
                                 anotherPage={anotherPage}
                             />
-                        :   <PostApplyBox />
+                        :   <PostApplyBox 
+                                postId={id}
+                                anotherPage={anotherPage}
+                                isApply={isApply}
+                                isApplyWait={isApplyWait}
+                                isApplyReadCheck={isApplyReadCheck}
+                            />
                     }
                 </ButtonContainer>                 
                 <ButtonContainer>

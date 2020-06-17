@@ -1,5 +1,4 @@
 import React from "react";
-import { Image } from 'react-native';
 import { Avatar } from 'react-native-paper';
 import styled from "styled-components";
 import PropTypes from "prop-types";
