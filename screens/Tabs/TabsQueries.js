@@ -74,3 +74,67 @@ export const SEE_BUYME = gql`
         }
     }
 `;
+
+export const SEE_BUY_ONE = gql`
+    query seeBuyOne ($postId: String!) {
+        seeBuyOne (postId: $postId) {
+            id
+            location
+            lastDate
+            isApply
+            isApplyWait
+            isApplyReadCheck
+            applysCount
+            applysReadCount
+            commentCount
+            viewApply
+            anotherPage
+            groupRoom
+            comments {
+                id
+                text
+            }
+            applys {
+                id
+                apply
+                readCheck
+                progress
+                user {
+                    userName
+                    avatar
+                }
+            }
+            applysRead {
+                id
+                apply
+                readCheck
+                progress
+                user {
+                    userName
+                    avatar
+                }
+            }
+            user {
+                userName
+                avatar
+                isSelf
+           }
+           categorys {
+               id
+                text
+                contents {
+                    id
+                    text
+                    check
+                    contentsReqs {
+                        id
+                        check
+                        user {
+                            userName
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;

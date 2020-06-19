@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, Text } from "react-native";
 import { Badge } from 'react-native-paper';
 import PropTypes from "prop-types";
 import styled from "styled-components";
@@ -10,8 +10,6 @@ import AvatarPaper from "./AvatarPaper";
 const Wrapper = styled.View`
     flex-direction: column;
 `;
-
-const Text = styled.Text``;
 
 const Header = styled.View`
     flex-direction: row;
@@ -77,29 +75,28 @@ const UserCard = ({
                 </Touchable>
             </HeaderContainer>
             {applysCount !== 0 
-                ?   (
-                        <CountContainer>
-                            <MarginRight>
-                                <NavIcon
-                                    size={20}
-                                    focused={false}
-                                    name={Platform.OS === "ios" 
-                                        ? "ios-people" 
-                                        : "md-people"
-                                    }
-                                />
-                            </MarginRight>
-                            <Badge
-                                size={25}
-                                style={{
-                                    color: "#fff",
-                                    fontWeight: "600",
-                                    backgroundColor: styles.melonaColor
-                                }}
-                            >
-                                {` 신청자 ${applysCount} 명 `}
-                            </Badge>
-                        </CountContainer>
+                ?   (<CountContainer>
+                        <MarginRight>
+                            <NavIcon
+                                size={20}
+                                focused={false}
+                                name={Platform.OS === "ios" 
+                                    ? "ios-person-add" 
+                                    : "md-person-add"
+                                }
+                            />
+                        </MarginRight>
+                        <Badge
+                            size={25}
+                            style={{
+                                color: "#fff",
+                                fontWeight: "600",
+                                backgroundColor: styles.melonaColor
+                            }}
+                        >
+                            {` 신청자 ${applysCount} 명 `}
+                        </Badge>
+                    </CountContainer>
                     )
                 :   <Text />
             }

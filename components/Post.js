@@ -46,6 +46,7 @@ const Post = ({
     isApply,
     isApplyWait,
     isApplyReadCheck,
+    handleRoute
 }) => (
     <Container>
         <Card.Content>
@@ -74,6 +75,7 @@ const Post = ({
                                 isApply={isApply}
                                 isApplyWait={isApplyWait}
                                 isApplyReadCheck={isApplyReadCheck}
+                                handleRoute={handleRoute}
                             />
                     }
                 </ButtonContainer>                 
@@ -91,15 +93,18 @@ Post.propTypes = {
     id: PropTypes.string.isRequired,
     applysCount: PropTypes.number.isRequired,
     location: PropTypes.string.isRequired,
-    lastDate : PropTypes.string.isRequired,
-    anotherPage : PropTypes.bool.isRequired,
-    categorys : PropTypes.array.isRequired,
-    viewApply : PropTypes.bool.isRequired,
+    lastDate: PropTypes.string.isRequired,
+    anotherPage: PropTypes.bool.isRequired,
+    categorys: PropTypes.array.isRequired,
+    viewApply: PropTypes.bool.isRequired,
+    isApplyWait: PropTypes.bool.isRequired,
+    isApplyReadCheck: PropTypes.bool.isRequired,
     user: PropTypes.shape({
         avatar: PropTypes.string.isRequired,
         userName: PropTypes.string.isRequired,
         isSelf: PropTypes.bool.isRequired
     }).isRequired,
+    handleRoute: PropTypes.func.isRequired
 };
 
 export default Post;

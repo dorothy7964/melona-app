@@ -19,11 +19,12 @@ const PostApplyBox = ({
     anotherPage,
     isApply,
     isApplyWait,
-    isApplyReadCheck
+    isApplyReadCheck,
+    handleRoute
 }) => {
     if (isApply === false && isApplyReadCheck === false) {
         return (
-            <Touchable>
+            <Touchable onPress={() => handleRoute("writeApply", postId)}>
                 <Container>
                     <Avatar.Image 
                         size={30} 
@@ -98,6 +99,7 @@ PostApplyBox.propTypes = {
     isApply: PropTypes.bool.isRequired,
     isApplyWait: PropTypes.bool.isRequired,
     isApplyReadCheck: PropTypes.bool.isRequired,
+    handleRoute: PropTypes.func.isRequired,
 };
 
 export default PostApplyBox;

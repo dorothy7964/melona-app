@@ -17,7 +17,7 @@ export default () => {
     return (
         <TabNavigation.Navigator>
             <TabNavigation.Screen 
-                name="갈 때 사갈게" 
+                name="Daddy" 
                 component={StackFactory}   
                 options={{
                     tabBarLabel: ({ focused }) => (
@@ -47,7 +47,7 @@ export default () => {
                 }}
             />
             <TabNavigation.Screen 
-                name="올 때 사다줘" 
+                name="Daughter" 
                 component={StackFactory}  
                 options={{
                     tabBarLabel: ({ focused }) => (
@@ -77,7 +77,7 @@ export default () => {
                 }}
             />
             <TabNavigation.Screen
-                name="그룹"
+                name="Group"
                 component={StackFactory} 
                 options={{
                     tabBarLabel: ({ focused }) => (
@@ -107,7 +107,7 @@ export default () => {
                 }}
             />
             <TabNavigation.Screen
-                name="메시지" 
+                name="Message" 
                 component={StackFactory}  
                 options={{
                     tabBarLabel: ({ focused }) => (
@@ -137,7 +137,7 @@ export default () => {
                 }}
             />
             <TabNavigation.Screen
-                name="프로필" 
+                name="Profile" 
                 component={StackFactory}  
                 options={{
                     tabBarLabel: ({ focused }) => (
