@@ -27,6 +27,7 @@ export default () => {
     const handleRoute = (route, postId) => {
         setRouteView(route);
         setRoutePostId(postId);
+        refetch();
     };
 
     if (routeView === "post") {

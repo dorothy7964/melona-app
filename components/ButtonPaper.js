@@ -23,8 +23,11 @@ const ButtonPaper = ({
     props, 
     onPress, 
     text, 
-    loading = false,
-    primaryColor = styles.melonaColor
+    color="#fff",
+    mode="contained",
+    loading=false,
+    disabled=false,
+    primaryColor=styles.melonaColor
 }) => (
     <View>
         {loading
@@ -34,10 +37,11 @@ const ButtonPaper = ({
                     </Container>
                 </Touchable>
             :   <Button 
-                    mode="contained"
+                    mode={mode}
+                    disabled={disabled}
                     onPress={onPress} 
                     labelStyle={{
-                        color: "#fff",
+                        color: `${color}`,
                         fontWeight: "600"
                     }}
                     theme={{ colors: { primary: `${primaryColor}` } }} {...props}
@@ -49,9 +53,16 @@ const ButtonPaper = ({
 );
 
 ButtonPaper.propTypes = {
+    mode: PropTypes.oneOf([
+        "text",
+        "outlined",
+        "contained",
+    ]),
+    color: PropTypes.string,
     text: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
     loading: PropTypes.bool,
+    disabled: PropTypes.bool,
     primaryColor: PropTypes.string
 };
 

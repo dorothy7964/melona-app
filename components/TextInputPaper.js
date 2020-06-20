@@ -17,12 +17,14 @@ const TextInputPaper = ({
     autoCapitalize="none",
     autoCorrect=true,
     secureTextEntry=false,
+    disabled=false,
     returnKeyType="done",
     onSubmitEditing = () => null
 }) => (
     <Container>
         <TextInput
             mode="outlined"
+            disabled={disabled}
             label={placeholder}
             value={value}
             onChangeText={onChange}
@@ -38,9 +40,10 @@ const TextInputPaper = ({
 );
 
 TextInputPaper.propTypes = {
-    onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
+    onChange: PropTypes.func,
     placeholder: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     autoCorrect: PropTypes.bool,
     secureTextEntry: PropTypes.bool,
     onSubmitEditing: PropTypes.func,

@@ -52,7 +52,7 @@ const PostApplyBox = ({
                                 : require('../assets/req_waiting.png')
                         }
                     />
-                    <Text>대기 중</Text>
+                    <Text>대기 중...</Text>
                 </Container>
             </Touchable>
         );
