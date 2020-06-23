@@ -4,6 +4,7 @@ import { useQuery } from "react-apollo-hooks";
 import { SEE_BUY } from "./TabsQueries";
 import Loader from "../../components/Loader";
 import Post from "../../components/Post";
+import PostNone from "../../components/PostNone";
 import FABgroup from "../../components/FABgroup";
 import WriteApply from "../../components/WriteApply";
 
@@ -31,33 +32,38 @@ export default () => {
     };
 
     if (routeView === "post") {
-        return (
-            <View>
-                <ScrollView 
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-                    }
-                >
-                    {loading
-                        ?   <Loader /> 
-                        :   (
-                            data && data.seeBuy &&
-                            data.seeBuy.map(post => 
-                                <Post 
-                                    {...post} 
-                                    key={post.id} 
-                                    handleRoute={handleRoute} 
-                                />)
-                    )}
-                </ScrollView>
-                <FABgroup 
-                    text="갈 때 사갈게 확인"
-                    select="Buy" 
-                    SearcheSelect="DaddySearch"
-                    writeSelect="DaddyWrite"
-                />
-            </View>
-        );
+        if (data && data.seeBuy && data.seeBuy.length === 0) {
+            return <PostNone />;
+            
+        } else {
+            return (
+                <View>
+                    <ScrollView 
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+                        }
+                    >
+                        {loading
+                            ?   <Loader /> 
+                            :   (
+                                data && data.seeBuy &&
+                                data.seeBuy.map(post => 
+                                    <Post 
+                                        {...post} 
+                                        key={post.id} 
+                                        handleRoute={handleRoute} 
+                                    />)
+                        )}
+                    </ScrollView>
+                    <FABgroup 
+                        text="갈 때 사갈게 확인"
+                        select="Buy" 
+                        SearcheSelect="DaddySearch"
+                        writeSelect="DaddyWrite"
+                    />
+                </View>
+            );
+        }
     } else if (routeView === "writeApply") {
         return (
             <WriteApply 

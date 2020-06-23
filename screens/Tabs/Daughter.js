@@ -4,6 +4,7 @@ import { useQuery } from "react-apollo-hooks";
 import { SEE_BUYME } from "./TabsQueries";
 import Loader from "../../components/Loader";
 import Post from "../../components/Post";
+import PostNone from "../../components/PostNone";
 import FABgroup from "../../components/FABgroup";
 import WriteApply from "../../components/WriteApply";
 
@@ -31,33 +32,38 @@ export default () => {
     };
     
     if (routeView === "post") {
-        return (
-            <View>
-                <ScrollView 
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-                    }
-                >
-                    {loading
-                        ?   <Loader /> 
-                        :   (
-                            data && data.seeBuyMe &&
-                            data.seeBuyMe.map(post => 
-                                <Post 
-                                    {...post} 
-                                    key={post.id} 
-                                    handleRoute={handleRoute} 
-                                />)
-                    )}
-                </ScrollView>
-                <FABgroup 
-                    text="올 때 사다줘 확인"
-                    select="Apply" 
-                    SearcheSelect="DaughterSearch"
-                    writeSelect="DaughterWrite"
-                />
-            </View>
-        );
+        if (data && data.seeBuyMe && data.seeBuyMe.length === 0) {
+            return <PostNone />;
+            
+        } else {
+            return (
+                <View>
+                    <ScrollView 
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+                        }
+                    >
+                        {loading
+                            ?   <Loader /> 
+                            :   (
+                                data && data.seeBuyMe &&
+                                data.seeBuyMe.map(post => 
+                                    <Post 
+                                        {...post} 
+                                        key={post.id} 
+                                        handleRoute={handleRoute} 
+                                    />)
+                        )}
+                    </ScrollView>
+                    <FABgroup 
+                        text="올 때 사다줘 확인"
+                        select="Apply" 
+                        SearcheSelect="DaughterSearch"
+                        writeSelect="DaughterWrite"
+                    />
+                </View>
+            );
+        }
     } else if (routeView === "writeApply") {
         return (
             <WriteApply 
