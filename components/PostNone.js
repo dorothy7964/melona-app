@@ -10,14 +10,15 @@ const View = styled.View`
 `;
 
 const Image = styled.Image`
-    width: 200;
-    height: 200;
+    width: 200px;
+    height: 200px;
 `;
 
 const Bold = styled.Text`
     color: ${props => props.theme.darkGreyColor};
-    font-size: 17;
+    font-size: 17px;
     font-weight: 600;
+    margin-top: -40px;
 `;
 
 export default () => (

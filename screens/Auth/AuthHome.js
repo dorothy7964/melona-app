@@ -11,7 +11,7 @@ const View = styled.View`
 `;
 
 const Image = styled.Image`
-    width: ${constants.width / 2.5};
+    width: ${constants.width / 2.5}px;
 `;
 
 const Touchable = styled.TouchableOpacity``;

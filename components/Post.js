@@ -1,4 +1,5 @@
 import React from "react";
+import { Text } from "react-native";
 import { Card } from 'react-native-paper';
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -14,7 +15,7 @@ const Container = styled(Card)`
 
 const ButtonBox = styled.View`
     flex-direction: row;
-    borderTopWidth: 1;
+    borderTopWidth: 1px;
     borderTopColor: ${props => props.theme.lightGreyColor};
     padding-top: 25px;
     margin-top: 30px;
@@ -23,7 +24,7 @@ const ButtonBox = styled.View`
 const ButtonContainer = styled.View`
     width: 50%;
     align-items: center;
-    borderRightWidth: 1;
+    borderRightWidth: 1px;
     borderRightColor: ${props => props.firstButton 
         ? props.theme.lightGreyColor
         : '#fff'
@@ -31,8 +32,6 @@ const ButtonContainer = styled.View`
 `;
 
 const Touchable = styled.TouchableOpacity``;
-
-const Text = styled.Text``;
 
 const Post = ({ 
     id,

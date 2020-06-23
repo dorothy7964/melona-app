@@ -1,7 +1,11 @@
-import React from "react";
-import { Avatar } from 'react-native-paper';
+import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Alert } from "react-native";
+import { Avatar } from 'react-native-paper';
+import { useMutation } from "react-apollo-hooks";
+import { DELETE_CONTENTS, FALSE_APPLY } from "../SharedQueries";
+import DialogPaper from "./DialogPaper";
 
 const Container = styled.View`
     flex-direction: row;
@@ -22,6 +26,41 @@ const PostApplyBox = ({
     isApplyReadCheck,
     handleRoute
 }) => {
+    const [falseApplyMutation] = useMutation(FALSE_APPLY);
+    const [deleteContentsMutation] = useMutation(DELETE_CONTENTS);
+    
+    // DialogPaper
+    const [visible, setVisible] = useState(false);
+
+    const handleToggleDialog = () => {
+        setVisible(!visible);
+    };
+
+    const handleAbort = () => {
+        handleToggleDialog();
+        return Alert.alert("신청을 취소하지 않습니다.");
+    };
+
+    const handleCancel = async(postId) => {
+        handleToggleDialog();
+        try {
+            await deleteContentsMutation({
+                variables: {
+                    postId
+                } 
+            });
+            await falseApplyMutation({
+                variables: {
+                    postId
+                }   
+            }); 
+        } catch (e) {
+            console.log(e);
+        }
+        handleRoute("post", "");
+        return Alert.alert("신청을 취소 합니다.");
+    };
+
     if (isApply === false && isApplyReadCheck === false) {
         return (
             <Touchable onPress={() => handleRoute("writeApply", postId)}>
@@ -41,8 +80,16 @@ const PostApplyBox = ({
         );
     } else if (isApply === true && isApplyWait === true ) {
         return (
-            <Touchable>
+            <Touchable onPress={() => handleToggleDialog()}>
                 <Container>
+                    <DialogPaper 
+                        title="갈 때 사갈게"
+                        postId={postId}
+                        visible={visible}
+                        handleAbort={handleAbort}
+                        handleCancel={handleCancel}
+                        handleToggleDialog={handleToggleDialog}
+                    />
                     <Avatar.Image 
                         size={30} 
                         style={{ backgroundColor: "#fff" }}
