@@ -72,7 +72,6 @@ export const CONNECT_CONTNETS = gql`
     }
 `;
 
-// WriteApply
 export const CONNECT_APPLY = gql`
     mutation connectApply ($postId: String!) {
         connectApply (postId: $postId)
@@ -83,5 +82,19 @@ export const CONNECT_APPLY = gql`
 export const DELETE_CONTENTS = gql`
     mutation deleteContents ($postId: String!) {
         deleteContents (postId: $postId)
+    }
+`;
+
+// WriteForm
+export const TRUE_APPLY = gql`
+    mutation trueApply ($postId: String!) {
+        trueApply (postId: $postId)
+    }
+`;
+
+// WriteApply
+export const FALSE_APPLY = gql`
+    mutation falseApply ($postId: String!) {
+        falseApply (postId: $postId)
     }
 `;

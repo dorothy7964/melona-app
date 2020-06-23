@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import useInput from "../hooks/useInput";
 import ButtonPaper from "./ButtonPaper";
 import TextInputPaper from "./TextInputPaper";
-import { CONNECT_CONTNETS } from "../SharedQueries";
+import { TRUE_APPLY, CONNECT_CONTNETS } from "../SharedQueries";
 
 const Container = styled.View`
     padding: 10px 45px;
@@ -23,15 +23,17 @@ const Bold = styled.Text`
 `;
 
 const WriteForm = ({
+    postId,
     categoryId,
     category,
 }) => {
     const textInput = useInput();
     const [disabled, setDisabled] = useState(false);
     const [buttonView, setButtonView] = useState(true);
+    const [trueApplyMutation] = useMutation(TRUE_APPLY);
     const [coonnectContentsMutation] = useMutation(CONNECT_CONTNETS);
 
-    const handleContent = async(categoryId , text) => {
+    const handleContent = async(categoryId , text, postId) => {
         if (text === undefined) {
             setDisabled(false);
             setButtonView(true);
@@ -46,6 +48,11 @@ const WriteForm = ({
                     categoryId
                 }   
             }); 
+            await trueApplyMutation({
+                variables: {
+                    postId
+                }   
+            });
         } catch(e) {
             console.log(e);
         }
@@ -64,7 +71,7 @@ const WriteForm = ({
                 />
                 {buttonView
                     ?   <ButtonPaper
-                            onPress={() => handleContent(categoryId, textInput.value )}
+                            onPress={() => handleContent(categoryId, textInput.value, postId)}
                             text="신청 하기"
                         />
                     :   <ButtonPaper
@@ -79,6 +86,7 @@ const WriteForm = ({
 };
 
 WriteForm.propTypes = {
+    postId: PropTypes.string.isRequired,
     categoryId: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
 };

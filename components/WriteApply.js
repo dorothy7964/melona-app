@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { ScrollView, RefreshControl, Platform, Alert, View } from "react-native";
 import { Card } from 'react-native-paper';
 import { useQuery, useMutation } from "react-apollo-hooks";
-import { SEE_BUY_ONE, CONNECT_APPLY, DELETE_CONTENTS } from "../SharedQueries";
+import { 
+    SEE_BUY_ONE, 
+    DELETE_CONTENTS, 
+    FALSE_APPLY 
+} from "../SharedQueries";
 import Loader from "./Loader";
 import NavIcon from "./NavIcon";
 import UserCard from "./UserCard";
@@ -40,7 +44,7 @@ const ButtonContainer = styled.View`
 
 const WriteApply = ({ postId, handleRoute }) => {
     const [refreshing, setRefreshing] = useState(false);
-    const [connectApplyMutation] = useMutation(CONNECT_APPLY);
+    const [falseApplyMutation] = useMutation(FALSE_APPLY);
     const [deleteContentsMutation] = useMutation(DELETE_CONTENTS);
     const { data, loading } = useQuery(SEE_BUY_ONE, {
         variables: { postId }
@@ -64,16 +68,7 @@ const WriteApply = ({ postId, handleRoute }) => {
                     postId
                 } 
             });
-        } catch (e) {
-            console.log(e);
-        }
-        handleRoute("post", "");
-        return Alert.alert("신청하신 내용은 삭제됩니다.");
-    };
-
-    const ToggleApply = async(postId) => {
-        try {
-            await connectApplyMutation({
+            await falseApplyMutation({
                 variables: {
                     postId
                 }   
@@ -81,6 +76,11 @@ const WriteApply = ({ postId, handleRoute }) => {
         } catch (e) {
             console.log(e);
         }
+        handleRoute("post", "");
+        return Alert.alert("신청하신 내용은 삭제됩니다.");
+    };
+
+    const handleComplete = () => {
         handleRoute("post", "");
         return Alert.alert("신청 완료 되었습니다.");
     };
@@ -144,6 +144,7 @@ const WriteApply = ({ postId, handleRoute }) => {
                                         <Card.Content>
                                             {!anotherPage
                                                 ?   <WriteForm 
+                                                        postId={postId}
                                                         categoryId={category.id}
                                                         category={category.text}
                                                         categoryContents={category}
@@ -160,7 +161,7 @@ const WriteApply = ({ postId, handleRoute }) => {
                                                 mode="text"
                                                 color="#262626"
                                                 primaryColor="#fff"
-                                                onPress={() => ToggleApply(postId)}
+                                                onPress={() => handleComplete(postId)}
                                             />
                                         :   <ButtonPaper
                                                 text="완료 하기"
