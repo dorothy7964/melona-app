@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Alert } from "react-native";
 import { Avatar } from 'react-native-paper';
 import { useMutation } from "react-apollo-hooks";
-import { DELETE_CONTENTS, FALSE_APPLY } from "../SharedQueries";
+import { DELETE_CONTENTS, FALSE_APPLY, UNCONNECT_CONTENTSREQ } from "../SharedQueries";
 import DialogPaper from "./DialogPaper";
 
 const Container = styled.View`
@@ -28,6 +28,7 @@ const PostApplyBox = ({
 }) => {
     const [falseApplyMutation] = useMutation(FALSE_APPLY);
     const [deleteContentsMutation] = useMutation(DELETE_CONTENTS);
+    const [unConnectContentsReqMutation] = useMutation(UNCONNECT_CONTENTSREQ);
     
     // DialogPaper
     const [visible, setVisible] = useState(false);
@@ -50,6 +51,11 @@ const PostApplyBox = ({
                 } 
             });
             await falseApplyMutation({
+                variables: {
+                    postId
+                }   
+            }); 
+            await unConnectContentsReqMutation({
                 variables: {
                     postId
                 }   
