@@ -98,3 +98,17 @@ export const FALSE_APPLY = gql`
         falseApply (postId: $postId)
     }
 `;
+
+// WriteApply
+export const UNCONNECT_CONTENTSREQ = gql`
+    mutation unConnectContentsReq ($postId: String!) {
+        unConnectContentsReq (postId: $postId)
+    }
+`;
+
+// SwitchPaper
+export const TOGGLE_CONTENTREQ = gql`
+    mutation toggleContnetsReq ($contentId: String!) {
+        toggleContnetsReq (contentId: $contentId)
+    }
+`;

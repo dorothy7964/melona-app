@@ -6,7 +6,8 @@ import { useQuery, useMutation } from "react-apollo-hooks";
 import { 
     SEE_BUY_ONE, 
     DELETE_CONTENTS, 
-    FALSE_APPLY 
+    FALSE_APPLY,
+    UNCONNECT_CONTENTSREQ
 } from "../SharedQueries";
 import Loader from "./Loader";
 import NavIcon from "./NavIcon";
@@ -46,6 +47,7 @@ const WriteApply = ({ postId, handleRoute }) => {
     const [refreshing, setRefreshing] = useState(false);
     const [falseApplyMutation] = useMutation(FALSE_APPLY);
     const [deleteContentsMutation] = useMutation(DELETE_CONTENTS);
+    const [unConnectContentsReqMutation] = useMutation(UNCONNECT_CONTENTSREQ);
     const { data, loading } = useQuery(SEE_BUY_ONE, {
         variables: { postId }
     });
@@ -69,6 +71,11 @@ const WriteApply = ({ postId, handleRoute }) => {
                 } 
             });
             await falseApplyMutation({
+                variables: {
+                    postId
+                }   
+            }); 
+            await unConnectContentsReqMutation({
                 variables: {
                     postId
                 }   
@@ -146,10 +153,12 @@ const WriteApply = ({ postId, handleRoute }) => {
                                                 ?   <WriteForm 
                                                         postId={postId}
                                                         categoryId={category.id}
-                                                        category={category.text}
-                                                        categoryContents={category}
+                                                        categoryText={category.text}
                                                     />
-                                                :   <WriteFormMe />
+                                                :   <WriteFormMe 
+                                                        postId={postId}
+                                                        category={category}
+                                                    />
                                             }
                                         </Card.Content>
                                     </CategoryContainer>
@@ -161,14 +170,14 @@ const WriteApply = ({ postId, handleRoute }) => {
                                                 mode="text"
                                                 color="#262626"
                                                 primaryColor="#fff"
-                                                onPress={() => handleComplete(postId)}
+                                                onPress={() => handleComplete()}
                                             />
                                         :   <ButtonPaper
                                                 text="완료 하기"
                                                 mode="text"
                                                 color="#262626"
                                                 primaryColor="#fff"
-                                                onPress={() => null}
+                                                onPress={() => handleComplete()}
                                             />
                                     }
                                 </ButtonContainer>

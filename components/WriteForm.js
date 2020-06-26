@@ -25,7 +25,7 @@ const Bold = styled.Text`
 const WriteForm = ({
     postId,
     categoryId,
-    category,
+    categoryText,
 }) => {
     const textInput = useInput();
     const [disabled, setDisabled] = useState(false);
@@ -60,7 +60,7 @@ const WriteForm = ({
 
     return (
         <Container>
-            <Bold>{`+ ${category}`}</Bold>
+            <Bold>{`+ ${categoryText}`}</Bold>
             <ContentContiner>
                 <TextInputPaper 
                     { ...textInput }
@@ -88,7 +88,7 @@ const WriteForm = ({
 WriteForm.propTypes = {
     postId: PropTypes.string.isRequired,
     categoryId: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
+    categoryText: PropTypes.string.isRequired,
 };
 
 export default WriteForm;
