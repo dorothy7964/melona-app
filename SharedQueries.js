@@ -112,3 +112,45 @@ export const TOGGLE_CONTENTREQ = gql`
         toggleContnetsReq (contentId: $contentId)
     }
 `;
+
+// SwitchPaper
+export const TOGGLECHECKCONFIRM_CONTENTS = gql`
+    mutation toggleCheckConfirmContents ($contentId: String!) {
+        toggleCheckConfirmContents (contentId: $contentId)
+    }
+`;
+
+// ViewApply
+export const DELETE_POST = gql`
+    mutation deletePost ($postId: String!) {
+        deletePost (postId: $postId)
+    }
+`;
+
+// ViewApply
+export const TOGGLE_VIEWAPPLY = gql`
+    mutation toggleViewApply ($postId: String!) {
+        toggleViewApply (postId: $postId)
+    }
+`;
+
+// ApplyContents
+export const TOGGLECHECK_APPLY = gql`
+    mutation toggleReadCheck ($applyId: String!) {
+        toggleReadCheck (applyId: $applyId)
+    }
+`;
+
+// ApplyContents
+export const APPLY_CONTENTS = gql`
+    query applyContents ($categoryId: String! $userName: String! ) {
+        applyContents (categoryId: $categoryId, userName: $userName) {
+            id
+            text
+            confirmCheck
+            category {
+                text
+            }
+        }
+    }
+`;

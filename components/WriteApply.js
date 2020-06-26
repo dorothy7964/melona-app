@@ -15,6 +15,7 @@ import UserCard from "./UserCard";
 import WriteForm from "./WriteForm";
 import WriteFormMe from "./WriteFormMe";
 import ButtonPaper from "./ButtonPaper";
+import styles from "../styles";
 
 const Touchable = styled.TouchableOpacity``;
 
@@ -48,7 +49,7 @@ const WriteApply = ({ postId, handleRoute }) => {
     const [falseApplyMutation] = useMutation(FALSE_APPLY);
     const [deleteContentsMutation] = useMutation(DELETE_CONTENTS);
     const [unConnectContentsReqMutation] = useMutation(UNCONNECT_CONTENTSREQ);
-    const { data, loading } = useQuery(SEE_BUY_ONE, {
+    const { data, loading, refetch } = useQuery(SEE_BUY_ONE, {
         variables: { postId }
     });
 
@@ -164,22 +165,13 @@ const WriteApply = ({ postId, handleRoute }) => {
                                     </CategoryContainer>
                                 ))}
                                 <ButtonContainer>
-                                    {!anotherPage
-                                        ?   <ButtonPaper
-                                                text="완료 하기"
-                                                mode="text"
-                                                color="#262626"
-                                                primaryColor="#fff"
-                                                onPress={() => handleComplete()}
-                                            />
-                                        :   <ButtonPaper
-                                                text="완료 하기"
-                                                mode="text"
-                                                color="#262626"
-                                                primaryColor="#fff"
-                                                onPress={() => handleComplete()}
-                                            />
-                                    }
+                                    <ButtonPaper
+                                        text="완료 하기"
+                                        mode="text"
+                                        color={styles.blackColor}
+                                        primaryColor="#fff"
+                                        onPress={() => handleComplete()}
+                                    />
                                 </ButtonContainer>
                             </ScrollView>
                         </ScrollContainer>

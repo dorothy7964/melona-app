@@ -24,6 +24,7 @@ const WriteFormMe = ({ postId, category }) => (
                 <ContentsBox key={content.id}>
                     <SwitchPaper 
                         key={content.id}
+                        type="WriteFormMe"
                         postId={postId}
                         contentId={content.id}
                         contentText={content.text}

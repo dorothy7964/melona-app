@@ -67,6 +67,7 @@ const Post = ({
                                 postId={id}
                                 viewApply={viewApply}
                                 anotherPage={anotherPage}
+                                handleRoute={handleRoute}
                             />
                         :   <PostApplyBox 
                                 postId={id}

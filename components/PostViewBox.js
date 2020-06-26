@@ -14,7 +14,12 @@ const Text = styled.Text`
 
 const Touchable = styled.TouchableOpacity``;
 
-const PostViewBox = ({ postId, viewApply, anotherPage }) => {
+const PostViewBox = ({ 
+    postId, 
+    viewApply, 
+    anotherPage, 
+    handleRoute 
+}) => {
     if (viewApply) {
         return (
             <Touchable>
@@ -34,7 +39,7 @@ const PostViewBox = ({ postId, viewApply, anotherPage }) => {
         );
     } else {
         return (
-            <Touchable>
+            <Touchable onPress={() => handleRoute("viewApply", postId)}>
                 <Container>
                     <Avatar.Image 
                         size={30} 
@@ -56,6 +61,7 @@ PostViewBox.propTypes = {
     postId : PropTypes.string.isRequired,
     viewApply : PropTypes.bool.isRequired,
     anotherPage : PropTypes.bool.isRequired,
+    handleRoute : PropTypes.func.isRequired,
 }
 
 export default PostViewBox;
