@@ -154,3 +154,53 @@ export const APPLY_CONTENTS = gql`
         }
     }
 `;
+
+// ProgressApply
+export const CATEGORY_CONTENTS = gql`
+    query categoryContents ($categoryId: String! $userName: String! $anotherPage: Boolean!) {
+        categoryContents (categoryId: $categoryId, userName: $userName, anotherPage: $anotherPage) {
+            id
+            text
+            check
+            confirmCheck
+            confirmFile
+            confirmProgress
+            category {
+                id
+                text
+            }
+            contentsReqs {
+                id
+                confirmCheck
+                confirmProgress
+                    user {
+                        id
+                        avatar
+                        userName
+                    }
+            }
+        }
+    }
+`;
+
+// ProgressSteppers
+export const PROGRESS_NUM = gql`
+    mutation progressNum (
+        $contentId: String! 
+        $stepNum: Int! 
+        $anotherPage: Boolean!
+    ) {
+        progressNum (
+            contentId: $contentId, 
+            stepNum: $stepNum,
+            anotherPage: $anotherPage
+        )
+    }
+`;
+
+// ProgressCardUser
+export const PROGRESS_APPLY = gql`
+    mutation progressApply ($postId: String! $userName: String!) {
+        progressApply (postId: $postId, userName: $userName)
+    }
+`;

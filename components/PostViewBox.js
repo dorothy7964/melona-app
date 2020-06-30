@@ -22,7 +22,7 @@ const PostViewBox = ({
 }) => {
     if (viewApply) {
         return (
-            <Touchable>
+            <Touchable onPress={() => handleRoute("progress", postId)}>
                 <Container>
                     <Avatar.Image 
                         size={30} 
