@@ -204,3 +204,12 @@ export const PROGRESS_APPLY = gql`
         progressApply (postId: $postId, userName: $userName)
     }
 `;
+
+// ProgressStap
+export const ME = gql`
+    query me {
+        me {
+            userName
+        }
+    }
+`;

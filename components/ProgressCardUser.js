@@ -34,6 +34,7 @@ const UserText = styled.Text`
 `;
 
 const ProgressCardUser = ({ 
+    isSelf,
     postId,
     userName,
     categorys,
@@ -58,34 +59,40 @@ const ProgressCardUser = ({
     
     return(
         <View>
-            <TextBox>
-                <Text>신청자</Text>
-                <UserText>{userName}</UserText>
-            </TextBox>
+            {isSelf == true && (
+                <TextBox>
+                    <Text>신청자</Text>
+                    <UserText>{userName}</UserText>
+                </TextBox>
+            )}
             {categorys.map(category => (
                 <ProgressApply 
                     key={category.id}
                     categoryId={category.id}
                     userName={userName}
                     anotherPage={anotherPage}
+                    isSelf={isSelf}
                 />
             ))}
-            <ButtonBox>
-                <ButtonPaper 
-                    onPress={() => handleProgressApply(postId, userName)}
-                    text="전체 진행상황 완료"
-                />
-            </ButtonBox>
+            {isSelf == true && (
+                <ButtonBox>
+                    <ButtonPaper 
+                        onPress={() => handleProgressApply(postId, userName)}
+                        text="전체 진행상황 완료"
+                    />
+                </ButtonBox>
+            )}
         </View>
     );
 };
 
 ProgressCardUser.propTypes = {
+    isSelf: PropTypes.bool.isRequired,
     postId: PropTypes.string.isRequired,
     userName: PropTypes.string.isRequired,
     categorys: PropTypes.array.isRequired,
     anotherPage: PropTypes.bool.isRequired,
-    handleAction: PropTypes.func.isRequired,
+    handleAction: PropTypes.func,
 };
 
 export default ProgressCardUser;

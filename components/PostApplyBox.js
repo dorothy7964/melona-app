@@ -111,7 +111,7 @@ const PostApplyBox = ({
         );
     } else if (isApply === true && isApplyReadCheck === true) {
         return (
-            <Touchable>
+            <Touchable onPress={() => handleRoute("progressStap", postId)}>
                 <Container>
                     <Avatar.Image 
                         size={30} 

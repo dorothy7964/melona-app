@@ -6,6 +6,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "./Loader";
 import ProgressSteppers from "./ProgressSteppers";
+import ProgressView from "./ProgressView";
 import { CATEGORY_CONTENTS } from "../SharedQueries";
 
 const Wrapper = styled.View`
@@ -34,7 +35,8 @@ const Text = styled.Text`
 const ProgressApply = ({ 
     categoryId,
     userName,
-    anotherPage
+    anotherPage,
+    isSelf
 }) => {
     const { data, loading, refetch } = useQuery(CATEGORY_CONTENTS, {
         variables: { categoryId, userName, anotherPage }
@@ -64,13 +66,15 @@ const ProgressApply = ({
                         </Container>
                         <Container>
                             <Card.Content>
-                                {!anotherPage
+                                {!isSelf
                                     ?   <ProgressSteppers 
                                             stepNum={contents.confirmProgress}
                                             contentId={contents.id}
                                             anotherPage={anotherPage}
                                         />
-                                    :   <Text>Daughter</Text>
+                                    :   <ProgressView
+                                            stepNum={contents.confirmProgress}
+                                        />
                                 }
                             </Card.Content>
                         </Container>
@@ -85,6 +89,7 @@ ProgressApply.propTypes = {
     categoryId: PropTypes.string.isRequired,
     userName: PropTypes.string.isRequired,
     anotherPage: PropTypes.bool.isRequired,
+    isSelf: PropTypes.bool.isRequired,
 };
 
 export default ProgressApply;
