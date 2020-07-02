@@ -8,7 +8,8 @@ import styles from "../styles";
 import { 
     TRUE_APPLY, 
     TOGGLE_CONTENTREQ,
-    TOGGLECHECKCONFIRM_CONTENTS
+    TOGGLECHECKCONFIRM_CONTENTS,
+    TOGGLECONFIRM_CONTENTREQ
 } from "../SharedQueries";
 
 const Container = styled.View`
@@ -22,6 +23,9 @@ const Container = styled.View`
 const TextBox = styled.View`
     display: flex;
     flex: 1;
+    borderBottomWidth: 1px;
+    borderBottomColor: ${props => props.theme.lightGreyColor};
+    margin-right: 10px;
 `;
 
 const SwitchPaper = ({
@@ -31,8 +35,9 @@ const SwitchPaper = ({
     contentText,
     contentCheck
 }) => {
-    // WriteFormMe
     const [isSwitch, setIsSwitch] = useState(false);
+
+    // WriteFormMe
     const [trueApplyMutation] = useMutation(TRUE_APPLY);
     const [toggleContnetsReqMutation] = useMutation(TOGGLE_CONTENTREQ);
 
@@ -54,8 +59,11 @@ const SwitchPaper = ({
         }
     };
 
-    // ApplyContents
+    // content Switch - Use (ApplyContents,viewContents)
     const [isContentSwitch, setIsContentSwitch] = useState(contentCheck);
+
+
+    // ApplyContents
     const [checkContentsMutation] = useMutation(TOGGLECHECKCONFIRM_CONTENTS);
 
     const handleToggleContentSwitch = async(contentId) => {
@@ -64,6 +72,22 @@ const SwitchPaper = ({
             await checkContentsMutation({
                 variables: {
                     contentId
+                }   
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    // viewContents
+    const [toggleConfirmReqMutation] = useMutation(TOGGLECONFIRM_CONTENTREQ);
+
+    const handleToggleConfirmReqSwitch = async(contentId) => {
+        setIsContentSwitch(!isContentSwitch);
+        try {
+            await toggleConfirmReqMutation({
+                variables: {
+                    contentReqId: contentId
                 }   
             });
         } catch (e) {
@@ -94,6 +118,19 @@ const SwitchPaper = ({
                     value={isContentSwitch}
                     color={styles.melonaColor}
                     onValueChange={() => handleToggleContentSwitch(contentId)}
+                />
+            </Container>
+        );
+    } else if (type === "viewContents") {
+        return (
+            <Container>
+                <TextBox>
+                    <Text>{contentText}</Text>
+                </TextBox>
+                <Switch
+                    value={isContentSwitch}
+                    color={styles.melonaColor}
+                    onValueChange={() => handleToggleConfirmReqSwitch(contentId)}
                 />
             </Container>
         );

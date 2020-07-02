@@ -89,7 +89,11 @@ const PostApplyBox = ({
             <Touchable onPress={() => handleToggleDialog()}>
                 <Container>
                     <DialogPaper 
-                        title="갈 때 사갈게"
+                        title={
+                            !anotherPage 
+                                ? "갈 때 사갈게"
+                                : "올 때 사다줘"
+                        }
                         postId={postId}
                         visible={visible}
                         handleAbort={handleAbort}

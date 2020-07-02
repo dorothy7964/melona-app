@@ -213,3 +213,32 @@ export const ME = gql`
         }
     }
 `;
+
+// ApplyContentMe
+export const VIEW_CONTENTS = gql`
+    query viewContents ($categoryId: String! $userName: String!) {
+        viewContents (categoryId: $categoryId, userName: $userName) {
+            id
+            text
+            category {
+                text
+            }
+            contentsReqs {
+                id
+                check
+                confirmCheck
+                    user {
+                        id
+                        userName
+                    }
+            }
+        }
+    }
+`;
+
+// ApplyContentSwitchMe
+export const TOGGLECONFIRM_CONTENTREQ = gql`
+    mutation toggleConfirmContnetsReq ($contentReqId: String!) {
+        toggleConfirmContnetsReq (contentReqId: $contentReqId)
+    }
+`;

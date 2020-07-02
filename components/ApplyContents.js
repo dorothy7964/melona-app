@@ -7,7 +7,7 @@ import SwitchPaper from "./SwitchPaper";
 import { APPLY_CONTENTS } from "../SharedQueries";
         
 const Container = styled.View`
-    padding: 10px 45px;
+    padding: 5px 45px;
 `;
         
 const ContentContainer = styled.View``;
@@ -35,12 +35,12 @@ const ApplyContents = ({
                 {applyContents.map(contents => (
                     <ContentContainer key={contents.id}>
                         <Bold>{`+ ${contents.category.text}`}</Bold>
-                        <SwitchPaper 
-                            type="ApplyContents"
-                            contentId={contents.id}
-                            contentText={contents.text}
-                            contentCheck={contents.confirmCheck}
-                        />
+                            <SwitchPaper 
+                                type="ApplyContents"
+                                contentId={contents.id}
+                                contentText={contents.text}
+                                contentCheck={contents.confirmCheck}
+                            />
                     </ContentContainer>
                 ))}
             </Container>

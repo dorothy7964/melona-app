@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import styles from "../styles";
 import AvatarPaper from "./AvatarPaper";
 import ApplyContents from "./ApplyContents";
+import ApplyContentsMe from "./ApplyContentsMe";
 import { TOGGLECHECK_APPLY } from "../SharedQueries";
 
 const Container = styled.View`
@@ -45,7 +46,6 @@ const ApplyUser = ({
     userName,
     applyId,
     applyReadCheck,
-    postId,
     categorys,
     anotherPage,
 }) => {
@@ -83,12 +83,25 @@ const ApplyUser = ({
                     <Text style={{ color: styles.melonaColor }}>수락</Text>
                 </SwitchBox>
             </Profile>
-            {checked && (
+            {anotherPage === false && checked && (
                 <ApplyCheckBox>
                     {categorys.map(category => (
                         <ApplyContents 
                             key={category.id}
                             categoryId={category.id}
+                            userName={userName}
+                        />
+                        
+                    ))}
+                </ApplyCheckBox>
+            )}
+            {anotherPage === true && checked && (
+                <ApplyCheckBox>
+                    {categorys.map(category => (
+                        <ApplyContentsMe 
+                            key={category.id}
+                            categoryId={category.id}
+                            categoryText={category.text}
                             userName={userName}
                         />
                         
@@ -104,7 +117,6 @@ ApplyUser.propTypes = {
     userName: PropTypes.string.isRequired,
     applyId: PropTypes.string.isRequired,
     applyReadCheck: PropTypes.bool.isRequired,
-    postId: PropTypes.string.isRequired,
     categorys: PropTypes.array.isRequired,
     anotherPage: PropTypes.bool.isRequired,
 };
