@@ -8,6 +8,7 @@ import PostNone from "../../components/PostNone";
 import FABgroup from "../../components/FABgroup";
 import WriteApply from "../../components/WriteApply";
 import ViewApply from "../../components/ViewApply";
+import Progress from "../../components/Progress";
 
 export default () => {
     const [routeView, setRouteView] = useState("post");
@@ -75,6 +76,13 @@ export default () => {
     } else if (routeView === "viewApply") {
         return (
             <ViewApply 
+                postId={routePostId}
+                handleRoute={handleRoute}
+            />
+        );
+    } else if (routeView === "progress") {
+        return (
+            <Progress
                 postId={routePostId}
                 handleRoute={handleRoute}
             />

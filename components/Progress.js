@@ -76,7 +76,8 @@ const Progress = ({
             seeBuyOne: {
                 user: {
                     avatar,
-                    userName
+                    userName,
+                    isSelf
                 },
                 applysRead,
                 applysReadCount,
@@ -124,6 +125,7 @@ const Progress = ({
                                         avatar={apply.user.avatar}
                                         userName={apply.user.userName}
                                         progress={apply.progress}
+                                        anotherPage={anotherPage}
                                         handleAction={handleAction}
                                     />
                                 </Card.Content>
@@ -133,6 +135,7 @@ const Progress = ({
                 )}
                 {view === "user" && (
                     <ProgressCardUser 
+                        isSelf={isSelf}
                         postId={postId}
                         userName={viewUser}
                         categorys={categorys}

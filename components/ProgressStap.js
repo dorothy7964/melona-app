@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, RefreshControl, Platform, View, Text } from "react-native";
+import { ScrollView, RefreshControl, Platform } from "react-native";
 import { Card } from 'react-native-paper';
 import { useQuery } from "react-apollo-hooks";
 import styled from "styled-components";
@@ -27,12 +27,10 @@ const ProgressStap = ({
     handleRoute
 }) => {
     const [refreshing, setRefreshing] = useState(false);
-    const { data: { me: { userName: userNameMe } } } = useQuery(ME);
-    const { data: { me: { userName } } } = useQuery(ME);
+    const { data: dataMe, loading: lodingMe } = useQuery(ME);
     const { data, loading, refetch } = useQuery(SEE_BUY_ONE, {
         variables: { postId }
     });
-
     const refresh = async () => {
         try {
             setRefreshing(true);
@@ -44,10 +42,13 @@ const ProgressStap = ({
         }
     };
 
-    if (loading === true){
+    if (loading === true || lodingMe === true){
         return <Loader />
 
-    } else {
+    } else if (
+        !loading && data && data.seeBuyOne &&
+        !lodingMe && dataMe && dataMe.me 
+    ) {
         const { 
             seeBuyOne: {
                 user: {
@@ -62,6 +63,12 @@ const ProgressStap = ({
                 anotherPage,
             }
         } = data;
+
+        const {
+            me: {
+                userName: userNameMe
+            }
+        } = dataMe;
 
         return(
             <ScrollView 

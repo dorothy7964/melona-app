@@ -66,15 +66,25 @@ const ProgressApply = ({
                         </Container>
                         <Container>
                             <Card.Content>
-                                {!isSelf
-                                    ?   <ProgressSteppers 
-                                            stepNum={contents.confirmProgress}
-                                            contentId={contents.id}
-                                            anotherPage={anotherPage}
-                                        />
-                                    :   <ProgressView
-                                            stepNum={contents.confirmProgress}
-                                        />
+                                {!anotherPage
+                                    ?   isSelf 
+                                        ?   <ProgressSteppers 
+                                                stepNum={contents.confirmProgress}
+                                                contentId={contents.id}
+                                                anotherPage={anotherPage}
+                                            />
+                                        :   <ProgressView
+                                                stepNum={contents.confirmProgress}
+                                            />
+                                    :   isSelf 
+                                        ?   <ProgressView 
+                                                stepNum={contents.confirmProgress}
+                                            />
+                                        :   <ProgressSteppers 
+                                                stepNum={contents.confirmProgress}
+                                                contentId={contents.id}
+                                                anotherPage={anotherPage}
+                                            />
                                 }
                             </Card.Content>
                         </Container>

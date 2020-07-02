@@ -1,7 +1,11 @@
 import React from "react";
 import { View } from "react-native";
+import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import styled from "styled-components";
+import styles from "../styles";
 import PropTypes from "prop-types";
+
+const melonaColor = styles.melonaColor;
 
 const Container = styled.View`
     margin-top: 20px;
@@ -26,8 +30,14 @@ const ProgressView = ({
                     completedProgressBarColor={melonaColor}
                     activeStepIconBorderColor={melonaColor}
                 >
-                    <ProgressStep label="진행 중" />
-                    <ProgressStep label="인증 사진" />
+                    <ProgressStep 
+                        label="진행 중"
+                        removeBtnRow={true}
+                    />
+                    <ProgressStep 
+                        label="인중사진"
+                        removeBtnRow={true}
+                    />
                     <ProgressStep 
                         label="완료"
                         removeBtnRow={true}
@@ -49,10 +59,18 @@ const ProgressView = ({
                     completedProgressBarColor={melonaColor}
                     activeStepIconBorderColor={melonaColor}
                 >
-                        
-                    <ProgressStep label="진행 중" />
-                    <ProgressStep label="인증 사진" />
-                    <ProgressStep label="완료" />
+                    <ProgressStep 
+                        label="진행 중"
+                        removeBtnRow={true}
+                    />
+                    <ProgressStep 
+                        label="인중사진"
+                        removeBtnRow={true}
+                    />
+                    <ProgressStep 
+                        label="완료"
+                        removeBtnRow={true}
+                    />
                 </ProgressSteps>
             </Container>
         );

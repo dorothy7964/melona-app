@@ -7,13 +7,13 @@ import Loader from "./Loader";
 import SwitchPaper from "./SwitchPaper";
 import { VIEW_CONTENTS } from "../SharedQueries";
         
-const Container = styled.View``;
+const Container = styled.View`
+    padding: 5px 45px;
+`;
         
 const ContentContainer = styled.View``;
 
-const ContentBox = styled.View`
-    padding: 5px 45px;
-`;
+const ContentBox = styled.View``;
 
 const Bold = styled.Text`
     font-size: 15px;

@@ -59,7 +59,7 @@ const ProgressCardUser = ({
     
     return(
         <View>
-            {isSelf == true && (
+            {isSelf === true && (
                 <TextBox>
                     <Text>신청자</Text>
                     <UserText>{userName}</UserText>
@@ -74,14 +74,22 @@ const ProgressCardUser = ({
                     isSelf={isSelf}
                 />
             ))}
-            {isSelf == true && (
-                <ButtonBox>
-                    <ButtonPaper 
-                        onPress={() => handleProgressApply(postId, userName)}
-                        text="전체 진행상황 완료"
-                    />
-                </ButtonBox>
-            )}
+            {!anotherPage
+                ?   isSelf === true &&
+                    <ButtonBox>
+                        <ButtonPaper 
+                            onPress={() => handleProgressApply(postId, userName)}
+                            text="전체 진행상황 완료"
+                        />
+                    </ButtonBox>
+                :   isSelf === true &&
+                    <ButtonBox>
+                        <ButtonPaper 
+                            onPress={() => null}
+                            text="인증 사진 보기"
+                        />
+                    </ButtonBox>
+            }
         </View>
     );
 };

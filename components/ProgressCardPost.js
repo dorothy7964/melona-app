@@ -32,6 +32,7 @@ const ProgressCardPost = ({
     avatar,
     userName,
     progress,
+    anotherPage,
     handleAction
 }) => (
     <View >
@@ -55,14 +56,22 @@ const ProgressCardPost = ({
                         <Avatar.Image 
                             size={60} 
                             style={{ backgroundColor: "#fff" }}
-                            source={require('../assets/melona_success.png')}
+                            source={
+                                !anotherPage 
+                                    ? require('../assets/melona_success.png')
+                                    : require('../assets/req_success.png')
+                            }
                         />
                     </Touchable>
                 :   <Touchable onPress={() => handleAction("user", userName)}>
                         <Avatar.Image 
                             size={60} 
                             style={{ backgroundColor: "#fff" }}
-                            source={require('../assets/melona_failure.png')}
+                            source={
+                                !anotherPage 
+                                    ? require('../assets/melona_failure.png')
+                                    : require('../assets/req_failure.png')
+                            }
                         />
                     </Touchable>
             }
@@ -74,6 +83,7 @@ ProgressCardPost.propTypes = {
     avatar: PropTypes.string.isRequired,
     userName: PropTypes.string.isRequired,
     progress: PropTypes.bool.isRequired,
+    anotherPage: PropTypes.bool.isRequired,
     handleAction: PropTypes.func.isRequired,
 };
 
