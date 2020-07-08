@@ -77,14 +77,21 @@ const ProgressApply = ({
                                                 stepNum={contents.confirmProgress}
                                             />
                                     :   isSelf 
-                                        ?   <ProgressView 
-                                                stepNum={contents.confirmProgress}
-                                            />
-                                        :   <ProgressSteppers 
-                                                stepNum={contents.confirmProgress}
-                                                contentId={contents.id}
-                                                anotherPage={anotherPage}
-                                            />
+                                        ?   contents.contentsReqs.map(contentsReqs => (
+                                                <ProgressView 
+                                                    key={contentsReqs.id}
+                                                    stepNum={contentsReqs.confirmProgress}
+                                                />
+                                            ))
+                                        :   contents.contentsReqs.map(contentsReqs => (
+                                                userName === contentsReqs.user.userName &&
+                                                <ProgressSteppers 
+                                                    key={contentsReqs.id}
+                                                    contentId={contentsReqs.id}
+                                                    stepNum={contentsReqs.confirmProgress}
+                                                    anotherPage={anotherPage}
+                                                />
+                                            ))
                                 }
                             </Card.Content>
                         </Container>

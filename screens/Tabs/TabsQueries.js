@@ -46,6 +46,7 @@ export const SEE_BUYME = gql`
             isApply
             isApplyWait
             isApplyReadCheck
+            isProgress
             applysCount
             commentCount
             viewApply
@@ -54,6 +55,7 @@ export const SEE_BUYME = gql`
                 id
                 apply
                 readCheck
+                progress
                 user {
                     userName
                     avatar

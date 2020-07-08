@@ -1,6 +1,6 @@
 import { gql } from "apollo-boost";
 
-// WriteApply
+// WriteApply, ProgressStap
 export const SEE_BUY_ONE = gql`
     query seeBuyOne ($postId: String!) {
         seeBuyOne (postId: $postId) {
@@ -10,6 +10,7 @@ export const SEE_BUY_ONE = gql`
             isApply
             isApplyWait
             isApplyReadCheck
+            isProgress
             applysCount
             applysReadCount
             commentCount

@@ -31,6 +31,7 @@ const ProgressStap = ({
     const { data, loading, refetch } = useQuery(SEE_BUY_ONE, {
         variables: { postId }
     });
+
     const refresh = async () => {
         try {
             setRefreshing(true);
@@ -61,6 +62,7 @@ const ProgressStap = ({
                 lastDate,
                 categorys,
                 anotherPage,
+                isProgress
             }
         } = data;
 
@@ -104,6 +106,8 @@ const ProgressStap = ({
                     userName={userNameMe}
                     categorys={categorys}
                     anotherPage={anotherPage}
+                    isProgress={isProgress}
+                    handleRoute={handleRoute}
                 />
             </ScrollView>
         );
