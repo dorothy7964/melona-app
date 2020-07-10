@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import styled from "styled-components";
 import styles from "../styles";
 import PropTypes from "prop-types";
+import ButtonPaper from "./ButtonPaper";
+import DialogPaperPhoto from "./DialogPaperPhoto";
 
 const melonaColor = styles.melonaColor;
 
@@ -17,9 +19,24 @@ const LastText = styled.Text`
     padding-bottom: 30px;
 `;
 
+const ButtonBox = styled.View`
+    margin-top: 20px;
+    align-items: center;
+`;
+
 const ProgressView = ({ 
     stepNum,
+    categoryText,
+    contentText,
+    confirmFile
 }) => {
+    // DialogPaperPhoto
+    const [visible, setVisible] = useState(false);
+
+    const handleToggleDialog = () => {
+        setVisible(!visible);
+    };
+
     if (stepNum === 3) {
         return (
             <Container>
@@ -47,6 +64,19 @@ const ProgressView = ({
                         </View>
                     </ProgressStep>
                 </ProgressSteps>
+                <ButtonBox>
+                    <ButtonPaper 
+                        onPress={handleToggleDialog}
+                        text="인증 사진 보기"
+                    />
+                    <DialogPaperPhoto 
+                        categoryText={categoryText}
+                        contentText={contentText}
+                        confirmFile={confirmFile}
+                        visible={visible}
+                        handleToggleDialog={handleToggleDialog}
+                    />
+                </ButtonBox>
             </Container>
         );
     } else {
@@ -79,6 +109,9 @@ const ProgressView = ({
 
 ProgressView.propTypes = {
     stepNum: PropTypes.number.isRequired,
+    categoryText: PropTypes.string.isRequired,
+    contentText: PropTypes.string.isRequired,
+    confirmFile: PropTypes.string.isRequired,
 };
 
 export default ProgressView;

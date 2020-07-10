@@ -5,6 +5,8 @@ import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import styled from "styled-components";
 import styles from "../styles";
 import PropTypes from "prop-types";
+import ButtonPaper from "./ButtonPaper";
+import DialogPaperPhoto from "./DialogPaperPhoto";
 import { PROGRESS_NUM } from "../SharedQueries";
 
 const melonaColor = styles.melonaColor;
@@ -27,10 +29,18 @@ const LastText = styled.Text`
     padding-bottom: 30px;
 `;
 
+const ButtonBox = styled.View`
+    margin-top: 20px;
+    align-items: center;
+`;
+
 const ProgressSteppers = ({ 
     stepNum,
     contentId,
     anotherPage,
+    categoryText,
+    contentText,
+    confirmFile,
 }) => {
     const [removeBtn, setRemoveBtn] = useState(false);
     const [stepNumber, setStepNumber] = useState(stepNum);
@@ -73,6 +83,13 @@ const ProgressSteppers = ({
         setOnSubmitText("진행이 완료 되었습니다.");
     };
 
+    // DialogPaperPhoto
+    const [visible, setVisible] = useState(false);
+
+    const handleToggleDialog = () => {
+        setVisible(!visible);
+    };
+
     if (stepNum === 3) {
         return (
             <Container>
@@ -94,6 +111,19 @@ const ProgressSteppers = ({
                         </View>
                     </ProgressStep>
                 </ProgressSteps>
+                <ButtonBox>
+                    <ButtonPaper 
+                        onPress={handleToggleDialog}
+                        text="인증 사진 보기"
+                    />
+                    <DialogPaperPhoto 
+                        categoryText={categoryText}
+                        contentText={contentText}
+                        confirmFile={confirmFile}
+                        visible={visible}
+                        handleToggleDialog={handleToggleDialog}
+                    />
+                </ButtonBox>
             </Container>
         );
     } else {
@@ -161,6 +191,9 @@ ProgressSteppers.propTypes = {
     stepNum: PropTypes.number.isRequired,
     contentId: PropTypes.string.isRequired,
     anotherPage: PropTypes.bool.isRequired,
+    categoryText: PropTypes.string.isRequired,
+    contentText: PropTypes.string.isRequired,
+    confirmFile: PropTypes.string.isRequired,
 };
 
 export default ProgressSteppers;

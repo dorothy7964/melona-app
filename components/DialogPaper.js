@@ -4,11 +4,13 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const GreyBold = styled.Text`
+    font-size: 15px;
     font-weight: 600;
     color: ${props => props.theme.darkGreyColor};
 `;
 
 const Bold = styled.Text`
+    font-size: 15px;
     font-weight: 600;
 `;
 

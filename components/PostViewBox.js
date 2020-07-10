@@ -12,6 +12,13 @@ const Text = styled.Text`
     margin-left: 5px;
 `;
 
+const TextColor = styled.Text`
+    margin-left: 5px;
+    background-color: ${props => props.theme.melonaColor};
+    borderRadius: 10;
+    padding: 0 10px;
+`;
+
 const Touchable = styled.TouchableOpacity``;
 
 const PostViewBox = ({ 
@@ -50,7 +57,7 @@ const PostViewBox = ({
                                 : require('../assets/daughter.png')
                         }
                     />
-                    <Text>신청자 보기</Text>
+                    <TextColor>신청자 보기</TextColor>
                 </Container>
             </Touchable>
         );

@@ -83,14 +83,7 @@ const ProgressCardUser = ({
                             text="전체 진행상황 완료"
                         />
                     </ButtonBox>
-                :   isSelf === true
-                    ?   <ButtonBox>
-                            <ButtonPaper 
-                                onPress={() => null}
-                                text="인증 사진 보기"
-                            />
-                        </ButtonBox>
-                    :   isProgress === false &&
+                :   isSelf === false && isProgress === false &&
                         <ButtonBox>
                             <ButtonPaper 
                                 onPress={() => handleProgressApply(postId, userName)}

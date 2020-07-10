@@ -75,6 +75,9 @@ const ProgressApply = ({
                                             />
                                         :   <ProgressView
                                                 stepNum={contents.confirmProgress}
+                                                categoryText={contents.category.text}
+                                                contentText={contents.text}
+                                                confirmFile={contents.confirmFile}
                                             />
                                     :   isSelf 
                                         ?   contents.contentsReqs.map(contentsReqs => (
@@ -90,6 +93,10 @@ const ProgressApply = ({
                                                     contentId={contentsReqs.id}
                                                     stepNum={contentsReqs.confirmProgress}
                                                     anotherPage={anotherPage}
+                                                    categoryText={contents.category.text}
+                                                    contentText={contents.text}
+                                                    confirmFile={contentsReqs.confirmFile}
+                                                    contentsReqs={contentsReqs}
                                                 />
                                             ))
                                 }
