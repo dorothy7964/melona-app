@@ -41,11 +41,16 @@ const ProgressCardUser = ({
     anotherPage,
     isProgress,
     handleRoute,
+    handleAction,
 }) => {
     const [progressApplyMutation] = useMutation(PROGRESS_APPLY);
 
-    const handleProgressApply = async(postId, userName) => {
-        handleRoute("post", "");
+    const handleProgressApply = async(postId, userName, anotherPage) => {
+        if (anotherPage === false) {
+            handleAction("post", "");
+        } else {
+            handleRoute("post", "");
+        }
         try {
             await progressApplyMutation({
                 variables: {
@@ -79,14 +84,14 @@ const ProgressCardUser = ({
                 ?   isSelf === true &&
                     <ButtonBox>
                         <ButtonPaper 
-                            onPress={() => handleProgressApply(postId, userName)}
+                            onPress={() => handleProgressApply(postId, userName, anotherPage)}
                             text="전체 진행상황 완료"
                         />
                     </ButtonBox>
                 :   isSelf === false && isProgress === false &&
                         <ButtonBox>
                             <ButtonPaper 
-                                onPress={() => handleProgressApply(postId, userName)}
+                                onPress={() => handleProgressApply(postId, userName, anotherPage)}
                                 text="전체 진행상황 완료"
                             />
                         </ButtonBox>
@@ -103,6 +108,7 @@ ProgressCardUser.propTypes = {
     anotherPage: PropTypes.bool.isRequired,
     isProgress: PropTypes.bool,
     handleRoute: PropTypes.func,
+    handleAction: PropTypes.func,
 };
 
 export default ProgressCardUser;

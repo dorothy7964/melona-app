@@ -110,9 +110,9 @@ const ProgressApply = ({
 };
 
 ProgressApply.propTypes = {
-    categoryId: PropTypes.string.isRequired,
-    userName: PropTypes.string.isRequired,
-    anotherPage: PropTypes.bool.isRequired,
+    categoryId: PropTypes.string,
+    userName: PropTypes.string,
+    anotherPage: PropTypes.bool,
     isSelf: PropTypes.bool.isRequired,
 };
 

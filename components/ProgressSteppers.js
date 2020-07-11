@@ -191,9 +191,9 @@ ProgressSteppers.propTypes = {
     stepNum: PropTypes.number.isRequired,
     contentId: PropTypes.string.isRequired,
     anotherPage: PropTypes.bool.isRequired,
-    categoryText: PropTypes.string.isRequired,
-    contentText: PropTypes.string.isRequired,
-    confirmFile: PropTypes.string.isRequired,
+    categoryText: PropTypes.string,
+    contentText: PropTypes.string,
+    confirmFile: PropTypes.string,
 };
 
 export default ProgressSteppers;

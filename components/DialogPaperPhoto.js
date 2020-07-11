@@ -64,9 +64,9 @@ const DialogPaperPhoto = ({
 );
 
 DialogPaperPhoto.propTypes = {
-    categoryText: PropTypes.string.isRequired,
-    contentText: PropTypes.string.isRequired,
-    confirmFile: PropTypes.string.isRequired,
+    categoryText: PropTypes.string,
+    contentText: PropTypes.string,
+    confirmFile: PropTypes.string,
     visible: PropTypes.bool.isRequired,
     handleToggleDialog: PropTypes.func.isRequired,
 };

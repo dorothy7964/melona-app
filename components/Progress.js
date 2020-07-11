@@ -9,6 +9,7 @@ import NavIcon from "./NavIcon";
 import UserCard from "./UserCard";
 import ProgressCardPost from "./ProgressCardPost";
 import ProgressCardUser from "./ProgressCardUser";
+import ProgressCardPhoto from "./ProgressCardPhoto";
 import { SEE_BUY_ONE } from "../SharedQueries";
 
 const Touchable = styled.TouchableOpacity``;
@@ -25,6 +26,27 @@ const BackButtonContainer = styled.View`
     flex: 1;
     align-items: center;
     margin: 15px;
+`;
+
+const TextBox = styled.View`
+    flex-direction: row;
+    margin: 0 10px;
+    margin-bottom: 25px;
+    align-items: center;
+`;
+
+const Text = styled.Text`
+    background-color: ${props => props.theme.lightGreyColor};
+    width: 20%;
+    font-size: 16px;
+    padding: 10px;
+`;
+
+const UserText = styled.Text`
+    background-color: #fff;
+    width: 60%;
+    font-size: 16px;
+    padding: 10px;
 `;
 
 const Progress = ({
@@ -52,16 +74,24 @@ const Progress = ({
     const handleAction = (view, userName) => {
         setView(view);
         setViewUser(userName);
-        refetch();
+        if (view === "post") {
+            setTimeout(() => {
+                refresh();
+            }, 500);
+        }
     };
 
     const handleRouteBack = (route) => {
         if (route === "post") {
             return handleRoute("post", "");
-
         } else if (route === "user") {
-            return setView("post")
-
+            setView("post");
+            setViewUser("");
+            return;
+        } else if (route === "photo") {
+            setView("post");
+            setViewUser("");
+            return;
         }
     };
 
@@ -142,6 +172,22 @@ const Progress = ({
                         anotherPage={anotherPage}
                         handleAction={handleAction}
                     />
+                )}
+                {view === "photo" && (
+                    <View>
+                        <TextBox>
+                            <Text>신청자</Text>
+                            <UserText>{viewUser}</UserText>
+                        </TextBox>
+                        {categorys.map(category => (
+                            <ProgressCardPhoto 
+                                key={category.id}
+                                categoryId={category.id}
+                                userName={viewUser}
+                                anotherPage={anotherPage}
+                            />
+                        ))}
+                    </View>
                 )}
             </ScrollView>
         );

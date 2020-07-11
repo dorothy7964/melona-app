@@ -52,7 +52,7 @@ const ProgressCardPost = ({
         </Header>
         <IconBox>
             {progress
-                ?   <Touchable>
+                ?   <Touchable onPress={() => handleAction("photo", userName)}>
                         <Avatar.Image 
                             size={60} 
                             style={{ backgroundColor: "#fff" }}
