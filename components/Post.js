@@ -1,8 +1,9 @@
 import React from "react";
-import { Text } from "react-native";
+import { Platform } from "react-native";
 import { Card } from 'react-native-paper';
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import NavIcon from "./NavIcon";
 import UserCard from "./UserCard";
 import PostCategory from "./PostCategory";
 import PostViewBox from "./PostViewBox";
@@ -29,6 +30,16 @@ const ButtonContainer = styled.View`
         ? props.theme.lightGreyColor
         : '#fff'
     };
+`;
+
+const CommentBox = styled.View`
+    margin-top: 5px;
+    flex-direction: row;
+    align-items: center;
+`;
+
+const Text = styled.Text`
+    margin-left: 10px;
 `;
 
 const Touchable = styled.TouchableOpacity``;
@@ -80,8 +91,18 @@ const Post = ({
                     }
                 </ButtonContainer>                 
                 <ButtonContainer>
-                    <Touchable>
-                        <Text>댓글</Text>
+                    <Touchable onPress={() => handleRoute("postCommentBox", id)}>
+                        <CommentBox>
+                            <NavIcon
+                                size={23}
+                                focused={false}
+                                name={Platform.OS === "ios" 
+                                    ? "ios-mail" 
+                                    : "md-mail"
+                                }
+                            />
+                            <Text>댓글</Text>
+                        </CommentBox>
                     </Touchable>
                 </ButtonContainer>                 
             </ButtonBox>

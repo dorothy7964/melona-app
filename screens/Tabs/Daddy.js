@@ -10,6 +10,7 @@ import WriteApply from "../../components/WriteApply";
 import ViewApply from "../../components/ViewApply";
 import Progress from "../../components/Progress";
 import ProgressStap from "../../components/ProgressStap";
+import PostCommentBox from "../../components/PostCommentBox";
 
 export default () => {
     const [routeView, setRouteView] = useState("post");
@@ -91,6 +92,13 @@ export default () => {
     } else if (routeView === "progressStap") {
         return (
             <ProgressStap 
+                postId={routePostId}
+                handleRoute={handleRoute}
+            />
+        );
+    } else if (routeView === "postCommentBox") {
+        return (
+            <PostCommentBox 
                 postId={routePostId}
                 handleRoute={handleRoute}
             />

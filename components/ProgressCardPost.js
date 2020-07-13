@@ -41,14 +41,15 @@ const ProgressCardPost = ({
                 avatar={avatar}
             />
             <Bold>{userName}</Bold>
-            <NavIcon
-                focused={false}
-                size={24}
-                name={Platform.OS === "ios" 
-                    ? "ios-text" 
-                    : "md-text"
-                }
-            />
+            <Touchable onPress={() => null}>
+                <NavIcon
+                    focused={false}
+                    name={Platform.OS === "ios" 
+                        ? "ios-paper-plane" 
+                        : "md-paper-plane"
+                    }
+                />
+            </Touchable>
         </Header>
         <IconBox>
             {progress

@@ -88,6 +88,7 @@ export default () => {
                     ),
                     tabBarIcon: ({ focused }) => (
                         <NavIcon
+                            size={30}
                             focused={focused}
                             name={Platform.OS === "ios" 
                                 ? "ios-people" 
@@ -120,8 +121,8 @@ export default () => {
                         <NavIcon
                             focused={focused}
                             name={Platform.OS === "ios" 
-                                ? "ios-text" 
-                                : "md-text"
+                                ? "ios-mail" 
+                                : "md-mail"
                             }
                         />
                     )

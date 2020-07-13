@@ -244,3 +244,65 @@ export const TOGGLECONFIRM_CONTENTREQ = gql`
         toggleConfirmContnetsReq (contentReqId: $contentReqId)
     }
 `;
+
+// PostCommentBox
+export const SEE_COMMENT = gql`
+    query seeComment ($postId: String!) {
+        seeComment (postId: $postId) {
+            id
+            text
+            reply
+            reCommentCount
+            recomments {
+                id
+                text
+                user {
+                    avatar
+                    userName
+                    isSelf
+                }
+                createdAt
+            }
+            createdAt
+            user {
+                avatar
+                userName
+                isSelf
+            }
+        }
+    }
+`;
+
+//PostCommentBox
+export const ADD_COMMENT = gql`
+    mutation addComment($postId: String!, $text: String!) {
+        addComment(postId: $postId, text: $text){
+            id
+            text
+            user {
+                userName
+            }
+        }
+    }
+`;
+
+//PostCommentBox
+export const CONNECT_REPLY = gql`
+    mutation connectReply($commentId: String!, $text: String!) {
+        connectReply(commentId: $commentId, text: $text)
+    }
+`;
+
+// PostCommentUser
+export const DELETE_COMMENT = gql`
+    mutation deleteComment($commentId: String!) {
+        deleteComment(commentId: $commentId)
+    }
+`;
+
+// PostCommentReUser
+export const REDELETE_COMMENT = gql`
+    mutation redeleteComment($recommentId: String!) {
+        redeleteComment(recommentId: $recommentId)
+    }
+`;

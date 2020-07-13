@@ -7,14 +7,14 @@ import constants from "../constants";
 import styles from "../styles";
 
 const View = styled.View`
-    width: ${constants.width / 1.7};
+    width: ${`${props => props.widthSize}`};
 `;
 
 const Touchable = styled.TouchableOpacity``;
 
 const Container = styled.View`
     background-color: ${props => props.theme.melonaColor};
-    width: ${constants.width / 1.7};
+    width: ${`${props => props.widthSize}`};
     padding: 10px;
     border-radius: 4px;
 `;
@@ -23,16 +23,17 @@ const ButtonPaper = ({
     props, 
     onPress, 
     text, 
+    widthSize="constants.width / 1.7",
     color="#fff",
     mode="contained",
     loading=false,
     disabled=false,
     primaryColor=styles.melonaColor
 }) => (
-    <View>
+    <View widthSize={widthSize}>
         {loading
             ?   <Touchable disabled={loading}>
-                    <Container>
+                    <Container widthSize={widthSize}>
                         <ActivityIndicator color="white" />
                     </Container>
                 </Touchable>
@@ -58,6 +59,7 @@ ButtonPaper.propTypes = {
         "outlined",
         "contained",
     ]),
+    widthSize: PropTypes.string,
     color: PropTypes.string,
     text: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
