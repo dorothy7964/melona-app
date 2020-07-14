@@ -33,7 +33,9 @@ export default () => {
                 ?   <ApplyRes 
                         tab="daddy"
                     />
-                :   <ApplyReq />
+                :   <ApplyReq 
+                        tab="daddy"
+                    />
             }
         </ScrollView>
     );

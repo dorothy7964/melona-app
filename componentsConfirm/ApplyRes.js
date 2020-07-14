@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ScrollView, RefreshControl } from "react-native";
 import { useQuery } from "react-apollo-hooks";
-// import styled from "styled-components";
 import Loader from "../components/Loader";
 import PostNone from "../components/PostNone";
 import Post from "../components/Post";
