@@ -8,6 +8,7 @@ import UserCard from "./UserCard";
 import PostCategory from "./PostCategory";
 import PostViewBox from "./PostViewBox";
 import PostApplyBox from "./PostApplyBox";
+import BadgePaper from "./BadgePaper";
 
 const Container = styled(Card)`
     margin: 15px;
@@ -48,6 +49,7 @@ const Post = ({
     id,
     user,
     applysCount,
+    commentCount,
     location,
     lastDate,
     anotherPage,
@@ -101,6 +103,11 @@ const Post = ({
                                     : "md-mail"
                                 }
                             />
+                            {commentCount !== 0 &&
+                                <BadgePaper
+                                    commentCount={commentCount}
+                                />
+                            }
                             <Text>댓글</Text>
                         </CommentBox>
                     </Touchable>
@@ -113,6 +120,7 @@ const Post = ({
 Post.propTypes = {
     id: PropTypes.string.isRequired,
     applysCount: PropTypes.number.isRequired,
+    commentCount: PropTypes.number.isRequired,
     location: PropTypes.string.isRequired,
     lastDate: PropTypes.string.isRequired,
     anotherPage: PropTypes.bool.isRequired,
