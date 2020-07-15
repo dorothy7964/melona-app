@@ -26,7 +26,7 @@ export default () => (
             resizeMode={"contain"}
             source={require('../assets/togeter_grey.png')}
         />
-        <Bold>게시물을 추가 해주세요.</Bold>
+        <Bold>게시물이 존재하지 않습니다.</Bold>
     </View>
 );
 

@@ -11,8 +11,18 @@ const Badges = styled(Badge)`
     right: 26px;
 `;
 
-export default ({ commentCount }) => (
-    <Badges>
-        {commentCount}
-    </Badges>
-);
+export default ({ commentCount }) => {
+    if (commentCount > 98) {
+        return (
+            <Badges>
+                99+
+            </Badges>
+        );
+    } else {
+        return (
+            <Badges>
+                {commentCount}
+            </Badges>
+        );
+    }
+};
