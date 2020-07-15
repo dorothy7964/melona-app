@@ -7,6 +7,7 @@ import Post from "../components/Post";
 import Loader from "../components/Loader";
 import PostNone from "../components/PostNone";
 import { SEARCH_POST } from "./SearchQueries";
+import { SEARCHME_POST } from "./SearchQueries";
 
 const LoadingContainer = styled.View`
     justify-content: center;
@@ -56,7 +57,40 @@ const SearchPost = ({
             );
         }
     } else if (queryType === "daughter") {
-        return null;
+        const { data, loading } = useQuery(SEARCHME_POST, {
+            skip: term === undefined,
+            variables: { term }
+        });
+
+        if (loading === true){
+            handlePostLoading(true);
+            return (
+                <LoadingContainer>
+                    <Loader />
+                    <Text>검색 중...</Text>
+                </LoadingContainer>
+            );
+
+        } else if (!loading && data && data.searchMePost.length === 0) {
+            handlePostLoading(false);
+            return <PostNone />;
+
+        } else if (!loading && data && data.searchMePost) {
+            const { searchMePost } = data;
+            handlePostLoading(false);
+            
+            return (
+                <View>
+                    {searchMePost.map(post => 
+                        <Post 
+                            {...post} 
+                            key={post.id} 
+                            handleRoute={handleRoute} 
+                        />
+                    )}
+                </View>
+            );
+        }
     }
 };
 
