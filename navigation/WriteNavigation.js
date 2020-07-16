@@ -1,16 +1,59 @@
 import 'react-native-gesture-handler';
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { HeaderBackButton } from '@react-navigation/stack';
+import { useNavigation } from "@react-navigation/native";
 import DaddyWrite from "../screens/Write/DaddyWrite";
 import DaughterWrite from "../screens/Write/DaughterWrite";
 
 const WriteNavigation = createStackNavigator();
 
 export default ({ route: { params: { writeSelect } } }) => {
+    const navigation = useNavigation();
+
     return (
-        <WriteNavigation.Navigator initialRouteName={writeSelect} headerMode="none">
-            <WriteNavigation.Screen name="DaddyWrite" component={DaddyWrite} />
-            <WriteNavigation.Screen name="DaughterWrite" component={DaughterWrite} />
+        <WriteNavigation.Navigator 
+            initialRouteName={writeSelect} 
+            headerMode="screen"
+        >
+            <WriteNavigation.Screen 
+                name="DaddyWrite" 
+                component={DaddyWrite}
+                options={{ 
+                    title: "갈 때 사갈게 게시물 작성",
+                    headerTitleStyle: {
+                        alignSelf: "center",
+                        marginRight: "15%"
+                    },
+                    headerLeft: (props) => (
+                        <HeaderBackButton
+                            {...props}
+                            onPress={() => {
+                                navigation.navigate("TabNavigation", { screen: "Daddy" });
+                            }}
+                        />
+                    ),
+                }}
+            />
+            <WriteNavigation.Screen 
+                name="DaughterWrite"
+                component={DaughterWrite} 
+                options={{ 
+                    title: "올 때 사다줘 게시물 작성",
+                    headerTitleStyle: {
+                        alignSelf: "center",
+                        marginRight: "15%"
+                    },
+                    headerLeft: (props) => (
+                        <HeaderBackButton
+                            {...props}
+                            onPress={() => {
+                                navigation.navigate("TabNavigation", { screen: "Daughter" });
+                            }}
+                        />
+                    ),
+                }}
+            />
         </WriteNavigation.Navigator>
     );
 };
