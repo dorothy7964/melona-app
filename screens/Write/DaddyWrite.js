@@ -5,6 +5,7 @@ import styled from "styled-components";
 import ButtonPaper from "../../components/ButtonPaper";
 import CheckBox from "../../componentsWrite/CheckBox";
 import Location from "../../componentsWrite/Location";
+import DatePicker from "../../componentsWrite/DatePicker";
 import { categoryArray } from "../../hooks/Category";
 import useInput from "../../hooks/useInput";
 
@@ -36,11 +37,13 @@ const GreyBold = styled.Text`
 export default () => {
     const [categoryText] = useState([]);
     const locationInput = useInput("");
+    const [lastDate, setLastDate] = useState("");
     const [refreshing, setRefreshing] = useState(false);
     
     const handleConfirm = () => {
         console.log(categoryText);
         console.log(locationInput.value);
+        console.log(lastDate);
     };
 
     const refresh = () => {
@@ -84,7 +87,9 @@ export default () => {
                 </Section>
                 <Section>
                     <GreyBold>도착일을 선택해 주세요.</GreyBold>
-                    <Text>content</Text>
+                    <DatePicker 
+                        setLastDate={setLastDate}
+                    />
                 </Section>
                 <AlignCenter>
                     <ButtonPaper
