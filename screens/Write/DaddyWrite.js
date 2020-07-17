@@ -7,7 +7,7 @@ import moment from "moment";
 import styled from "styled-components";
 import ButtonPaper from "../../components/ButtonPaper";
 import CheckBox from "../../componentsWrite/CheckBox";
-import Location from "../../componentsWrite/Location";
+import WriteInput from "../../componentsWrite/WriteInput";
 import DatePicker from "../../componentsWrite/DatePicker";
 import { categoryArray } from "../../hooks/Category";
 import useInput from "../../hooks/useInput";
@@ -134,8 +134,8 @@ export default () => {
                 </Section>
                 <Section>
                     <GreyBold>지역을 선택해 주세요.</GreyBold>
-                    <Location 
-                        locationInput={locationInput}
+                    <WriteInput 
+                        inputValue={locationInput}
                     />
                     <AlertText>{alertLocation}</AlertText>
                 </Section>
@@ -144,6 +144,7 @@ export default () => {
                     <DatePicker 
                         setLastDate={setLastDate}
                     />
+                    <AlertText />
                 </Section>
                 <AlignCenter>
                     <ButtonPaper

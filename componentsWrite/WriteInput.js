@@ -7,10 +7,10 @@ const Container = styled.View`
     align-items: center;
 `;
 
-export default ({ locationInput }) => (
+export default ({ inputValue }) => (
     <Container>
         <TextInputPaper
-            { ...locationInput }
+            { ...inputValue }
             placeholder="작성 해주세요."
         />
     </Container>

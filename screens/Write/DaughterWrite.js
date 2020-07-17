@@ -4,7 +4,7 @@ import { Card } from "react-native-paper";
 import styled from "styled-components";
 import ButtonPaper from "../../components/ButtonPaper";
 import RadioBox from "../../componentsWrite/RadioBox";
-import Location from "../../componentsWrite/Location";
+import WriteInput from "../../componentsWrite/WriteInput";
 import DatePicker from "../../componentsWrite/DatePicker";
 import useInput from "../../hooks/useInput";
 
@@ -40,15 +40,22 @@ const AlertText = styled.Text`
     font-size: 17px;
 `;
 
+const AlignCenterButton = styled.View`
+    flex-direction: row;
+    justify-content: space-around;
+`;
+
 export default () => {
     const locationInput = useInput("");
+    const categoryContentInput = useInput("");
     const [categoryText, setCategoryText] = useState("food");
     const [lastDate, setLastDate] = useState("");
     const [alertLocation, setAlertLocation] = useState("");
+    const [alertCategoryText, setAlertCategoryText] = useState("");
     const [refreshing, setRefreshing] = useState(false);
     
     const handleConfirm = async() => {
-        console.log("categoryText",categoryText);
+        console.log("categoryContentInput ",categoryContentInput.value);
     };
 
     const refresh = () => {
@@ -79,11 +86,12 @@ export default () => {
                     <DatePicker 
                         setLastDate={setLastDate}
                     />
+                    <AlertText />
                 </Section>
                 <Section>
                     <GreyBold>지역을 선택해 주세요.</GreyBold>
-                    <Location 
-                        locationInput={locationInput}
+                    <WriteInput 
+                        inputValue={locationInput}
                     />
                     <AlertText>{alertLocation}</AlertText>
                 </Section>
@@ -93,14 +101,27 @@ export default () => {
                         categoryText={categoryText}
                         setCategoryText={setCategoryText}
                     />
+                    <AlertText />
                 </Section>
-                <AlignCenter>
+                <Section>
+                    <GreyBold>선택한 카테고리의 내용을 적어주세요.</GreyBold>
+                    <WriteInput 
+                        inputValue={categoryContentInput}
+                    />
+                    <AlertText>{alertCategoryText}</AlertText>
+                </Section>
+                <AlignCenterButton>  
+                    <ButtonPaper
+                        onPress={() => null}
+                        text="더쓰기"
+                        loading={false}
+                    />
                     <ButtonPaper
                         onPress={handleConfirm}
                         text="작성 하기"
                         loading={false}
                     />
-                </AlignCenter>
+                </AlignCenterButton>
             </Container>
         </ScrollView>
     );
