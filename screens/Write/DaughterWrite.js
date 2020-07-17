@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { ScrollView, RefreshControl } from "react-native";
 import { Card } from "react-native-paper";
-import moment from "moment";
 import styled from "styled-components";
 import ButtonPaper from "../../components/ButtonPaper";
+import RadioBox from "../../componentsWrite/RadioBox";
 import Location from "../../componentsWrite/Location";
 import DatePicker from "../../componentsWrite/DatePicker";
 import useInput from "../../hooks/useInput";
@@ -42,30 +42,13 @@ const AlertText = styled.Text`
 
 export default () => {
     const locationInput = useInput("");
+    const [categoryText, setCategoryText] = useState("food");
     const [lastDate, setLastDate] = useState("");
     const [alertLocation, setAlertLocation] = useState("");
     const [refreshing, setRefreshing] = useState(false);
     
     const handleConfirm = async() => {
-        if (locationInput.value === "") {
-            return setAlertLocation("지역을 작성 해주세요.");
-        }
-
-        try {
-            if (lastDate === "") {
-                const getDate = new Date(); 
-                // today 
-                const momentDate = moment(getDate).format("YYYY-MM-DDTHH:mm:ssZ");
-                const momentDateSplit = momentDate.split("T");
-                const today = momentDateSplit[0];
-                console.log(today);
-            } else {
-                console.log("쿼리 연결")
-            }
-            setAlertLocation("");
-        } catch(e) {
-            console.log(e);
-        }
+        console.log("categoryText",categoryText);
     };
 
     const refresh = () => {
@@ -103,6 +86,13 @@ export default () => {
                         locationInput={locationInput}
                     />
                     <AlertText>{alertLocation}</AlertText>
+                </Section>
+                <Section>
+                    <GreyBold>카테고리를 체크 해주세요.</GreyBold>
+                    <RadioBox
+                        categoryText={categoryText}
+                        setCategoryText={setCategoryText}
+                    />
                 </Section>
                 <AlignCenter>
                     <ButtonPaper
