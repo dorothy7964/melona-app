@@ -6,3 +6,12 @@ export const categoryArray = [
     "devices",
     "etc"
 ];
+
+export const categoryObj = {
+    food : "",
+    makeup : "",
+    clothing : "",
+    book : "",
+    devices : "",
+    etc : "",
+};

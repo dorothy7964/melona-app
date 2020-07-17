@@ -42,6 +42,7 @@ const GreyBold = styled.Text`
 
 const AlertText = styled.Text`
     color: ${props => props.theme.redColor};
+    margin: 0 auto;
     margin-top: 10px;
     font-size: 17px;
 `;
@@ -59,11 +60,12 @@ export default () => {
     
     const handleConfirm = async() => {
         if (categoryText.length === 0) {
+            setAlertLocation("")
             return setAlertCheck("카테고리를 체크 해주세요.");
-
-        } else if(locationInput.value === "") {
+        } 
+        if (locationInput.value === "") {
+            setAlertCheck("")
             return setAlertLocation("지역을 작성 해주세요.");
-
         }
         try {
             if (lastDate === "") {
