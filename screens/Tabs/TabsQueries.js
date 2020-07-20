@@ -78,3 +78,27 @@ export const SEE_BUYME = gql`
         }
     }
 `;
+
+// Group
+export const ALL_GROUPROOM = gql`
+    query allGroupRoom {
+        allGroupRoom {
+            id
+            roomName
+            coverPhoto
+            createdAt
+            founderUser {
+                isSelf
+                userName
+            }
+            groupRoomMember {
+                id
+                participants {
+                    id
+                    avatar
+                    userName
+                }
+            }
+        }
+    }
+`;
