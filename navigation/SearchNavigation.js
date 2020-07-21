@@ -5,6 +5,7 @@ import { HeaderBackButton } from '@react-navigation/stack';
 import { useNavigation } from "@react-navigation/native";
 import DaddySearch from "../screens/Search/DaddySearch";
 import DaughterSearch from "../screens/Search/DaughterSearch";
+import GroupFriend from "../screens/Search/GroupFriend";
 
 const SearchNavigation = createStackNavigator();
 
@@ -49,6 +50,25 @@ export default ({ route: { params: { SearcheSelect } } }) => {
                             {...props}
                             onPress={() => {
                                 navigation.navigate("TabNavigation", { screen: "Daughter" });
+                            }}
+                        />
+                    ),
+                }}
+            />
+            <SearchNavigation.Screen 
+                name="GroupFriend" 
+                component={GroupFriend} 
+                options={{ 
+                    title: "친구 목록 보기",
+                    headerTitleStyle: {
+                        alignSelf: "center",
+                        marginRight: "15%"
+                    },
+                    headerLeft: (props) => (
+                        <HeaderBackButton
+                            {...props}
+                            onPress={() => {
+                                navigation.navigate("TabNavigation", { screen: "Group" });
                             }}
                         />
                     ),

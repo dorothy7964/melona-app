@@ -5,6 +5,7 @@ import { HeaderBackButton } from '@react-navigation/stack';
 import { useNavigation } from "@react-navigation/native";
 import DaddyWrite from "../screens/Write/DaddyWrite";
 import DaughterWrite from "../screens/Write/DaughterWrite";
+import GroupAdd from "../screens/Write/GroupAdd";
 
 const WriteNavigation = createStackNavigator();
 
@@ -49,6 +50,25 @@ export default ({ route: { params: { writeSelect } } }) => {
                             {...props}
                             onPress={() => {
                                 navigation.navigate("TabNavigation", { screen: "Daughter" });
+                            }}
+                        />
+                    ),
+                }}
+            />
+            <WriteNavigation.Screen 
+                name="GroupAdd"
+                component={GroupAdd} 
+                options={{ 
+                    title: "그룹 추가",
+                    headerTitleStyle: {
+                        alignSelf: "center",
+                        marginRight: "15%"
+                    },
+                    headerLeft: (props) => (
+                        <HeaderBackButton
+                            {...props}
+                            onPress={() => {
+                                navigation.navigate("TabNavigation", { screen: "Group" });
                             }}
                         />
                     ),
