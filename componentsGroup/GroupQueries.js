@@ -1,168 +1,208 @@
 import { gql } from "apollo-boost";
 
-// DaddySearch
-export const SEARCH_POST = gql`
-    query searchPost ($term: String!) {
-        searchPost (term: $term) {
+// RoomCard
+export const SEE_GROUPROOM = gql`
+    query seeGroupRoom ($groupRoomId: String!) {
+        seeGroupRoom (groupRoomId: $groupRoomId) {
             id
-            location
-            lastDate
-            isApply
-            isApplyWait
-            isApplyReadCheck
-            applysCount
-            commentCount
-            viewApply
-            anotherPage
-            applys {
-                id
-                apply
-                readCheck
-                user {
-                    userName
-                    avatar
-                }
-            }
-            user {
-                userName
+            roomName
+            coverPhoto
+            createdAt
+            founderUser {
                 avatar
-                isSelf
-           }
-            categorys {
-                id
-                text
-            }
-        }
-    }
-`;
-
-// DaughterSearch
-export const SEARCHME_POST = gql`
-    query searchMePost ($term: String!) {
-        searchMePost (term: $term) {
-            id
-            location
-            lastDate
-            isApply
-            isApplyWait
-            isApplyReadCheck
-            applysCount
-            commentCount
-            viewApply
-            anotherPage
-            applys {
-                id
-                apply
-                readCheck
-                user {
-                    userName
-                    avatar
-                }
-            }
-            user {
                 userName
-                avatar
-                isSelf
-           }
-            categorys {
+            }
+            groupRoomMember {
                 id
-                text
-                contents {
+                participants {
                     id
-                    text
-                    check
-                }
-            }
-        }
-    }
-`;
-
-// SearchGroupPost
-export const SEARCH_POST_GROUP = gql`
-    query searchPostGroup ($term: String! $groupRoomId: String!) {
-        searchPostGroup (term: $term, groupRoomId: $groupRoomId) {
-            id
-            location
-            lastDate
-            isApply
-            isApplyWait
-            isApplyReadCheck
-            applysCount
-            commentCount
-            viewApply
-            anotherPage
-            applys {
-                id
-                apply
-                readCheck
-                user {
-                    userName
                     avatar
-                }
-            }
-            user {
-                userName
-                avatar
-                isSelf
-           }
-            categorys {
-                id
-                text
-            }
-        }
-    }
-`;
-
-// SearchGroupPost
-export const SEARCHME_POST_GROUP = gql`
-    query searchMePostGroup ($term: String! $groupRoomId: String!) {
-        searchMePostGroup (term: $term, groupRoomId: $groupRoomId) {
-            id
-            location
-            lastDate
-            isApply
-            isApplyWait
-            isApplyReadCheck
-            applysCount
-            commentCount
-            viewApply
-            anotherPage
-            applys {
-                id
-                apply
-                readCheck
-                user {
                     userName
-                    avatar
-                }
-            }
-            user {
-                userName
-                avatar
-                isSelf
-           }
-            categorys {
-                id
-                text
-                contents {
-                    id
-                    text
-                    check
                 }
             }
         }
-    }
-`;
-
-// FriendSearch
-export const SEARCH_USER = gql`
-    query searchUser ($term: String!) {
-        searchUser (term: $term) {
-            id
-            avatar
+        me {
             userName
-            isFollowing
         }
     }
 `;
 
+// GroupDaddy, GroupDaughter
+export const items = 4;
+
+// GroupDaddy
+export const SEEBUY_GROUP = gql`
+    query seeBuyGroup (
+        $groupRoomId: String! 
+        $items: Int 
+        $pageNumber: Int
+    ) {
+        seeBuyGroup (
+            groupRoomId: $groupRoomId,
+            items: $items, 
+            pageNumber: $pageNumber
+        ) {
+            id
+            location
+            lastDate
+            isApply
+            isApplyWait
+            isApplyReadCheck
+            applysCount
+            commentCount
+            viewApply
+            anotherPage
+            applys {
+                id
+                apply
+                readCheck
+                user {
+                    userName
+                    avatar
+                }
+            }
+            user {
+                userName
+                avatar
+                isSelf
+        }
+            categorys {
+                id
+                text
+            }
+        }
+    }
+`;
+
+// GroupDaughter
+export const SEEBUYME_GROUP = gql`
+    query seeBuyMeGroup (
+        $groupRoomId: String! 
+        $items: Int 
+        $pageNumber: Int
+    ) {
+        seeBuyMeGroup (
+            groupRoomId: $groupRoomId,
+            items: $items, 
+            pageNumber: $pageNumber
+        ) {
+            id
+            location
+            lastDate
+            isApply
+            isApplyWait
+            isApplyReadCheck
+            isProgress
+            applysCount
+            commentCount
+            viewApply
+            anotherPage
+            applys {
+                id
+                apply
+                readCheck
+                progress
+                user {
+                    userName
+                    avatar
+                }
+            }
+            user {
+                userName
+                avatar
+                isSelf
+           }
+            categorys {
+                id
+                text
+                contents {
+                    id
+                    text
+                    check
+                }
+            }
+        }
+    }
+`;
+
+// GroupApplyRes
+export const TOGGLE_POSTEDRES = gql`
+    query togglePostedResGroup ($groupRoomId: String! $tab: String!) {
+        togglePostedResGroup (groupRoomId: $groupRoomId tab: $tab) {
+            id
+            location
+            lastDate
+            isApply
+            isApplyWait
+            isApplyReadCheck
+            applysCount
+            commentCount
+            viewApply
+            anotherPage
+            applys {
+                id
+                apply
+                readCheck
+                user {
+                    userName
+                    avatar
+                }
+            }
+            user {
+                userName
+                avatar
+                isSelf
+           }
+            categorys {
+                id
+                text
+                contents {
+                    id
+                    text
+                    check
+                }
+            }
+        }
+    }
+`;
+
+// GroupApplyReq
+export const TOGGLE_POSTEDREQ = gql`
+    query togglePostedReqGroup ($groupRoomId: String! $tab: String!) {
+        togglePostedReqGroup (groupRoomId: $groupRoomId tab: $tab) {
+            id
+            location
+            lastDate
+            isApply
+            isApplyWait
+            isApplyReadCheck
+            applysCount
+            commentCount
+            viewApply
+            anotherPage
+            applys {
+                id
+                apply
+                readCheck
+                user {
+                    userName
+                    avatar
+                }
+            }
+            user {
+                userName
+                avatar
+                isSelf
+           }
+            categorys {
+                id
+                text
+                contents {
+                    id
+                    text
+                    check
+                }
+            }
+        }
+    }
+`;

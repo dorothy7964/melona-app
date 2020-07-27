@@ -87,6 +87,8 @@ export default ({ navigation }) => {
             }
         } finally {
             setLoading(false);
+            passwordInput.setValue("");
+            confirmPwInput.setValue("");
         }
     };
 

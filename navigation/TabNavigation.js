@@ -1,10 +1,10 @@
 import 'react-native-gesture-handler';
 import * as React from "react";
-import { Platform } from "react-native";
+import { Platform, View, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/native";
 import Daddy from "../screens/Tabs/Daddy";
 import Daughter from "../screens/Tabs/Daughter";
-import Group from "../screens/Tabs/Group";
 import Message from "../screens/Tabs/Message";
 import Profile from "../screens/Tabs/Profile";
 import NavText from "../components/NavText";
@@ -14,6 +14,8 @@ import StackFactory from "./StackFactory";
 const TabNavigation = createBottomTabNavigator();
 
 export default () => {
+    const navigation = useNavigation();  
+
     return (
         <TabNavigation.Navigator>
             <TabNavigation.Screen 
@@ -77,8 +79,8 @@ export default () => {
                 }}
             />
             <TabNavigation.Screen
-                name="Group"
-                component={StackFactory} 
+                name="Group" 
+                component={View} 
                 options={{
                     tabBarLabel: ({ focused }) => (
                         <NavText 
@@ -87,25 +89,21 @@ export default () => {
                         />
                     ),
                     tabBarIcon: ({ focused }) => (
-                        <NavIcon
-                            size={30}
-                            focused={focused}
-                            name={Platform.OS === "ios" 
-                                ? "ios-people" 
-                                : "md-people"
-                            }
-                        />
+                        <TouchableOpacity onPress={
+                            () => navigation.navigate(
+                                "GroupNavigation", {screen: "RoomCard" }
+                            )} 
+                        >
+                            <NavIcon
+                                focused={focused}
+                                name={ Platform.OS === "ios"
+                                    ? "ios-people" 
+                                    : "md-people"
+                                }
+                            />
+                        </TouchableOpacity>
                     )
-                }}
-                initialParams={{
-                    initialRoute: Group,
-                    customConfig: {
-                        title: "그룹",
-                        headerTitleStyle: {
-                            alignSelf: "center"
-                        }
-                    }
-                }}
+                }} 
             />
             <TabNavigation.Screen
                 name="Message" 

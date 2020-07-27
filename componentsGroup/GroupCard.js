@@ -34,7 +34,7 @@ const GroupCard = ({
     founderUser,
     participants,
     createdAt,
-    handleRoute,
+    onPress,
 }) => {
     // DialogPaperPhoto
     const [visible, setVisible] = useState(false);
@@ -45,7 +45,7 @@ const GroupCard = ({
 
     return (
         <Container>
-            <Touchable onPress={() => handleRoute("roomCard", groupRoomId)}>
+            <Touchable onPress={onPress}>
                 <Card.Cover source={{ uri: `${coverPhoto}` }} />
                 <Card.Content>
                     <Title>{roomName}</Title>
@@ -88,7 +88,7 @@ GroupCard.propTypes = {
     founderUser: PropTypes.bool.isRequired,
     participants: PropTypes.array.isRequired,
     createdAt: PropTypes.string.isRequired,
-    handleRoute: PropTypes.func.isRequired,
+    onPress: PropTypes.func.isRequired,
 };
 
 export default GroupCard;

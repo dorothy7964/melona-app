@@ -1,4 +1,4 @@
-import React, {  useState} from "react";
+import React, {  useState } from "react";
 import PropTypes from "prop-types";
 import { FAB, Portal, Provider } from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
@@ -28,8 +28,16 @@ const FABgroupRoom =  ({ writeSelect, SearcheSelect }) => {
                         backgroundColor: styles.melonaColor
                     }}
                     actions={[
-                        { icon: 'plus', onPress: () => navigation.navigate("WriteNavigation", { writeSelect }) },
-                        { icon: 'account-search', label: '친구 목록 보기', onPress: () => navigation.navigate("SearchNavigation", { SearcheSelect }) },
+                        { 
+                            icon: 'plus', 
+                            onPress: () => navigation.navigate(
+                                "WriteNavigation", { writeSelect }) 
+                        },{ 
+                            icon: 'account-search', 
+                            label: '친구 목록 보기', 
+                            onPress: () => navigation.navigate(
+                                "SearchNavigation", { SearcheSelect }) 
+                        }
                     ]}
                     onStateChange={onStateChange}
                     onPress={() => {

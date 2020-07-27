@@ -3,6 +3,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import TabNavigation from "./TabNavigation";
+import GroupNavigation from "./GroupNavigation";
 import ConfirmNavigation from "./ConfirmNavigation";
 import SearchNavigation from "./SearchNavigation";
 import WriteNavigation from "./WriteNavigation";
@@ -19,6 +20,10 @@ export default () => {
                 <MainNavigation.Screen 
                     name="TabNavigation" 
                     component={TabNavigation} 
+                />
+                <MainNavigation.Screen 
+                    name="GroupNavigation" 
+                    component={GroupNavigation} 
                 />
                 <MainNavigation.Screen 
                     name="ConfirmNavigation" 

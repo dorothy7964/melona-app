@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ScrollView, RefreshControl } from "react-native";
-import IconTab from "../../componentsConfirm/IconTab";
+import IconTab from "../../components/IconTab";
 import ApplyRes from "../../componentsConfirm/ApplyRes";
 import ApplyReq from "../../componentsConfirm/ApplyReq";
 

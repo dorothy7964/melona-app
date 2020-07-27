@@ -51,8 +51,16 @@ export const CONNECT_CONTENTS = gql`
 
 // DaughterWrite
 export const CREATE_CONTENTS = gql`
-    mutation createContents ($postId: String! $categoryText: String! $contentText: String!) {
-        createContents (postId: $postId, categoryText: $categoryText, contentText: $contentText){
+    mutation createContents (
+        $postId: String! 
+        $categoryText: String! 
+        $contentText: String!
+    ) {
+        createContents (
+            postId: $postId, 
+            categoryText: $categoryText, 
+            contentText: $contentText
+        ){
             id
             text 
             category {

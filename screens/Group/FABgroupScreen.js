@@ -2,13 +2,14 @@ import React, {  useState} from "react";
 import PropTypes from "prop-types";
 import { FAB, Portal, Provider } from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
-import styles from "../styles";
+import styles from "../../styles";
 
-const FABgroup =  ({ 
+const FABgroupScreen =  ({ 
     text, 
     select, 
     SearcheSelect, 
-    writeSelect 
+    writeSelect ,
+    groupRoomId,
 }) => {
     const navigation = useNavigation();    
     const [open, setOpen] = useState(false);
@@ -36,17 +37,17 @@ const FABgroup =  ({
                         { 
                             icon: 'plus', 
                             onPress: () => navigation.navigate(
-                                "WriteNavigation", { writeSelect }) 
+                                `${writeSelect}`, { groupRoomId }) 
                         },{ 
                             icon: 'account-search', 
                             label: '찾기', 
                             onPress: () => navigation.navigate(
-                                "SearchNavigation", { SearcheSelect }) 
+                                `${SearcheSelect}`, { groupRoomId }) 
                         },{ 
                             icon: 'account-multiple-check', 
                             label: `${text}`,  
                             onPress: () => navigation.navigate(
-                                "ConfirmNavigation", { select }) 
+                                `${select}`, { groupRoomId }) 
                         }
                     ]}
                     onStateChange={onStateChange}
@@ -61,11 +62,12 @@ const FABgroup =  ({
     );
 }
 
-FABgroup.propTypes = {
+FABgroupScreen.propTypes = {
     text: PropTypes.string.isRequired,
     select: PropTypes.string.isRequired,
     SearcheSelect: PropTypes.string.isRequired,
     writeSelect: PropTypes.string.isRequired,
+    groupRoomId: PropTypes.string.isRequired,
 };
 
-export default FABgroup;
+export default FABgroupScreen;
