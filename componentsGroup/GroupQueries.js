@@ -206,3 +206,55 @@ export const TOGGLE_POSTEDREQ = gql`
         }
     }
 `;
+
+// GroupCard
+export const EDIT_GROUPROOM = gql`
+    mutation editGroupRoom (
+        $groupRoomId: String!
+        $coverPhoto: String
+        $roomName: String
+    ) {
+        editGroupRoom (
+            groupRoomId: $groupRoomId
+            coverPhoto: $coverPhoto
+            roomName: $roomName
+        )
+    }
+`;
+
+// GroupUserPluseDialogPaper
+export const ADDMEMBER_LIST = gql`
+    query addMemberList ($userNameArr: [String!]!) {
+        addMemberList (userNameArr: $userNameArr) {
+            id
+            avatar
+            userName
+        }
+    }
+`;
+
+// GroupUserPlusDialogPaper
+export const ADD_MEMBER= gql`
+    mutation addUserMember (
+        $groupMemberId: String!
+        $userNameArr: [String!]!
+    ) {
+        addUserMember (
+            groupMemberId: $groupMemberId
+            userNameArr: $userNameArr
+        )
+    }
+`;
+
+// GroupRemoveDialogPaper
+export const DELETE_MEMBER= gql`
+    mutation deleteUserMember (
+        $groupMemberId: String!
+        $userNameArr: [String!]!
+    ) {
+        deleteUserMember (
+            groupMemberId: $groupMemberId
+            userNameArr: $userNameArr
+        )
+    }
+`;

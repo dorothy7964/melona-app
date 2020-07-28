@@ -23,6 +23,7 @@ const Bold = styled.Text`
 `;
 
 const GroupUserDialogPaper = ({
+    roomName,
     participants,
     visible,
     handleToggleDialog
@@ -32,7 +33,7 @@ const GroupUserDialogPaper = ({
             visible={visible}
             onDismiss={handleToggleDialog}
         >
-            <Dialog.Title>그룹 인원 보기</Dialog.Title>
+            <Dialog.Title>{`그룹 인원 보기 [ ${roomName} ] `}</Dialog.Title>
             <Dialog.Content>
                 {participants.map((user) => (
                     <Container key={user.id}>
@@ -53,7 +54,8 @@ const GroupUserDialogPaper = ({
 );
 
 GroupUserDialogPaper.propTypes = {
-    groupRoomMember: PropTypes.array,
+    roomName: PropTypes.string.isRequired,
+    participants: PropTypes.array,
     visible: PropTypes.bool.isRequired,
     handleToggleDialog: PropTypes.func.isRequired,
 };

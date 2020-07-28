@@ -55,18 +55,20 @@ export default ({ navigation }) => {
                     }
                 >
                     {allGroupRoom.map(groupRoom => (
-                    <GroupCard 
+                        <GroupCard 
                             key={groupRoom.id}
                             groupRoomId={groupRoom.id}
                             coverPhoto={groupRoom.coverPhoto}
                             roomName={groupRoom.roomName}
                             founderUser={groupRoom.founderUser.isSelf}
+                            founderUserName={groupRoom.founderUser.userName}
+                            groupMemberId={groupRoom.groupRoomMember[0].id}
                             participants={groupRoom.groupRoomMember[0].participants}
                             createdAt={groupRoom.createdAt}
                             onPress={() => navigation.navigate(
                                 "RoomPost", { groupRoomId: groupRoom.id }
                             )}
-                    />
+                        />
                     ))}
                 </ScrollView>
                 <FABgroupRoom 

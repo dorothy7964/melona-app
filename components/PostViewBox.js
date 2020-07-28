@@ -15,7 +15,7 @@ const Text = styled.Text`
 const TextColor = styled.Text`
     margin-left: 5px;
     background-color: ${props => props.theme.melonaColor};
-    borderRadius: 10;
+    borderRadius: 10px;
     padding: 0 10px;
 `;
 
