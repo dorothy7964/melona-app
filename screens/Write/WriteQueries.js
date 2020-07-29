@@ -69,3 +69,18 @@ export const CREATE_CONTENTS = gql`
         }
     }
 `;
+
+// GroupAdd
+export const CREATE_GROUPROOM = gql`
+    mutation createGroupRoom (
+        $coverPhoto: String 
+        $roomName: String! 
+        $userName: [String!]!
+    ) {
+        createGroupRoom (
+            coverPhoto: $coverPhoto, 
+            roomName: $roomName,
+            userName: $userName
+        )
+    }
+`;

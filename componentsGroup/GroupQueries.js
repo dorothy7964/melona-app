@@ -258,3 +258,14 @@ export const DELETE_MEMBER= gql`
         )
     }
 `;
+
+// GroupAddMember
+export const SEE_FOLLOWING = gql`
+    query seeFollowing {
+        seeFollowing {
+            id
+            avatar
+            userName
+        }
+    }
+`;

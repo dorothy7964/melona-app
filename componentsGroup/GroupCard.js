@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Platform, Alert } from "react-native";
+import { Platform } from "react-native";
 import { Card, Title, Paragraph } from 'react-native-paper';
 import styled from "styled-components";
 import PropTypes from "prop-types";
