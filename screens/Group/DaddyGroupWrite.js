@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { ScrollView, RefreshControl, Platform, Alert } from "react-native";
 import { Card } from "react-native-paper";
-import { useQuery, useMutation } from "react-apollo-hooks";
-import moment from "moment";
+import { useMutation } from "react-apollo-hooks";
 import styled from "styled-components";
+import moment from "moment";
+import "moment-timezone";
 import NavIcon from "../../components/NavIcon";
 import ButtonPaper from "../../components/ButtonPaper";
 import CheckBox from "../../componentsWrite/CheckBox";
@@ -55,20 +56,28 @@ const AlertText = styled.Text`
 `;
 
 export default ({ navigation, route: { params: { groupRoomId } }}) => {
+    // today
+    const momentDate = moment().tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ssZ");
+    const momentDateSplit = momentDate.split("T");
+    const today = momentDateSplit[0];
+
     const [categoryText] = useState([]);
     const locationInput = useInput("");
-    const [lastDate, setLastDate] = useState("");
+    const [lastDate, setLastDate] = useState(today);
     const [alertCheck, setAlertCheck] = useState("");
     const [alertLocation, setAlertLocation] = useState("");
+    const [buttonLoading, setButtonLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const { refetch } = useQuery(SEEBUY_GROUP, {
-        variables: { 
-            groupRoomId,
-            pageNumber: 0,
-            items
-        }
+    const [createBuyGroupMutation] = useMutation(CREATE_BUY_GROUP,{
+        refetchQueries: () => [{
+            query: SEEBUY_GROUP,
+            variables: { 
+                groupRoomId,
+                pageNumber: 0,
+                items
+            }
+        }]
     });
-    const [createBuyGroupMutation] = useMutation(CREATE_BUY_GROUP);
     
     const handleConfirm = async() => {
         if (categoryText.length === 0) {
@@ -80,31 +89,15 @@ export default ({ navigation, route: { params: { groupRoomId } }}) => {
             return setAlertLocation("지역을 작성 해주세요.");
         }
         try {
-            if (lastDate === "") {
-                const getDate = new Date(); 
-                // today 
-                const momentDate = moment(getDate).format("YYYY-MM-DDTHH:mm:ssZ");
-                const momentDateSplit = momentDate.split("T");
-                const today = momentDateSplit[0];
-                await createBuyGroupMutation({
-                    variables: {
-                        location: locationInput.value,
-                        lastDate: today,
-                        categoryText,
-                        groupRoomId,
-                    }   
-                }); 
-            } else {
-                await createBuyGroupMutation({
-                    variables: {
-                        location: locationInput.value,
-                        lastDate,
-                        categoryText,
-                        groupRoomId,
-                    }   
-                }); 
-            }
-            refetch();
+            setButtonLoading(true);
+            await createBuyGroupMutation({
+                variables: {
+                    location: locationInput.value,
+                    lastDate,
+                    categoryText,
+                    groupRoomId,
+                }   
+            });
             setAlertCheck("");
             setAlertLocation("");
             navigation.navigate("RoomPost", { groupRoomId });
@@ -179,7 +172,7 @@ export default ({ navigation, route: { params: { groupRoomId } }}) => {
                     <ButtonPaper
                         onPress={handleConfirm}
                         text="작성 하기"
-                        loading={false}
+                        loading={buttonLoading}
                     />
                 </AlignCenter>
             </Container>

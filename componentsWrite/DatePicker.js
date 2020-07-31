@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment';
+import "moment-timezone";
 
 const Container = styled.View`
     display: flex;
@@ -9,15 +10,14 @@ const Container = styled.View`
 `;
 
 export default ({ setLastDate }) => {
-    const [date, setDate] = useState(new Date());
-
-    const getDate = new Date(); 
     // today - use minDate
-    const momentDate = moment(getDate).format("YYYY-MM-DDTHH:mm:ssZ");
+    const momentDate = moment().tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ssZ");
     const momentDateSplit = momentDate.split("T");
     const today = momentDateSplit[0];
     // get year - use maxDate
-    const yearDate = getDate.getFullYear(); 
+    const yearDate =  moment().tz("Asia/Seoul").format("YYYY");
+    
+    const [date, setDate] = useState(today);
 
     const handlePushDate = (obj) => {
         setDate(obj.date);

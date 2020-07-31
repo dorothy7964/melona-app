@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { ScrollView, RefreshControl, Platform, Alert } from "react-native";
 import { Card } from "react-native-paper";
-import { useQuery, useMutation } from "react-apollo-hooks";
+import { useMutation } from "react-apollo-hooks";
 import styled from "styled-components";
+import moment from "moment";
+import "moment-timezone";
 import NavIcon from "../../components/NavIcon";
 import ButtonPaper from "../../components/ButtonPaper";
 import RadioBox from "../../componentsWrite/RadioBox";
@@ -14,7 +16,8 @@ import {
     SEEBUYME_GROUP,
     CREATE_BUYME_GROUP, 
     CREATE_CONTENTS, 
-    CONNECT_CONTENTS 
+    CONNECT_CONTENTS,
+    items
 } from "./GroupQueries";
 
 const Touchable = styled.TouchableOpacity``;
@@ -27,7 +30,7 @@ const BackButtonContainer = styled.View`
 
 const Container = styled(Card)`
     margin: 10px;
-    padding:30px;;
+    padding:30px;
 `;
 
 const AlignCenter = styled.View`
@@ -64,22 +67,52 @@ const AlignCenterButton = styled.View`
 `;
 
 export default ({ navigation, route: { params: { groupRoomId } }}) => {
+    // today
+    const momentDate = moment().tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ssZ");
+    const momentDateSplit = momentDate.split("T");
+    const today = momentDateSplit[0];
+
     const locationInput = useInput("");
     const categoryContentInput = useInput("");
     const [view, setview] = useState("default");
     const [postId, setPostId] = useState("");           // categoryText
     const [categoryIdState] = useState(categoryObj);    // categoryText
     const [categoryText, setCategoryText] = useState("food");
-    const [lastDate, setLastDate] = useState("");
+    const [lastDate, setLastDate] = useState(today);
     const [alertLocation, setAlertLocation] = useState("");
     const [alertCategoryText, setAlertCategoryText] = useState("");
+    const [buttonLoading, setButtonLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const { refetch } = useQuery(SEEBUYME_GROUP, {
-        variables: { groupRoomId }
+    const [createBuyMeGroupMutation] = useMutation(CREATE_BUYME_GROUP, {
+        refetchQueries: () => [{
+            query: SEEBUYME_GROUP,
+            variables: { 
+                groupRoomId,
+                pageNumber: 0,
+                items
+            }
+        }]
     });
-    const [createBuyMeGroupMutation] = useMutation(CREATE_BUYME_GROUP);
-    const [createContentsMutation] = useMutation(CREATE_CONTENTS);
-    const [coonnectContentsMutation] = useMutation(CONNECT_CONTENTS);
+    const [createContentsMutation] = useMutation(CREATE_CONTENTS, {
+        refetchQueries: () => [{
+            query: SEEBUYME_GROUP,
+            variables: { 
+                groupRoomId,
+                pageNumber: 0,
+                items
+            }
+        }]
+    });
+    const [coonnectContentsMutation] = useMutation(CONNECT_CONTENTS, {
+        refetchQueries: () => [{
+            query: SEEBUYME_GROUP,
+            variables: { 
+                groupRoomId,
+                pageNumber: 0,
+                items
+            }
+        }]
+    });
     
     const createBuyMe = async() => {
         if (locationInput.value === ""){
@@ -92,11 +125,10 @@ export default ({ navigation, route: { params: { groupRoomId } }}) => {
         } 
         // Mutation
         try {
+            setButtonLoading(true);
             const {
                 data: {
-                    createBuyMeGroup: {
-                        category
-                    }
+                    createBuyMeGroup: { category }
                 }
             } = await createBuyMeGroupMutation({
                 variables: {
@@ -104,13 +136,16 @@ export default ({ navigation, route: { params: { groupRoomId } }}) => {
                     location: locationInput.value,
                     lastDate,
                     categoryText,
-                    contentText: categoryContentInput.value,
+                    contentText: categoryContentInput.value
                 }   
             });
             setPostId(category.post.id);
             categoryIdState[categoryText] = category.id;
         } catch(e) {
             console.log(e);
+            Alert.alert("작성이 취소 되었습니다.");
+        } finally {
+            setButtonLoading(false);
         }
     };
 
@@ -127,7 +162,6 @@ export default ({ navigation, route: { params: { groupRoomId } }}) => {
         setAlertLocation("");
         setAlertCategoryText("");
         Alert.alert("완료 되었습니다."); 
-        refetch();
         navigation.navigate("RoomPost", { groupRoomId });
     };
 
@@ -145,35 +179,48 @@ export default ({ navigation, route: { params: { groupRoomId } }}) => {
         setview("add");
     };
 
-
     const addContent = async() => {
         if (categoryContentInput.value === "") {
             return setAlertCategoryText("카테고리 내용을 작성해주세요.");
         } 
         if (categoryIdState[categoryText] === "") {
-            const { 
-                data: {
-                    createContents: {
-                        category
+            try {
+                setButtonLoading(true);
+                const { 
+                    data: {
+                        createContents: { category }
                     }
-                }
-            } = await createContentsMutation({
-                variables: {
-                    postId,
-                    categoryText,
-                    contentText: categoryContentInput.value
-                }
-            });
-            categoryIdState[categoryText] = category.id
-            categoryContentInput.setValue("");
+                } = await createContentsMutation({
+                    variables: {
+                        postId,
+                        categoryText,
+                        contentText: categoryContentInput.value
+                    }
+                });
+                categoryIdState[categoryText] = category.id
+                categoryContentInput.setValue("");
+            } catch (e) {
+                console.log(e);
+                Alert.alert("작성이 취소 되었습니다.");
+            } finally {
+                setButtonLoading(false);
+            }
         } else {
-            await coonnectContentsMutation({
-                variables: {
-                    text: categoryContentInput.value,
-                    categoryId: categoryIdState[categoryText]
-                }
-            });
-            categoryContentInput.setValue("");
+            try {
+                setButtonLoading(true);
+                await coonnectContentsMutation({
+                    variables: {
+                        text: categoryContentInput.value,
+                        categoryId: categoryIdState[categoryText]
+                    }
+                });
+                categoryContentInput.setValue("");
+            } catch (e) {
+                console.log(e);
+                Alert.alert("작성이 취소 되었습니다.");
+            } finally {
+                setButtonLoading(false);
+            }
         }
     };
 
@@ -190,7 +237,6 @@ export default ({ navigation, route: { params: { groupRoomId } }}) => {
             return setAlertCategoryText("카테고리 내용을 작성해주세요.");
         }
         addContent();
-        refetch();
         Alert.alert("작성이 완료 되었습니다.");
         navigation.navigate("RoomPost", { groupRoomId });
     };
@@ -221,7 +267,7 @@ export default ({ navigation, route: { params: { groupRoomId } }}) => {
                             ? "ios-arrow-back" 
                             : "md-arrow-back"
                         }
-                    />
+                />
                 </BackButtonContainer>
             </Touchable>
             <Container>
@@ -238,7 +284,7 @@ export default ({ navigation, route: { params: { groupRoomId } }}) => {
                         setLastDate={setLastDate}
                     />
                     <AlertText />
-                    </Section>}
+                </Section>}
                 {view === "default" &&
                 <Section>
                     <GreyBold>지역을 선택해 주세요.</GreyBold>
@@ -269,15 +315,15 @@ export default ({ navigation, route: { params: { groupRoomId } }}) => {
                             : handlePlusContent
                         }
                         text="더쓰기"
-                        loading={false}
+                        loading={buttonLoading}
                     />
                     <ButtonPaper
-                            onPress={view === "default"
+                        onPress={view === "default"
                             ? handleConfirm
                             : handleAddConfirm
                         }
                         text="작성 하기"
-                        loading={false}
+                        loading={buttonLoading}
                     />
                 </AlignCenterButton>
             </Container>

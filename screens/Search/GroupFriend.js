@@ -53,6 +53,7 @@ const Image = styled.Image`
 export default () => {
     const termInput = useInput("");
     const [refreshing, setRefreshing] = useState(false);
+    const [searchRefetch, setSearchRefetch] = useState(false);
     const { data, loading, refetch } = useQuery(SEE_FOLLOWING);
     const [toggleFollowMutation] = useMutation(TOGGLE_FOLLOW);
 
@@ -72,8 +73,7 @@ export default () => {
     };
 
     // 친구 추가.삭제
-    const handleToggleFollow = async(userName, isFollowing, route) => {
-
+    const handleToggleFollow = async(userName, isFollowing) => {
         try {
             if (isFollowing === true) {
                 Alert.alert(`${userName} 님과 친구 연결이 해제 되었습니다.`);
@@ -85,9 +85,9 @@ export default () => {
                     userName
                 }
             });
-            handleResetTerm();
+            // handleResetTerm();
+            setSearchRefetch(true);
             refresh();
-
         } catch (e) {
             console.log(e);
         } finally {
@@ -138,6 +138,7 @@ export default () => {
                     <SearchUserBox>
                         <FriendSearch
                             term={termInput.value}
+                            searchRefetch={searchRefetch}
                             handleToggleFollow={handleToggleFollow}
                         />
                     </SearchUserBox>}
@@ -147,7 +148,7 @@ export default () => {
                             avatar={user.avatar}
                             userName={user.userName}
                             isFollowing={user.isFollowing}
-                            onPress={() =>  handleToggleFollow(user.userName, user.isFollowing, "listCard")}
+                            onPress={() =>  handleToggleFollow(user.userName, user.isFollowing)}
                         />
                     ))}
                 </Container>

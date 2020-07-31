@@ -31,6 +31,7 @@ const Image = styled.Image`
 
 export default ({ 
    term,
+   searchRefetch,
    handleToggleFollow
 }) => {
     const { data, loading, refetch } = useQuery(SEARCH_USER, {
@@ -43,8 +44,13 @@ export default ({
         refetch();
     };
 
-    if ( data === undefined) {
+    if (searchRefetch === true) {
+        refetch();
         return <Text />;
+
+    } else if (data === undefined) {
+        return <Text />;
+
     } else if (term === "") {
         return <Text />;
 

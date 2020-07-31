@@ -3,8 +3,9 @@ import { ScrollView, RefreshControl, Alert } from "react-native";
 import { Card } from "react-native-paper";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { useNavigation } from "@react-navigation/native";
-import moment from "moment";
 import styled from "styled-components";
+import moment from "moment";
+import "moment-timezone";
 import ButtonPaper from "../../components/ButtonPaper";
 import CheckBox from "../../componentsWrite/CheckBox";
 import WriteInput from "../../componentsWrite/WriteInput";
@@ -48,12 +49,18 @@ const AlertText = styled.Text`
 `;
 
 export default () => {
+    // today
+    const momentDate = moment().tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ssZ");
+    const momentDateSplit = momentDate.split("T");
+    const today = momentDateSplit[0];
+
     const navigation = useNavigation();
     const [categoryText] = useState([]);
     const locationInput = useInput("");
-    const [lastDate, setLastDate] = useState("");
+    const [lastDate, setLastDate] = useState(today);
     const [alertCheck, setAlertCheck] = useState("");
     const [alertLocation, setAlertLocation] = useState("");
+    const [buttonLoading, setButtonLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const { refetch } = useQuery(SEE_BUY);
     const [createBuyMutation] = useMutation(CREATE_BUY);
@@ -68,28 +75,14 @@ export default () => {
             return setAlertLocation("지역을 작성 해주세요.");
         }
         try {
-            if (lastDate === "") {
-                const getDate = new Date(); 
-                // today 
-                const momentDate = moment(getDate).format("YYYY-MM-DDTHH:mm:ssZ");
-                const momentDateSplit = momentDate.split("T");
-                const today = momentDateSplit[0];
-                await createBuyMutation({
-                    variables: {
-                        location: locationInput.value,
-                        lastDate: today,
-                        categoryText
-                    }   
-                }); 
-            } else {
-                await createBuyMutation({
-                    variables: {
-                        location: locationInput.value,
-                        lastDate,
-                        categoryText
-                    }   
-                }); 
-            }
+            setButtonLoading(true);
+            await createBuyMutation({
+                variables: {
+                    location: locationInput.value,
+                    lastDate,
+                    categoryText,
+                }   
+            });
             refetch();
             setAlertCheck("");
             setAlertLocation("");
@@ -152,7 +145,7 @@ export default () => {
                     <ButtonPaper
                         onPress={handleConfirm}
                         text="작성 하기"
-                        loading={false}
+                        loading={buttonLoading}
                     />
                 </AlignCenter>
             </Container>

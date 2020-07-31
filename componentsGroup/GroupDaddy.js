@@ -12,8 +12,7 @@ import PostCommentBox from "../components/PostCommentBox";
 import { SEEBUY_GROUP, items } from "./GroupQueries";
 
 const Container = styled.View`
-    margin-top: 30px;
-    padding: 130px 0;
+    min-height: 430px;
 `;
 
 export default ({ groupRoomId }) => {
@@ -50,13 +49,15 @@ export default ({ groupRoomId }) => {
             const { seeBuyGroup } = data;
             
             return (
-                seeBuyGroup.map(post => 
-                    <Post 
-                        {...post} 
-                        key={post.id} 
-                        handleRoute={handleRoute} 
-                    />
-                )
+                <Container>
+                    {seeBuyGroup.map(post => 
+                        <Post 
+                            {...post} 
+                            key={post.id} 
+                            handleRoute={handleRoute} 
+                        />
+                    )}
+                </Container>
             );
         }
     } else if (routeView === "writeApply") {

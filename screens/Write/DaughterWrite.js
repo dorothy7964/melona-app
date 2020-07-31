@@ -4,6 +4,8 @@ import { Card } from "react-native-paper";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components";
+import moment from "moment";
+import "moment-timezone";
 import ButtonPaper from "../../components/ButtonPaper";
 import RadioBox from "../../componentsWrite/RadioBox";
 import WriteInput from "../../componentsWrite/WriteInput";
@@ -57,6 +59,11 @@ const AlignCenterButton = styled.View`
 `;
 
 export default () => {
+    // today
+    const momentDate = moment().tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ssZ");
+    const momentDateSplit = momentDate.split("T");
+    const today = momentDateSplit[0];
+
     const navigation = useNavigation();
     const locationInput = useInput("");
     const categoryContentInput = useInput("");
@@ -64,9 +71,10 @@ export default () => {
     const [postId, setPostId] = useState("");           // categoryText
     const [categoryIdState] = useState(categoryObj);    // categoryText
     const [categoryText, setCategoryText] = useState("food");
-    const [lastDate, setLastDate] = useState("");
+    const [lastDate, setLastDate] = useState(today);
     const [alertLocation, setAlertLocation] = useState("");
     const [alertCategoryText, setAlertCategoryText] = useState("");
+    const [buttonLoading, setButtonLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const { refetch } = useQuery(SEE_BUYME);
     const [createBuyMeMutation] = useMutation(CREATE_BUYME);
@@ -84,11 +92,10 @@ export default () => {
         } 
         // Mutation
         try {
+            setButtonLoading(true);
             const {
                 data: {
-                    createBuyMe: {
-                        category
-                    }
+                    createBuyMe: { category }
                 }
             } = await createBuyMeMutation({
                 variables: {
@@ -102,6 +109,8 @@ export default () => {
             categoryIdState[categoryText] = category.id;
         } catch(e) {
             console.log(e);
+        } finally {
+            setButtonLoading(false);
         }
     };
 
@@ -136,35 +145,48 @@ export default () => {
         setview("add");
     };
 
-
     const addContent = async() => {
         if (categoryContentInput.value === "") {
             return setAlertCategoryText("카테고리 내용을 작성해주세요.");
         } 
         if (categoryIdState[categoryText] === "") {
-            const { 
-                data: {
-                    createContents: {
-                        category
+            try {
+                setButtonLoading(true);
+                const { 
+                    data: {
+                        createContents: { category }
                     }
-                }
-            } = await createContentsMutation({
-                variables: {
-                    postId,
-                    categoryText,
-                    contentText: categoryContentInput.value
-                }
-            });
-            categoryIdState[categoryText] = category.id
-            categoryContentInput.setValue("");
+                } = await createContentsMutation({
+                    variables: {
+                        postId,
+                        categoryText,
+                        contentText: categoryContentInput.value
+                    }
+                });
+                categoryIdState[categoryText] = category.id
+                categoryContentInput.setValue("");
+            } catch (e) {
+                console.log(e);
+                Alert.alert("전송이 취소 되었습니다."); 
+            } finally {
+                setButtonLoading(false);
+            }
         } else {
-            await coonnectContentsMutation({
-                variables: {
-                    text: categoryContentInput.value,
-                    categoryId: categoryIdState[categoryText]
-                }
-            });
-            categoryContentInput.setValue("");
+            try {
+                setButtonLoading(true);
+                await coonnectContentsMutation({
+                    variables: {
+                        text: categoryContentInput.value,
+                        categoryId: categoryIdState[categoryText]
+                    }
+                });
+                categoryContentInput.setValue("");
+            } catch (e) {
+                console.log(e);
+                Alert.alert("전송이 취소 되었습니다."); 
+            } finally {
+                setButtonLoading(false);
+            }
         }
     };
 
@@ -247,7 +269,7 @@ export default () => {
                             : handlePlusContent
                         }
                         text="더쓰기"
-                        loading={false}
+                        loading={buttonLoading}
                     />
                     <ButtonPaper
                             onPress={view === "default"
@@ -255,7 +277,7 @@ export default () => {
                             : handleAddConfirm
                         }
                         text="작성 하기"
-                        loading={false}
+                        loading={buttonLoading}
                     />
                 </AlignCenterButton>
             </Container>
