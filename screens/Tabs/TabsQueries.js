@@ -102,3 +102,33 @@ export const ALL_GROUPROOM = gql`
         }
     }
 `;
+
+// profile
+export const ME = gql`
+    query me {
+        me {
+            id
+            email
+            avatar
+            userName
+        }
+    }
+`;
+
+// profile
+export const EDIT_USER = gql`
+    mutation editUser ($userName: String $email: String) {
+        editUser (userName: $userName, email: $email) {
+            id
+            userName
+            email
+        }
+    }
+`;
+
+// profile
+export const EDIT_PASSWORD = gql`
+    mutation editPassword ($password: String!) {
+        editPassword (password: $password)
+    }
+`;

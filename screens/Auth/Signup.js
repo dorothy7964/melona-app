@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TouchableWithoutFeedback, Keyboard, Alert } from "react-native";
 import * as Facebook from "expo-facebook";
 import styled from "styled-components";
+import styles from "../../styles";
 import { useMutation } from "react-apollo-hooks";
 import { CREATE_ACCOUNT } from "./AuthQueries";
 import ButtonPaper from "../../components/ButtonPaper";
@@ -155,7 +156,7 @@ export default ({ navigation }) => {
                         onPress={fbLogin}
                         text="페이스북으로 연결"
                         loading={false}
-                        primaryColor="#2D4DA7"
+                        primaryColor={`${styles.facebookColor}`}
                     />
                 </FBContainer>
             </View>
