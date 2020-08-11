@@ -8,12 +8,20 @@ import AvatarPaper from "../../components/AvatarPaper";
 import ButtonPaper from "../../components/ButtonPaper";
 import TextInputPaper from "../../components/TextInputPaper";
 import useInput from "../../hooks/useInput";
-import { ME, EDIT_USER, EDIT_PASSWORD } from "./TabsQueries";
+import { useLogOut } from "../../AuthContext";
+import { ME, EDIT_USER, EDIT_PASSWORD, LOG_OUT } from "./TabsQueries";
+
+const Touchable = styled.TouchableOpacity``;
 
 const Container = styled(Card)`
     margin: 30px 20px;
     padding: 20px 15px;
     min-height: 580px;
+`;
+
+const UserBox = styled.View`
+    flex-direction: column;
+    margin-left: 10px;
 `;
 
 const Section = styled.View`
@@ -39,7 +47,17 @@ const ButtonBox = styled.View`
 const Title = styled.Text`
     font-size: 20px;
     font-weight:600;
+`;
+
+const TitleMargin = styled.Text`
+    font-size: 20px;
+    font-weight:600;
     margin-left: 10px;
+`;
+
+const GreyText = styled.Text`
+    font-weight:600;
+    color: ${props => props.theme.darkGreyColor};
 `;
 
 const Bold = styled.Text`
@@ -59,6 +77,7 @@ const Image = styled.Image`
 `;
 
 export default () => {
+    const logOut = useLogOut();
     const { data, loading, refetch } = useQuery(ME);
     const [loadingBt, setLodaingBt] = useState(false);
     const [editPasswordMutation] = useMutation(EDIT_PASSWORD);
@@ -67,6 +86,15 @@ export default () => {
             query: ME,
         }]
      });
+
+    const handleLogOut = async() => {
+        try {
+            Alert.alert("로그아웃이 되었습니다.")
+            await logOut();
+        } catch (e) {
+            console.log(e);
+        }
+    };
     
     if (loading === true) {
         return  <Loader />;
@@ -152,7 +180,7 @@ export default () => {
                             size={100}
                             avatar={me.avatar}
                         />
-                        <Title>{me.userName}</Title>
+                        <TitleMargin>{me.userName}</TitleMargin>
                     </Section>
                     <ImageBox>
                         <Image 
@@ -171,7 +199,12 @@ export default () => {
                             size={100}
                             avatar={me.avatar}
                         />
-                        <Title>{me.userName}</Title>
+                        <UserBox>
+                            <Title>{me.userName}</Title>
+                            <Touchable onPress={handleLogOut}>
+                                <GreyText>로그아웃</GreyText>
+                            </Touchable>
+                        </UserBox>
                     </Section>
                     <SectionContainer>
                         <SectionBox>

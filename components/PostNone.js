@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import constants from "../constants";
 
 const View = styled.View`
     justify-content: center;
