@@ -132,3 +132,44 @@ export const EDIT_PASSWORD = gql`
         editPassword (password: $password)
     }
 `;
+
+// Message
+export const CHATROOMS_QUERY = gql`
+    query {
+        seeChatRooms {
+            id
+            lastMessage
+            lastMsgTime
+            unReadMsgCounter
+            participants {
+                id
+                userName
+                avatar
+            }
+            messages {
+                id
+                text
+                createdAt
+            }
+        }
+        me {
+            id
+        }
+    }
+`;
+
+// Message
+export const READCOUNT_MESSAGE = gql`
+    mutation readcountMessage ($chatRoomId: String!){
+        readcountMessage (chatRoomId: $chatRoomId)
+    }
+`;
+
+// Message
+export const DELETE_CHATROOM = gql`
+    mutation deleteChatRoom ($chatRoomId: String!){
+        deleteChatRoom (chatRoomId:$chatRoomId){
+            id
+        }
+    }
+`;
