@@ -7,5 +7,6 @@ export default {
     redColor: "#ED4956",
     melonaColor: "#b9dd39",
     lightGreenColor: "#9ccc65",
-    facebookColor: "#2D4DA7"
+    facebookColor: "#2D4DA7",
+    yellowColor: "#FFE404",
 };

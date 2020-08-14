@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { ScrollView, RefreshControl } from "react-native";
+import { Card } from "react-native-paper";
+import { useQuery, useMutation } from "react-apollo-hooks";
 import styled from "styled-components";
 import Loader from "../../components/Loader";
 import ChatCard from "../../componentsMessage/ChatCard";
 import ChatRoom from "../../componentsMessage/ChatRoom";
-import { Card } from "react-native-paper";
-import { useQuery, useMutation } from "react-apollo-hooks";
 import { 
     CHATROOMS_QUERY, 
     READCOUNT_MESSAGE,
@@ -102,17 +102,11 @@ export default () => {
         } else if (view === "chatRoom") {
             return (
                 <Container>
-                    <ScrollView 
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-                        }
-                    >
-                        <ChatRoom 
-                            chatRoomId={chatRoomId}
-                            handleView={handleView}
-                            handleDeleteRoom={handleDeleteRoom}
-                        />
-                    </ScrollView>
+                    <ChatRoom 
+                        chatRoomId={chatRoomId}
+                        handleView={handleView}
+                        handleDeleteRoom={handleDeleteRoom}
+                    />
                 </Container>
             );
         }
