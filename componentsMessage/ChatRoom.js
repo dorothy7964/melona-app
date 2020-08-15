@@ -8,6 +8,7 @@ import Loader from  "../components/Loader";
 import NavIcon from  "../components/NavIcon";
 import AvatarPaper from  "../components/AvatarPaper";
 import TimeIapse from  "../components/TimeIapse";
+import SendChat from "./SendChat";
 import styles from "../styles";
 import { SEE_CHATROOM } from "./ChatQueries";
 
@@ -29,7 +30,7 @@ const Header = styled.View`
 
 const Content = styled.View`
     padding: 20px 0;
-    max-height: 540px;
+    max-height: 470px;
 `;
 
 const MessageContainer  = styled.View`
@@ -50,7 +51,7 @@ const MessageBubble = styled.View`
 const MessageText = styled.Text`
     flex: 1;
     font-size:12px;
-    lineHeight: 20;
+    lineHeight: 20px;
 `;
 
 const TimeForm = styled.View`
@@ -210,6 +211,9 @@ const ChatRoom = ({
                         )}
                     </ScrollView>
                 </Content>
+                <SendChat 
+                    chatRoomId={chatRoomId}
+                />
             </View>
         );
     }
