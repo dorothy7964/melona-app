@@ -31,6 +31,7 @@ const Header = styled.View`
 const Content = styled.View`
     padding: 20px 0;
     max-height: 470px;
+    min-height: 470px;
 `;
 
 const MessageContainer  = styled.View`

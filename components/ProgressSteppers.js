@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { Platform, View, Text } from "react-native";
 import { useMutation } from "react-apollo-hooks";
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import styled from "styled-components";
@@ -7,6 +7,8 @@ import styles from "../styles";
 import PropTypes from "prop-types";
 import ButtonPaper from "./ButtonPaper";
 import DialogPaperPhoto from "./DialogPaperPhoto";
+import NavIcon from "./NavIcon";
+import SelectPhoto from "./SelectPhoto";
 import { PROGRESS_NUM } from "../SharedQueries";
 
 const melonaColor = styles.melonaColor;
@@ -18,6 +20,14 @@ const mainColor = {
 const greyColor = {
     color: styles.darkGreyColor
 };
+
+const Touchable = styled.TouchableOpacity``;
+
+const ViewSelect = styled.View`
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 10px;
+`;
 
 const Container = styled.View`
     margin-top: 20px;
@@ -42,6 +52,7 @@ const ProgressSteppers = ({
     contentText,
     confirmFile,
 }) => {
+    const [viewPhoto, setViewPhoto] = useState(false);
     const [removeBtn, setRemoveBtn] = useState(false);
     const [stepNumber, setStepNumber] = useState(stepNum);
     const [onSubmitText, setOnSubmitText] = useState("진행이 완료 되었습니까?");
@@ -88,6 +99,11 @@ const ProgressSteppers = ({
 
     const handleToggleDialog = () => {
         setVisible(!visible);
+    };
+
+    // Uploade
+    const handleViewPhoto = () => {
+        setViewPhoto(!viewPhoto);
     };
 
     if (stepNum === 3) {
@@ -159,9 +175,22 @@ const ProgressSteppers = ({
                         onNext={onNext}
                         onPrevious={onPrevious}
                     >
-                        <View style={{ alignItems: 'center' }}>
-                            <Text>인증 사진을 올리겠습니까?</Text>
-                        </View>
+                        <ViewSelect>
+                            <Text style={{ marginRight: 10 }}>
+                                인증 사진을 올리겠습니까?
+                            </Text>
+                            <Touchable onPress={handleViewPhoto}>
+                                <NavIcon
+                                    size={20}
+                                    focused={false}
+                                    name={Platform.OS === "ios" 
+                                        ? "ios-camera" 
+                                        : "md-camera"
+                                    }
+                                />
+                            </Touchable>
+                        </ViewSelect>
+                        {viewPhoto && <SelectPhoto />}
                     </ProgressStep>
                     <ProgressStep 
                         label="완료"
