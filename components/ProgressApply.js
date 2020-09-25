@@ -72,6 +72,7 @@ const ProgressApply = ({
                                                 stepNum={contents.confirmProgress}
                                                 contentId={contents.id}
                                                 anotherPage={anotherPage}
+                                                confirmFile={contents.confirmFile}
                                             />
                                         :   <ProgressView
                                                 stepNum={contents.confirmProgress}

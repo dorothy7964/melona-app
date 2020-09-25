@@ -15,11 +15,15 @@ const FirstImgBox = styled.View`
     margin-bottom: 10px;
 `;
 
-export default () => {
+const AllImgBox = styled.View``;
+
+export default ({ contentId, anotherPage, handleUpload }) => {
     const [loading, setLoading] = useState(true);
     const [hasPermission, setHasPermission] = useState(false);
     const [selected, setSelected] = useState();
     const [allPhotos, setAllPhotos] = useState();
+    const [btDisabled, setBtDisabled] = useState(false);
+    const [viewAllPhoto, setViewAllPhoto] = useState(true);
 
     const changeSelected = (photo) => {
         setSelected(photo);
@@ -30,6 +34,7 @@ export default () => {
             const { assets } = await MediaLibrary.getAssetsAsync();
             const [firstPhoto] = assets;
             setSelected(firstPhoto);
+            setAllPhotos(assets);
             setAllPhotos(assets);
         } catch (e) {
             console.log(e);
@@ -51,6 +56,12 @@ export default () => {
         }
     };
 
+    const handleApplyPhoto = (contentId, anotherPage, photo) => {
+        setViewAllPhoto(false);
+        setBtDisabled(true);
+        handleUpload(contentId, anotherPage, photo);
+    };
+
     useEffect(() => {
         askPermission();
     }, []);
@@ -66,36 +77,39 @@ export default () => {
                             <FirstImgBox>
                                 <Image
                                     source={{ uri: selected.uri }}
-                                    style={{ width: constants.width, height: constants.height / 2 }}
+                                    style={{ width: constants.width, height: constants.height / 2, }}
                                 />
                                 <ButtonPaper
-                                    onPress={() => null}
+                                    onPress={() => handleApplyPhoto(contentId, anotherPage, selected.uri)}
                                     text="사진 적용"
                                     loading={false}
+                                    disabled={btDisabled}
                                 />
                             </FirstImgBox>
-                            <ScrollView
-                                contentContainerStyle={{
-                                    flexDirection: "row",
-                                    flexWrap: "wrap"
-                                }}
-                            >
-                                {allPhotos.map(photo => (
-                                    <TouchableOpacity
-                                        key={photo.id}
-                                        onPress={() => changeSelected(photo)}
-                                    >
-                                        <Image
-                                            source={{ uri: photo.uri }}
-                                            style={{
-                                                width: constants.width / 4,
-                                                height: constants.height / 6,
-                                                opacity: photo.id === selected.id ? 0.5 : 1
-                                            }}
-                                        />
-                                    </TouchableOpacity>
-                                ))}
-                            </ScrollView>
+                            {viewAllPhoto && <AllImgBox>
+                                <ScrollView
+                                    contentContainerStyle={{
+                                        flexDirection: "row",
+                                        flexWrap: "wrap"
+                                    }}
+                                >
+                                    {allPhotos.map(photo => (
+                                        <TouchableOpacity
+                                            key={photo.id}
+                                            onPress={() => changeSelected(photo)}
+                                        >
+                                            <Image
+                                                source={{ uri: photo.uri }}
+                                                style={{
+                                                    width: constants.width / 4,
+                                                    height: constants.height / 6,
+                                                    opacity: photo.id === selected.id ? 0.5 : 1
+                                                }}
+                                            />
+                                        </TouchableOpacity>
+                                    ))}
+                                </ScrollView>
+                            </AllImgBox>}
                         </React.Fragment>
                     ) : null}
                 </View>

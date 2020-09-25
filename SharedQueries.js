@@ -200,6 +200,21 @@ export const PROGRESS_NUM = gql`
     }
 `;
 
+// ProgressSteppers
+export const EDIT_CONFIRMFILE = gql`
+    mutation editConfirmFile (
+        $contentId: String! 
+        $confirmFile: String!
+        $anotherPage: Boolean!
+    ) {
+        editConfirmFile (
+            contentId: $contentId, 
+            confirmFile: $confirmFile
+            anotherPage: $anotherPage
+        ) 
+    }
+`;
+
 // ProgressCardUser
 export const PROGRESS_APPLY = gql`
     mutation progressApply ($postId: String! $userName: String!) {
@@ -306,3 +321,5 @@ export const REDELETE_COMMENT = gql`
         redeleteComment(recommentId: $recommentId)
     }
 `;
+
+

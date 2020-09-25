@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { Platform, View, Text } from "react-native";
+import { Platform, Alert, View, Text, Image } from "react-native";
 import { useMutation } from "react-apollo-hooks";
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import styled from "styled-components";
 import styles from "../styles";
+import constants from "../constants";
 import PropTypes from "prop-types";
 import ButtonPaper from "./ButtonPaper";
 import DialogPaperPhoto from "./DialogPaperPhoto";
 import NavIcon from "./NavIcon";
 import SelectPhoto from "./SelectPhoto";
-import { PROGRESS_NUM } from "../SharedQueries";
+import { PROGRESS_NUM, EDIT_CONFIRMFILE } from "../SharedQueries";
 
 const melonaColor = styles.melonaColor;
         
@@ -57,6 +58,7 @@ const ProgressSteppers = ({
     const [stepNumber, setStepNumber] = useState(stepNum);
     const [onSubmitText, setOnSubmitText] = useState("진행이 완료 되었습니까?");
     const [progressNumMutation] = useMutation(PROGRESS_NUM);
+    const [editConfirmFileMutation] = useMutation(EDIT_CONFIRMFILE);
 
     const onNext = async() => {
         setStepNumber(stepNumber + 1);
@@ -104,6 +106,26 @@ const ProgressSteppers = ({
     // Uploade
     const handleViewPhoto = () => {
         setViewPhoto(!viewPhoto);
+    };
+
+    const handleUpload = async(contentId, anotherPage, photo) => {
+        console.log("보류 - 아마존 연결하기")
+        // try {
+        //     const {
+        //         data: { editConfirmFile }
+        //     } = await editConfirmFileMutation({
+        //         variables: {
+        //             contentId,
+        //             anotherPage,
+        //             confirmFile: photo
+        //         }
+        //     });
+        //     if (editConfirmFile){
+        //         Alert.alert("업로드 되었습니다.")
+        //     }
+        // } catch (e) {
+        //     console.log(e);
+        // }
     };
 
     if (stepNum === 3) {
@@ -175,22 +197,42 @@ const ProgressSteppers = ({
                         onNext={onNext}
                         onPrevious={onPrevious}
                     >
-                        <ViewSelect>
-                            <Text style={{ marginRight: 10 }}>
-                                인증 사진을 올리겠습니까?
-                            </Text>
-                            <Touchable onPress={handleViewPhoto}>
-                                <NavIcon
-                                    size={20}
-                                    focused={false}
-                                    name={Platform.OS === "ios" 
-                                        ? "ios-camera" 
-                                        : "md-camera"
-                                    }
+                        <View>
+                            {confirmFile === null || confirmFile !== "" &&
+                            <ViewSelect>
+                                <Image
+                                    source={{ uri: confirmFile }}
+                                    style={{ 
+                                        width: constants.width / 4,
+                                        height: constants.height / 6,
+                                    }}
                                 />
-                            </Touchable>
-                        </ViewSelect>
-                        {viewPhoto && <SelectPhoto />}
+                            </ViewSelect>
+                            }
+                            <ViewSelect>
+                                <Text style={{ marginRight: 10 }}>
+                                    인증 사진을 올리겠습니까?
+                                </Text>
+                                <Touchable onPress={handleViewPhoto}>
+                                    <NavIcon
+                                        size={20}
+                                        focused={false}
+                                        name={Platform.OS === "ios" 
+                                            ? "ios-photos" 
+                                            : "md-photos"
+                                        }
+                                    />
+                                </Touchable>
+                            </ViewSelect>
+                        </View>
+                        {viewPhoto && 
+                            <SelectPhoto 
+                                contentId={contentId}
+                                anotherPage={anotherPage}
+                                confirmFile={confirmFile}
+                                handleUpload={handleUpload}
+                            />
+                        }
                     </ProgressStep>
                     <ProgressStep 
                         label="완료"
