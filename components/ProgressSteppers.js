@@ -10,6 +10,7 @@ import ButtonPaper from "./ButtonPaper";
 import DialogPaperPhoto from "./DialogPaperPhoto";
 import NavIcon from "./NavIcon";
 import SelectPhoto from "./SelectPhoto";
+import TakePhoto from "./TakePhoto";
 import { PROGRESS_NUM, EDIT_CONFIRMFILE } from "../SharedQueries";
 
 const melonaColor = styles.melonaColor;
@@ -45,6 +46,10 @@ const ButtonBox = styled.View`
     align-items: center;
 `;
 
+const IconBox = styled.View`
+    margin-left: 10px;
+`;
+
 const ProgressSteppers = ({ 
     stepNum,
     contentId,
@@ -54,6 +59,8 @@ const ProgressSteppers = ({
     confirmFile,
 }) => {
     const [viewPhoto, setViewPhoto] = useState(false);
+    const [takePhoto, setTakePhoto] = useState(false);
+    const [takePhotoFile, setTakePhotoFile] = useState("");
     const [removeBtn, setRemoveBtn] = useState(false);
     const [stepNumber, setStepNumber] = useState(stepNum);
     const [onSubmitText, setOnSubmitText] = useState("진행이 완료 되었습니까?");
@@ -106,6 +113,7 @@ const ProgressSteppers = ({
     // Uploade
     const handleViewPhoto = () => {
         setViewPhoto(!viewPhoto);
+        setTakePhoto(false);
     };
 
     const handleUpload = async(contentId, anotherPage, photo) => {
@@ -126,6 +134,19 @@ const ProgressSteppers = ({
         // } catch (e) {
         //     console.log(e);
         // }
+    };
+
+    // Take Camera
+    const handleTakeCamera = () => {
+        console.log("카메라 등록2");
+        setTakePhoto(true);
+        setViewPhoto(false);
+    };
+
+    // Take Camera File
+    const handleTakeFile = (file) => {
+        setTakePhotoFile(file);
+        console.log("file",file);
     };
 
     if (stepNum === 3) {
@@ -210,21 +231,40 @@ const ProgressSteppers = ({
                             </ViewSelect>
                             }
                             <ViewSelect>
-                                <Text style={{ marginRight: 10 }}>
+                                <Text>
                                     인증 사진을 올리겠습니까?
                                 </Text>
+                                <Touchable onPress={handleTakeCamera}>
+                                    <IconBox>
+                                        <NavIcon
+                                            size={20}
+                                            focused={false}
+                                            name={Platform.OS === "ios" 
+                                                ? "ios-camera" 
+                                                : "md-camera"
+                                            }
+                                        />
+                                    </IconBox>
+                                </Touchable>
                                 <Touchable onPress={handleViewPhoto}>
-                                    <NavIcon
-                                        size={20}
-                                        focused={false}
-                                        name={Platform.OS === "ios" 
-                                            ? "ios-photos" 
-                                            : "md-photos"
-                                        }
-                                    />
+                                    <IconBox>
+                                        <NavIcon
+                                            size={20}
+                                            focused={false}
+                                            name={Platform.OS === "ios" 
+                                                ? "ios-photos" 
+                                                : "md-photos"
+                                            }
+                                        />
+                                    </IconBox>
                                 </Touchable>
                             </ViewSelect>
                         </View>
+                        {takePhoto && 
+                            <TakePhoto 
+                                handleTakeFile={handleTakeFile}
+                            />
+                        }
                         {viewPhoto && 
                             <SelectPhoto 
                                 contentId={contentId}
