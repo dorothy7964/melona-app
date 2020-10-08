@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { TouchableOpacity, Platform } from "react-native";
 import * as Permissions from "expo-permissions";
+import * as MediaLibrary from 'expo-media-library';
 import { Camera } from "expo-camera";
 import { Ionicons } from '@expo/vector-icons';
 import styled from "styled-components";
@@ -28,14 +29,25 @@ const Button = styled.View`
 export default ({ handleTakeFile }) => {
     const [loading, setLoading] = useState(true);
     const [hasPermission, setHasPermission] = useState(false);
+    const [canTakePhoto, setCanTakePhoto] = useState(true);
     const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
     const cameraRef = useRef();
 
     const takePhoto = async() => {
-        const { uri } = await cameraRef.current.takePictureAsync({
-            quality: 1
-        });
-        handleTakeFile(uri);
+        if(!canTakePhoto){
+            return;
+        }
+        try {
+            setCanTakePhoto(false);
+            const { uri } = await cameraRef.current.takePictureAsync({
+                quality: 1
+            });
+            const asset = await MediaLibrary.createAssetAsync(uri);
+            handleTakeFile(asset.uri);
+        } catch (e) {
+            console.log(e);
+            setCanTakePhoto(true);
+        }
     };
 
     const askPermission = async () => {
@@ -90,7 +102,7 @@ export default ({ handleTakeFile }) => {
                         </TouchableOpacity>
                     </Camera>
                     <TakeButton>
-                        <TouchableOpacity onPress={takePhoto}>
+                        <TouchableOpacity onPress={takePhoto} disabled={!canTakePhoto}>
                             <Button />
                         </TouchableOpacity>
                     </TakeButton>
