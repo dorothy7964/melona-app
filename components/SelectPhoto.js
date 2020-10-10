@@ -35,7 +35,6 @@ export default ({ contentId, anotherPage, handleUpload }) => {
             const [firstPhoto] = assets;
             setSelected(firstPhoto);
             setAllPhotos(assets);
-            setAllPhotos(assets);
         } catch (e) {
             console.log(e);
         } finally {

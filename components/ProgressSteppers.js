@@ -4,6 +4,7 @@ import { useMutation } from "react-apollo-hooks";
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import styled from "styled-components";
 import styles from "../styles";
+import axios from "axios";
 import constants from "../constants";
 import PropTypes from "prop-types";
 import ButtonPaper from "./ButtonPaper";
@@ -58,9 +59,11 @@ const ProgressSteppers = ({
     contentText,
     confirmFile,
 }) => {
+    const [loading, setIsLoading] = useState(false);
     const [viewPhoto, setViewPhoto] = useState(false);
     const [takePhoto, setTakePhoto] = useState(false);
     const [takePhotoFile, setTakePhotoFile] = useState("");
+    const [uploadPhotoFile, setUploadPhotoFile] = useState(confirmFile);
     const [removeBtn, setRemoveBtn] = useState(false);
     const [stepNumber, setStepNumber] = useState(stepNum);
     const [onSubmitText, setOnSubmitText] = useState("진행이 완료 되었습니까?");
@@ -118,6 +121,8 @@ const ProgressSteppers = ({
 
     const handleUpload = async(contentId, anotherPage, photo) => {
         console.log("보류 - 아마존 연결하기")
+        setUploadPhotoFile(photo);
+        console.log("handleUploadPhoto", photo)
         // try {
         //     const {
         //         data: { editConfirmFile }
@@ -144,9 +149,33 @@ const ProgressSteppers = ({
     };
 
     // Take Camera File
-    const handleTakeFile = (file) => {
-        setTakePhotoFile(file);
-        console.log("file",file);
+    const handleTakeFile = async(photo) => {
+        setUploadPhotoFile(photo.uri);
+        console.log("handleTakeFile file >> asset", photo.uri);
+        console.log("handleTakeFile file URI >> asset", photo);
+
+        const formData = new FormData();
+        formData.append("file", {
+            name: photo.filename,
+            type: "image/jpeg",
+            uri: photo.uri
+        });
+        try {
+            setIsLoading(true);
+            const { 
+                data: { location } 
+            } = await axios.post("http://192.168.56.1:4000/api/upload", formData, {
+                headers: {
+                    "content-type": "multipart/form-data"
+                }
+            });
+            
+            console.log("location >> ", location);
+        } catch (e) {
+            Alert.alert("Cant upload", "Try later"); 
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     if (stepNum === 3) {
@@ -219,10 +248,10 @@ const ProgressSteppers = ({
                         onPrevious={onPrevious}
                     >
                         <View>
-                            {confirmFile === null || confirmFile !== "" &&
+                            {uploadPhotoFile === null || uploadPhotoFile !== "" &&
                             <ViewSelect>
                                 <Image
-                                    source={{ uri: confirmFile }}
+                                    source={{ uri: uploadPhotoFile }}
                                     style={{ 
                                         width: constants.width / 4,
                                         height: constants.height / 6,

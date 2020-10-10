@@ -43,7 +43,7 @@ export default ({ handleTakeFile }) => {
                 quality: 1
             });
             const asset = await MediaLibrary.createAssetAsync(uri);
-            handleTakeFile(asset.uri);
+            handleTakeFile(asset);
         } catch (e) {
             console.log(e);
             setCanTakePhoto(true);
