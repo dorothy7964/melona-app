@@ -17,7 +17,7 @@ const FirstImgBox = styled.View`
 
 const AllImgBox = styled.View``;
 
-export default ({ contentId, anotherPage, handleUpload }) => {
+export default ({ contentId, anotherPage, handleChangeFile }) => {
     const [loading, setLoading] = useState(true);
     const [hasPermission, setHasPermission] = useState(false);
     const [selected, setSelected] = useState();
@@ -58,7 +58,7 @@ export default ({ contentId, anotherPage, handleUpload }) => {
     const handleApplyPhoto = (contentId, anotherPage, photo) => {
         setViewAllPhoto(false);
         setBtDisabled(true);
-        handleUpload(contentId, anotherPage, photo);
+        handleChangeFile(contentId, anotherPage, photo, "album");
     };
 
     useEffect(() => {
@@ -79,7 +79,7 @@ export default ({ contentId, anotherPage, handleUpload }) => {
                                     style={{ width: constants.width, height: constants.height / 2, }}
                                 />
                                 <ButtonPaper
-                                    onPress={() => handleApplyPhoto(contentId, anotherPage, selected.uri)}
+                                    onPress={() => handleApplyPhoto(contentId, anotherPage, selected)}
                                     text="사진 적용"
                                     loading={false}
                                     disabled={btDisabled}

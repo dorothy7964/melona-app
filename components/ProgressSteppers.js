@@ -58,12 +58,14 @@ const ProgressSteppers = ({
     categoryText,
     contentText,
     confirmFile,
+    contentsReqs
 }) => {
     const [loading, setIsLoading] = useState(false);
     const [viewPhoto, setViewPhoto] = useState(false);
     const [takePhoto, setTakePhoto] = useState(false);
-    const [takePhotoFile, setTakePhotoFile] = useState("");
+    const [uploadButton, setUploadButton] = useState(false);
     const [uploadPhotoFile, setUploadPhotoFile] = useState(confirmFile);
+    const [uploadPhotoFileName, setUploadPhotoFileName] = useState("none");
     const [removeBtn, setRemoveBtn] = useState(false);
     const [stepNumber, setStepNumber] = useState(stepNum);
     const [onSubmitText, setOnSubmitText] = useState("진행이 완료 되었습니까?");
@@ -113,69 +115,59 @@ const ProgressSteppers = ({
         setVisible(!visible);
     };
 
-    // Uploade
+    // album
     const handleViewPhoto = () => {
         setViewPhoto(!viewPhoto);
         setTakePhoto(false);
-    };
-
-    const handleUpload = async(contentId, anotherPage, photo) => {
-        console.log("보류 - 아마존 연결하기")
-        setUploadPhotoFile(photo);
-        console.log("handleUploadPhoto", photo)
-        // try {
-        //     const {
-        //         data: { editConfirmFile }
-        //     } = await editConfirmFileMutation({
-        //         variables: {
-        //             contentId,
-        //             anotherPage,
-        //             confirmFile: photo
-        //         }
-        //     });
-        //     if (editConfirmFile){
-        //         Alert.alert("업로드 되었습니다.")
-        //     }
-        // } catch (e) {
-        //     console.log(e);
-        // }
+        setUploadButton(false);
     };
 
     // Take Camera
     const handleTakeCamera = () => {
-        console.log("카메라 등록2");
         setTakePhoto(true);
         setViewPhoto(false);
+        setUploadButton(false);
     };
 
-    // Take Camera File
-    const handleTakeFile = async(photo) => {
-        setUploadPhotoFile(photo.uri);
-        console.log("handleTakeFile file >> asset", photo.uri);
-        console.log("handleTakeFile file URI >> asset", photo);
-
-        const formData = new FormData();
-        formData.append("file", {
-            name: photo.filename,
-            type: "image/jpeg",
-            uri: photo.uri
-        });
-        try {
-            setIsLoading(true);
-            const { 
-                data: { location } 
-            } = await axios.post("http://192.168.56.1:4000/api/upload", formData, {
-                headers: {
-                    "content-type": "multipart/form-data"
-                }
+    const handleUploadFile = async() => {
+        if (uploadPhotoFileName !== "none") {
+            const formData = new FormData();
+            formData.append("file", {
+                name: uploadPhotoFileName,
+                type: "image/jpeg",
+                uri: uploadPhotoFile
             });
-            
-            console.log("location >> ", location);
-        } catch (e) {
-            Alert.alert("Cant upload", "Try later"); 
-        } finally {
-            setIsLoading(false);
+            try {
+                setIsLoading(true);
+                // 이더넷 어댑터 - http://192.168.56.1:4000/ 
+                // 무선 LAN 어댑터 WI-FI  - http://192.168.219.110:4000/ 
+                const { 
+                    data: { location } 
+                } = await axios.post("http://192.168.219.110:4000/api/upload", formData, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    }
+                });
+                console.log("location >> ", location);
+                Alert.alert("사진이 업로드 되었습니다.");
+            } catch (e) {
+                Alert.alert("Cant upload", "Try later"); 
+            } finally {
+                setIsLoading(false);
+                setUploadButton(false);
+            }
         }
+    };
+
+    const handleChangeFile = async(contentId, anotherPage, photo, type) => {
+        if (type === "camera"){
+            setTakePhoto(false);
+        } else if (type ==="album") {
+            setViewPhoto(false);
+        }
+        setUploadButton(true);
+        setUploadPhotoFile(photo.uri);
+        setUploadPhotoFileName(photo.filename);
     };
 
     if (stepNum === 3) {
@@ -239,7 +231,7 @@ const ProgressSteppers = ({
                     </ProgressStep>
                     <ProgressStep 
                         label="인증 사진"
-                        nextBtnText="다음"
+                        nextBtnText="다음"R
                         previousBtnText="이전"
                         finishBtnText="완료"
                         nextBtnTextStyle={mainColor} 
@@ -248,7 +240,7 @@ const ProgressSteppers = ({
                         onPrevious={onPrevious}
                     >
                         <View>
-                            {uploadPhotoFile === null || uploadPhotoFile !== "" &&
+                            {uploadPhotoFile !== "none" &&
                             <ViewSelect>
                                 <Image
                                     source={{ uri: uploadPhotoFile }}
@@ -257,11 +249,10 @@ const ProgressSteppers = ({
                                         height: constants.height / 6,
                                     }}
                                 />
-                            </ViewSelect>
-                            }
+                            </ViewSelect>}
                             <ViewSelect>
                                 <Text>
-                                    인증 사진을 올리겠습니까?
+                                    인증 사진을 올리겠습니까? 852
                                 </Text>
                                 <Touchable onPress={handleTakeCamera}>
                                     <IconBox>
@@ -288,20 +279,30 @@ const ProgressSteppers = ({
                                     </IconBox>
                                 </Touchable>
                             </ViewSelect>
+                            <View>
+                                {takePhoto && 
+                                    <TakePhoto 
+                                        contentId={contentId}
+                                        anotherPage={anotherPage}
+                                        handleChangeFile={handleChangeFile}
+                                    />}
+                                {viewPhoto && 
+                                    <SelectPhoto 
+                                        contentId={contentId}
+                                        anotherPage={anotherPage}
+                                        handleChangeFile={handleChangeFile}
+                                    />}
+                            </View>
+                            {uploadButton &&
+                            <ViewSelect>
+                                <ButtonPaper 
+                                    onPress={handleUploadFile}
+                                    text="사진 업로드"
+                                    disabled={loading}
+                                    loading={loading}
+                                />
+                            </ViewSelect>}
                         </View>
-                        {takePhoto && 
-                            <TakePhoto 
-                                handleTakeFile={handleTakeFile}
-                            />
-                        }
-                        {viewPhoto && 
-                            <SelectPhoto 
-                                contentId={contentId}
-                                anotherPage={anotherPage}
-                                confirmFile={confirmFile}
-                                handleUpload={handleUpload}
-                            />
-                        }
                     </ProgressStep>
                     <ProgressStep 
                         label="완료"
