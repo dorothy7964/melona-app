@@ -26,7 +26,7 @@ const Button = styled.View`
     border: 10px solid ${styles.lightGreyColor};
 `;
 
-export default ({ contentId, anotherPage, handleChangeFile }) => {
+export default ({ handleChangeFile }) => {
     const [loading, setLoading] = useState(true);
     const [hasPermission, setHasPermission] = useState(false);
     const [canTakePhoto, setCanTakePhoto] = useState(true);
@@ -43,7 +43,7 @@ export default ({ contentId, anotherPage, handleChangeFile }) => {
                 quality: 1
             });
             const asset = await MediaLibrary.createAssetAsync(uri);
-            handleChangeFile(contentId, anotherPage, asset, "camera");
+            handleChangeFile(asset, "camera");
         } catch (e) {
             console.log(e);
             setCanTakePhoto(true);

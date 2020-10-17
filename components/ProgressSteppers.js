@@ -128,6 +128,10 @@ const ProgressSteppers = ({
         setViewPhoto(false);
         setUploadButton(false);
     };
+    
+    const url = process.env.NODE_ENV === "development"
+        ? "http://192.168.219.141:4000"
+        : "https://melona-backend.herokuapp.com"
 
     const handleUploadFile = async() => {
         if (uploadPhotoFileName !== "none") {
@@ -139,19 +143,30 @@ const ProgressSteppers = ({
             });
             try {
                 setIsLoading(true);
-                // 이더넷 어댑터 - http://192.168.56.1:4000/ 
-                // 무선 LAN 어댑터 WI-FI  - http://192.168.219.110:4000/ 
                 const { 
                     data: { location } 
-                } = await axios.post("http://192.168.219.110:4000/api/upload", formData, {
+                } = await axios.post(`${url}/api/upload`, formData, {
                     headers: {
-                        "content-type": "multipart/form-data"
+                        "content-type": "multipart/form-data",
+                        "Access-Control-Allow-Origin": "*"
                     }
                 });
-                console.log("location >> ", location);
-                Alert.alert("사진이 업로드 되었습니다.");
+                const {
+                    data: { editConfirmFile }
+                } = await editConfirmFileMutation({
+                    variables: {
+                        contentId,
+                        anotherPage,
+                        confirmFile: location
+                    }
+                });
+                if (editConfirmFile){
+                    Alert.alert("사진이 업로드 되었습니다.");
+                }
             } catch (e) {
-                Alert.alert("Cant upload", "Try later"); 
+                console.log(e);
+                setUploadButton(true);
+                Alert.alert("업로드 실패하였습니다.");
             } finally {
                 setIsLoading(false);
                 setUploadButton(false);
@@ -159,7 +174,7 @@ const ProgressSteppers = ({
         }
     };
 
-    const handleChangeFile = async(contentId, anotherPage, photo, type) => {
+    const handleChangeFile = async(photo, type) => {
         if (type === "camera"){
             setTakePhoto(false);
         } else if (type ==="album") {
@@ -252,7 +267,7 @@ const ProgressSteppers = ({
                             </ViewSelect>}
                             <ViewSelect>
                                 <Text>
-                                    인증 사진을 올리겠습니까? 852
+                                    인증 사진을 올리겠습니까?
                                 </Text>
                                 <Touchable onPress={handleTakeCamera}>
                                     <IconBox>
@@ -282,14 +297,10 @@ const ProgressSteppers = ({
                             <View>
                                 {takePhoto && 
                                     <TakePhoto 
-                                        contentId={contentId}
-                                        anotherPage={anotherPage}
                                         handleChangeFile={handleChangeFile}
                                     />}
                                 {viewPhoto && 
                                     <SelectPhoto 
-                                        contentId={contentId}
-                                        anotherPage={anotherPage}
                                         handleChangeFile={handleChangeFile}
                                     />}
                             </View>
