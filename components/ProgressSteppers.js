@@ -128,10 +128,6 @@ const ProgressSteppers = ({
         setViewPhoto(false);
         setUploadButton(false);
     };
-    
-    const url = process.env.NODE_ENV === "development"
-        ? "http://192.168.219.141:4000"
-        : "https://melona-backend.herokuapp.com"
 
     const handleUploadFile = async() => {
         if (uploadPhotoFileName !== "none") {
@@ -145,7 +141,7 @@ const ProgressSteppers = ({
                 setIsLoading(true);
                 const { 
                     data: { location } 
-                } = await axios.post(`${url}/api/upload`, formData, {
+                } = await axios.post("https://melona-backend.herokuapp.com/api/upload", formData, {
                     headers: {
                         "content-type": "multipart/form-data",
                         "Access-Control-Allow-Origin": "*"

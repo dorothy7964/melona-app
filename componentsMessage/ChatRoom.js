@@ -8,7 +8,6 @@ import Loader from  "../components/Loader";
 import NavIcon from  "../components/NavIcon";
 import AvatarPaper from  "../components/AvatarPaper";
 import TimeIapse from  "../components/TimeIapse";
-import SendChat from "./SendChat";
 import styles from "../styles";
 import { SEE_CHATROOM } from "./ChatQueries";
 
@@ -157,7 +156,7 @@ const ChatRoom = ({
                         </Bold>
                     </UserNameBox>
                     <Touchable onPress={() => handleDeleteRoom(chatRoomId)}>
-                        <RedText>채팅방 나가기</RedText>
+                        <RedText>채팅방 나가기3</RedText>
                     </Touchable>
                 </Header>
                 <Content>
@@ -212,9 +211,6 @@ const ChatRoom = ({
                         )}
                     </ScrollView>
                 </Content>
-                <SendChat 
-                    chatRoomId={chatRoomId}
-                />
             </View>
         );
     }

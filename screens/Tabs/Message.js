@@ -6,6 +6,8 @@ import styled from "styled-components";
 import Loader from "../../components/Loader";
 import ChatCard from "../../componentsMessage/ChatCard";
 import ChatRoom from "../../componentsMessage/ChatRoom";
+import SendChat from "../../componentsMessage/SendChat";
+
 import { 
     CHATROOMS_QUERY, 
     READCOUNT_MESSAGE,
@@ -14,8 +16,8 @@ import {
 
 const Container = styled(Card)`
     margin: 10px;
-    min-height: 620px;
     padding: 20px;
+    min-height: 620px;
 `;
 
 export default () => {
@@ -101,13 +103,22 @@ export default () => {
             );
         } else if (view === "chatRoom") {
             return (
-                <Container>
-                    <ChatRoom 
-                        chatRoomId={chatRoomId}
-                        handleView={handleView}
-                        handleDeleteRoom={handleDeleteRoom}
-                    />
-                </Container>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+                    }
+                > 
+                    <Container>
+                        <ChatRoom 
+                            chatRoomId={chatRoomId}
+                            handleView={handleView}
+                            handleDeleteRoom={handleDeleteRoom}
+                        />
+                        <SendChat 
+                            chatRoomId={chatRoomId}
+                        />
+                    </Container>
+                </ScrollView>
             );
         }
     }
