@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { ScrollView, RefreshControl, View } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import { SEE_BUY } from "./TabsQueries";
@@ -11,6 +12,15 @@ import ViewApply from "../../components/ViewApply";
 import Progress from "../../components/Progress";
 import ProgressStap from "../../components/ProgressStap";
 import PostCommentBox from "../../components/PostCommentBox";
+
+const ContainerNone = styled.View`
+    margin-top: 30px;
+    margin-bottom: 100px;
+    padding: 44% 0;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+`;
 
 export default () => {
     const [routeView, setRouteView] = useState("post");
@@ -37,8 +47,25 @@ export default () => {
 
     if (routeView === "post") {
         if (data && data.seeBuy && data.seeBuy.length === 0) {
-            return <PostNone />;
-            
+            return (
+                <View>
+                    <ScrollView 
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+                        }
+                    >
+                        <ContainerNone>
+                            <PostNone />
+                        </ContainerNone>
+                        <FABgroup 
+                            text="갈 때 사갈게 확인"
+                            select="Buy" 
+                            SearcheSelect="DaddySearch"
+                            writeSelect="DaddyWrite"
+                        />
+                    </ScrollView>
+                </View>
+            );
         } else {
             return (
                 <View>

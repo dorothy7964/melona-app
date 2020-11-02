@@ -16,6 +16,15 @@ const Container = styled.View`
     flex: 1;
 `;
 
+const ContainerNone = styled.View`
+    margin-top: 30px;
+    margin-bottom: 100px;
+    padding: 47% 0;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+`;
+
 export default ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
     const { data, loading, refetch } = useQuery(ALL_GROUPROOM);
@@ -40,9 +49,21 @@ export default ({ navigation }) => {
         
     } else if (!loading && data && data.allGroupRoom.length === 0) {
         return (
-            <Container>
-                <PostNone />
-            </Container>
+            <View>
+                <ScrollView 
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+                    }
+                >
+                    <ContainerNone>
+                        <PostNone />
+                    </ContainerNone>
+                </ScrollView>
+                <FABgroupRoom 
+                    SearcheSelect="GroupFriend"
+                    writeSelect="GroupAdd" 
+                />
+            </View>
         );
     } else if (!loading && data && data.allGroupRoom) {
         const { allGroupRoom } = data;
