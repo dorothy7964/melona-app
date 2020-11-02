@@ -84,6 +84,7 @@ const Post = ({
                             />
                         :   <PostApplyBox 
                                 postId={id}
+                                viewApply={viewApply}
                                 anotherPage={anotherPage}
                                 isApply={isApply}
                                 isApplyWait={isApplyWait}

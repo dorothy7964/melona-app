@@ -16,10 +16,16 @@ const Text = styled.Text`
     margin-left: 5px;
 `;
 
+const TextGrey = styled.Text`
+    margin-left: 5px;
+    color: ${props => props.theme.darkGreyColor};
+`;
+
 const Touchable = styled.TouchableOpacity``;
 
 const PostApplyBox = ({
     postId,
+    viewApply,
     anotherPage,
     isApply,
     isApplyWait,
@@ -69,20 +75,24 @@ const PostApplyBox = ({
 
     if (isApply === false && isApplyReadCheck === false) {
         return (
-            <Touchable onPress={() => handleRoute("writeApply", postId)}>
-                <Container>
-                    <Avatar.Image 
-                        size={30} 
-                        style={{ backgroundColor: "#fff" }}
-                        source={
-                            !anotherPage 
-                                ? require('../assets/melona_basic.png')
-                                : require('../assets/req_basic.png')
-                        }
-                    />
-                    <Text>올 때 메로나</Text>
-                </Container>
-            </Touchable>
+            viewApply
+                ?   <Container>
+                        <TextGrey>신청 마감</TextGrey>
+                    </Container>
+                :   <Touchable onPress={() => handleRoute("writeApply", postId)}>
+                        <Container>
+                            <Avatar.Image 
+                                size={30} 
+                                style={{ backgroundColor: "#fff" }}
+                                source={
+                                    !anotherPage 
+                                        ? require('../assets/melona_basic.png')
+                                        : require('../assets/req_basic.png')
+                                }
+                            />
+                            <Text>올 때 메로나</Text>
+                        </Container>
+                    </Touchable>
         );
     } else if (isApply === true && isApplyWait === true ) {
         return (
