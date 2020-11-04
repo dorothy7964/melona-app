@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ScrollView, RefreshControl, View } from "react-native";
 import { useQuery } from "react-apollo-hooks";
@@ -44,6 +44,10 @@ export default () => {
         setRoutePostId(postId);
         refetch();
     };
+
+    useEffect(() => {
+        refetch();
+    }, []);
     
     if (routeView === "post") {
         if (data && data.seeBuyMe && data.seeBuyMe.length === 0) {

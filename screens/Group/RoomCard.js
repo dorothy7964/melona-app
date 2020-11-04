@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, RefreshControl, View } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import styled from "styled-components";
@@ -39,6 +39,10 @@ export default ({ navigation }) => {
             setRefreshing(false);
         }
     };
+
+    useEffect(() => {
+        refetch();
+    }, []);
 
     if (loading === true){
         return (
