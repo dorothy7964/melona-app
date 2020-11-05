@@ -20,6 +20,7 @@ const CommentContainer = styled(Card)`
     display: flex;
     margin: 10px;
     padding: 20px;
+    min-height: 350px;
 `;
 
 const Comments = styled.View`
@@ -44,12 +45,16 @@ const TextBox = styled.View`
     align-items: center;
 `;
 
-const TimeForm = styled.Text`
-    flex-direction: row;
-    margin-left: 10px;
+const CommentBox = styled.View`
+    flex: 1;
 `;
 
 const IconBox = styled.TouchableOpacity`
+    margin-left: 10px;
+`;
+
+const TimeForm = styled.Text`
+    flex-direction: row;
     margin-left: 10px;
 `;
 
@@ -137,7 +142,9 @@ const PostCommentUser = ({
                                         }
                                     </UserBox>
                                     <TextBox>
-                                        <Text>{comment.text}</Text>
+                                        <CommentBox>
+                                            <Text>{comment.text}</Text>
+                                        </CommentBox>
                                         {comment.user.isSelf && 
                                             <IconBox onPress={() => handleDelete(comment.id)}>
                                                 <NavIcon

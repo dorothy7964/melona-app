@@ -22,7 +22,14 @@ import {
 const Touchable = styled.TouchableOpacity``;
 
 const Container = styled(Card)`
-    margin: 25px 10px;
+    margin: 20px 10px;
+`;
+
+const UserContainer = styled(Card)`
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 7px;
 `;
 
 const BackButtonContainer = styled.View`
@@ -33,8 +40,8 @@ const BackButtonContainer = styled.View`
 
 const CommentContainer = styled.View`
     height: ${props => props.isHeight
-        ? `230px`
-        : `300px`
+        ? `265px`
+        : `350px`
     };
 `;
 
@@ -199,7 +206,7 @@ const PostCommentBox = ({
                         />
                     </BackButtonContainer>
                 </Touchable>
-                <Container>
+                <UserContainer>
                     <Card.Content>
                         <UserCard 
                             avatar={avatar}
@@ -209,7 +216,7 @@ const PostCommentBox = ({
                             lastDate={lastDate}
                         />
                     </Card.Content>
-                </Container>
+                </UserContainer>
                 <CommentContainer isHeight={isReply}>
                     <PostCommentUser 
                         postId={postId}
