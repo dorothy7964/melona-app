@@ -48,7 +48,7 @@ export default ({ handleChangeFile }) => {
             if(status === "granted"){
                 setHasPermission(true);
                 getPhotos();
-        }
+            }
         } catch(e) {
             console.log(e);
             setHasPermission(false);

@@ -64,6 +64,7 @@ export default ({
     loadingBt,
     handleLogOut,
     toggleLoadingBt,
+    toggleEditAvatar,
 }) => {
     const [editPasswordMutation] = useMutation(EDIT_PASSWORD);
     const [editUserMutation] = useMutation(EDIT_USER, {
@@ -144,10 +145,12 @@ export default ({
     return (
         <Container>
             <Section>
-                <AvatarPaper 
-                    size={100}
-                    avatar={avatarMe}
-                />
+                <Touchable onPress={() => toggleEditAvatar(true)}>
+                    <AvatarPaper 
+                        size={100}
+                        avatar={avatarMe}
+                    />
+                </Touchable>
                 <UserBox>
                     <Title>{userNameMe}</Title>
                     <Touchable onPress={handleLogOut}>

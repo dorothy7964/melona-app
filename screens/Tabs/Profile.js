@@ -5,11 +5,13 @@ import { useLogOut } from "../../AuthContext";
 import Loader from "../../components/Loader";
 import ProfileBox from "../../components/ProfileBox";
 import ProfileEditBox from "../../components/ProfileEditBox";
+import ProfileLoadingtBox from "../../components/ProfileLoadingtBox";
 import { ME } from "./TabsQueries";
 
 export default () => {
     const logOut = useLogOut();
     const { data, loading, refetch } = useQuery(ME);
+    const [editBt, setEditBt] = useState(false);
     const [loadingBt, setLodaingBt] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
@@ -37,6 +39,10 @@ export default () => {
         setLodaingBt(bool)
     };
 
+    const toggleEditAvatar = (bool) => {
+        setEditBt(bool)
+    }
+
     useEffect(() => {
         refresh();
     }, []);
@@ -52,18 +58,26 @@ export default () => {
                 }
             >
                 {loadingBt
-                    ?   <ProfileEditBox 
-                            avatarMe={data.me.userName}
-                            emailMe={data.me.email}
-                        />
-                    :   <ProfileBox 
+                    ?   <ProfileLoadingtBox 
                             avatarMe={data.me.avatar}
-                            userNameMe={data.me.userName}
                             emailMe={data.me.email}
-                            loadingBt={loadingBt}
-                            handleLogOut={handleLogOut}
-                            toggleLoadingBt={toggleLoadingBt}
                         />
+                    :   editBt
+                        ?   <ProfileEditBox
+                                loadingBt={loadingBt}
+                                avatarMe={data.me.avatar}
+                                toggleLoadingBt={toggleLoadingBt}
+                                toggleEditAvatar={toggleEditAvatar}
+                            />
+                        :   <ProfileBox 
+                                avatarMe={data.me.avatar}
+                                userNameMe={data.me.userName}
+                                emailMe={data.me.email}
+                                loadingBt={loadingBt}
+                                handleLogOut={handleLogOut}
+                                toggleLoadingBt={toggleLoadingBt}
+                                toggleEditAvatar={toggleEditAvatar}
+                            />
                 }
             </ScrollView>
         );

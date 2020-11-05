@@ -133,6 +133,15 @@ export const EDIT_PASSWORD = gql`
     }
 `;
 
+// profile
+export const EDIT_AVATAR = gql`
+    mutation editAvatar($avatar: String!) {
+        editAvatar( avatar: $avatar ){
+            avatar
+        }
+    }
+`;
+
 // Message
 export const CHATROOMS_QUERY = gql`
     query {
