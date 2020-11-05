@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, RefreshControl, View } from "react-native";
+import { ScrollView, RefreshControl } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import styled from "styled-components";
 import Loader from "../../components/Loader";
@@ -7,6 +7,10 @@ import PostNone from "../../components/PostNone";
 import GroupCard from "../../componentsGroup/GroupCard";
 import FABgroupRoom from "../../componentsGroup/FABgroupRoom";
 import { ALL_GROUPROOM } from "./GroupQueries";
+
+const Wrapper = styled.View`
+    min-height: 89%;
+`;
 
 const Container = styled.View`
     margin-top: 30px;
@@ -44,16 +48,15 @@ export default ({ navigation }) => {
         refetch();
     }, []);
 
-    if (loading === true){
+    if (loading){
         return (
             <Container>
                 <Loader />
             </Container>
         );
-        
     } else if (!loading && data && data.allGroupRoom.length === 0) {
         return (
-            <View>
+            <Wrapper>
                 <ScrollView 
                     refreshControl={
                         <RefreshControl refreshing={refreshing} onRefresh={refresh} />
@@ -67,13 +70,13 @@ export default ({ navigation }) => {
                     SearcheSelect="GroupFriend"
                     writeSelect="GroupAdd" 
                 />
-            </View>
+            </Wrapper>
         );
     } else if (!loading && data && data.allGroupRoom) {
         const { allGroupRoom } = data;
         
         return (
-            <View>
+            <Wrapper>
                 <ScrollView 
                     refreshControl={
                         <RefreshControl refreshing={refreshing} onRefresh={refresh} />
@@ -100,7 +103,7 @@ export default ({ navigation }) => {
                     SearcheSelect="GroupFriend"
                     writeSelect="GroupAdd" 
                 />
-            </View>
+            </Wrapper>
         );
     }
 };

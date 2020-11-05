@@ -41,8 +41,8 @@ export default () => {
         refresh();
     }, []);
     
-    if (loading === true) {
-        return  <Loader />;
+    if (loading) {
+        return  <Loader />
 
     } else if (!loading && data && data.me) {
         return (

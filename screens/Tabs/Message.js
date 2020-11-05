@@ -76,8 +76,8 @@ export default () => {
         }
     };
 
-    if (loading === true) {
-        return <Loader />;
+    if (loading) {
+        return <Loader />
         
     } else if (!loading && data && data.seeChatRooms) {
         const { seeChatRooms } = data;

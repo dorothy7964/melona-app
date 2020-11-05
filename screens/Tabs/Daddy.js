@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { ScrollView, RefreshControl, View } from "react-native";
+import { ScrollView, RefreshControl } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import { SEE_BUY } from "./TabsQueries";
 import Loader from "../../components/Loader";
@@ -13,10 +13,14 @@ import Progress from "../../components/Progress";
 import ProgressStap from "../../components/ProgressStap";
 import PostCommentBox from "../../components/PostCommentBox";
 
+const Wrapper = styled.View`
+    min-height: 89%;
+`;
+
 const ContainerNone = styled.View`
     margin-top: 30px;
     margin-bottom: 100px;
-    padding: 44% 0;
+    padding: 40% 0;
     justify-content: center;
     align-items: center;
     flex: 1;
@@ -49,10 +53,13 @@ export default () => {
         refetch();
     }, []);
 
-    if (routeView === "post") {
+    if (loading) {
+        return <Loader />
+
+    } else if (routeView === "post") {
         if (data && data.seeBuy && data.seeBuy.length === 0) {
             return (
-                <View>
+                <Wrapper>
                     <ScrollView 
                         refreshControl={
                             <RefreshControl refreshing={refreshing} onRefresh={refresh} />
@@ -68,27 +75,24 @@ export default () => {
                             writeSelect="DaddyWrite"
                         />
                     </ScrollView>
-                </View>
+                </Wrapper>
             );
         } else {
             return (
-                <View>
+                <Wrapper>
                     <ScrollView 
                         refreshControl={
                             <RefreshControl refreshing={refreshing} onRefresh={refresh} />
                         }
                     >
-                        {loading
-                            ?   <Loader /> 
-                            :   (
-                                data && data.seeBuy &&
-                                data.seeBuy.map(post => 
-                                    <Post 
-                                        {...post} 
-                                        key={post.id} 
-                                        handleRoute={handleRoute} 
-                                    />)
-                        )}
+                        {data && data.seeBuy &&
+                            data.seeBuy.map(post => 
+                                <Post 
+                                    {...post} 
+                                    key={post.id} 
+                                    handleRoute={handleRoute} 
+                                />)
+                        }
                     </ScrollView>
                     <FABgroup 
                         text="갈 때 사갈게 확인"
@@ -96,7 +100,7 @@ export default () => {
                         SearcheSelect="DaddySearch"
                         writeSelect="DaddyWrite"
                     />
-                </View>
+                </Wrapper>
             );
         }
     } else if (routeView === "writeApply") {
