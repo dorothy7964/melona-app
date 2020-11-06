@@ -20,6 +20,23 @@ const Container = styled(Card)`
     min-height: 620px;
 `;
 
+const ImageBox = styled.View`
+    margin: 0 auto;
+    margin-top: 150px;
+`;
+
+const Image = styled.Image`
+    width: 200px;
+    height: 150px;
+`;
+
+const Bold = styled.Text`
+    font-size: 20px;
+    font-weight:600;
+    color: ${props => props.theme.darkGreyColor};
+    margin: 0 auto;
+`;
+
 export default () => {
     const [view, setView] = useState("chatCard");
     const [chatRoomId, setChatRoomId] = useState(""); 
@@ -90,14 +107,23 @@ export default () => {
                             <RefreshControl refreshing={refreshing} onRefresh={refresh} />
                         }
                     >
-                        {seeChatRooms.map(chatRoom => 
-                            <ChatCard   
-                                {...chatRoom}
-                                key={chatRoom.id}
-                                me={data.me}
-                                handleView={handleView}
-                            />
-                        )}
+                        {seeChatRooms.length === 0 
+                            ?   <ImageBox>
+                                    <Image 
+                                        resizeMode={"contain"}
+                                        source={require('../../assets/togeter_grey.png')}
+                                    />
+                                    <Bold>채팅방이 비어있습니다.</Bold>
+                                </ImageBox>
+                            :   seeChatRooms.map(chatRoom => 
+                                    <ChatCard   
+                                        {...chatRoom}
+                                        key={chatRoom.id}
+                                        me={data.me}
+                                        handleView={handleView}
+                                    />
+                                )
+                        }
                     </ScrollView>
                 </Container>
             );
