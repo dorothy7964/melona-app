@@ -163,6 +163,7 @@ export const CHATROOMS_QUERY = gql`
         }
         me {
             id
+            userName
         }
     }
 `;
@@ -178,6 +179,15 @@ export const READCOUNT_MESSAGE = gql`
 export const DELETE_CHATROOM = gql`
     mutation deleteChatRoom ($chatRoomId: String!){
         deleteChatRoom (chatRoomId:$chatRoomId){
+            id
+        }
+    }
+`;
+
+// Message
+export const CREATE_CHATROOM = gql`
+    mutation createChatRoom ($userName: String!){
+        createChatRoom (userName:$userName){
             id
         }
     }

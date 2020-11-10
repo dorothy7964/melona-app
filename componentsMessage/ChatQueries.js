@@ -59,3 +59,15 @@ export const READCOUNT_MESSAGE = gql`
         readcountMessage (chatRoomId: $chatRoomId)
     }
 `;
+
+// SearchCard
+export const SEARCH_USER = gql`
+    query searchUser ($term: String!){
+        searchUser (term: $term){
+            id
+            avatar
+            userName
+            isSelf
+        }
+    }
+`;

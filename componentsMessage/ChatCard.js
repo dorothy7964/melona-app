@@ -7,7 +7,7 @@ import AvatarPaper from  "../components/AvatarPaper";
 
 const Container = styled.TouchableOpacity`
     flex-direction: row;
-    margin-bottom: 20px;
+    margin-top: 20px;
 `;
 
 const CardMiddle = styled.View`

@@ -83,6 +83,7 @@ const Bold = styled.Text`
 
 const ChatRoom = ({ 
     chatRoomId, 
+    waitLoading,
     handleView, 
     handleDeleteRoom 
 }) => {
@@ -125,7 +126,7 @@ const ChatRoom = ({
     };
 
     useEffect(() => {
-        refresh();
+        refetch();
     }, []);
 
     if (loading === true) {
@@ -156,7 +157,10 @@ const ChatRoom = ({
                         </Bold>
                     </UserNameBox>
                     <Touchable onPress={() => handleDeleteRoom(chatRoomId)}>
-                        <RedText>채팅방 나가기3</RedText>
+                        {waitLoading
+                            ?   <Loader />
+                            :   <RedText>채팅방 나가기</RedText>
+                        }    
                     </Touchable>
                 </Header>
                 <Content>
@@ -165,50 +169,49 @@ const ChatRoom = ({
                             <RefreshControl refreshing={refreshing} onRefresh={refresh} />
                         }
                     >
-                        {messages.length === 0 ? "" : (
-                            messages.map(message =>
-                                (message.from.id !== me) ? (
-                                    <MessageContainer key={message.id} >
-                                        <AvatarPaper avatar={message.from.avatar} />
-                                        <MessageBubble bg={styles.lightGreyColor}>
-                                            <ReadMore
-                                                numberOfLines={5}
-                                                renderTruncatedFooter={renderTruncatedFooter}
-                                                renderRevealedFooter={renderRevealedFooter}
-                                                onReady={handleTextReady}>
-                                                <MessageText>
-                                                    {message.text}
-                                                </MessageText>
-                                            </ReadMore>
-                                            <TimeForm>
-                                                <TimeFormText>
-                                                    <TimeIapse createAt={message.createdAt} />
-                                                </TimeFormText>
-                                            </TimeForm>
-                                        </MessageBubble>
-                                    </MessageContainer>
-                                ): (
-                                    <MessageContainer key={message.id} style={{ justifyContent: 'flex-end' }}>
-                                        <MessageBubble bg={styles.yellowColor}>
-                                            <ReadMore
-                                                numberOfLines={5}
-                                                renderTruncatedFooter={renderTruncatedFooter}
-                                                renderRevealedFooter={renderRevealedFooter}
-                                                onReady={handleTextReady}>
-                                                <MessageText>
-                                                    {message.text}
-                                                </MessageText>
-                                            </ReadMore>
-                                            <TimeForm>
-                                                <TimeFormText>
-                                                    <TimeIapse createAt={message.createdAt} />
-                                                </TimeFormText>
-                                            </TimeForm> 
-                                        </MessageBubble>
-                                    </MessageContainer>
+                        {messages.length === 0 
+                            ?   <MessageText /> 
+                            :   messages.map(message =>
+                                    message.from.id !== me
+                                    ?   <MessageContainer key={message.id} >
+                                            <AvatarPaper avatar={message.from.avatar} />
+                                            <MessageBubble bg={styles.lightGreyColor}>
+                                                <ReadMore
+                                                    numberOfLines={5}
+                                                    renderTruncatedFooter={renderTruncatedFooter}
+                                                    renderRevealedFooter={renderRevealedFooter}
+                                                    onReady={handleTextReady}>
+                                                    <MessageText>
+                                                        {message.text}
+                                                    </MessageText>
+                                                </ReadMore>
+                                                <TimeForm>
+                                                    <TimeFormText>
+                                                        <TimeIapse createAt={message.createdAt} />
+                                                    </TimeFormText>
+                                                </TimeForm>
+                                            </MessageBubble>
+                                        </MessageContainer>
+                                    :   <MessageContainer key={message.id} style={{ justifyContent: 'flex-end' }}>
+                                            <MessageBubble bg={styles.yellowColor}>
+                                                <ReadMore
+                                                    numberOfLines={5}
+                                                    renderTruncatedFooter={renderTruncatedFooter}
+                                                    renderRevealedFooter={renderRevealedFooter}
+                                                    onReady={handleTextReady}>
+                                                    <MessageText>
+                                                        {message.text}
+                                                    </MessageText>
+                                                </ReadMore>
+                                                <TimeForm>
+                                                    <TimeFormText>
+                                                        <TimeIapse createAt={message.createdAt} />
+                                                    </TimeFormText>
+                                                </TimeForm> 
+                                            </MessageBubble>
+                                        </MessageContainer>
                                 )
-                            )
-                        )}
+                        }
                     </ScrollView>
                 </Content>
             </View>
