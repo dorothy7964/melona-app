@@ -151,14 +151,6 @@ export default ({ navigation }) => {
                     text="회원 가입하기"
                     loading={loading}
                 />
-                <FBContainer>
-                    <ButtonPaper
-                        onPress={fbLogin}
-                        text="페이스북으로 연결"
-                        loading={false}
-                        primaryColor={`${styles.facebookColor}`}
-                    />
-                </FBContainer>
             </View>
         </TouchableWithoutFeedback>
     );
