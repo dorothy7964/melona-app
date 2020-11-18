@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 import "moment-timezone";
 
@@ -16,7 +16,9 @@ export default ({ setLastDate }) => {
     const today = momentDateSplit[0];
     // get year - use maxDate
     const yearDate =  moment().tz("Asia/Seoul").format("YYYY");
-    
+    const typeYearDate =  Number(yearDate);
+    const maxYearDate =  typeYearDate + 1;
+
     const [date, setDate] = useState(today);
 
     const handlePushDate = (obj) => {
@@ -34,7 +36,7 @@ export default ({ setLastDate }) => {
                 placeholder="select date"
                 format="YYYY-MM-DD"
                 minDate={today}
-                maxDate={`${yearDate}-12-31`}
+                maxDate={`${maxYearDate}-06-15`}
                 confirmBtnText="확인"
                 cancelBtnText="취소"
                 customStyles={{
