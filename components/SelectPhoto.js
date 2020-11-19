@@ -15,7 +15,11 @@ const FirstImgBox = styled.View`
     margin-bottom: 10px;
 `;
 
-const AllImgBox = styled.View``;
+const AllImgBox = styled.View`
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+`;
 
 export default ({ handleChangeFile }) => {
     const [loading, setLoading] = useState(true);
@@ -100,8 +104,8 @@ export default ({ handleChangeFile }) => {
                                             <Image
                                                 source={{ uri: photo.uri }}
                                                 style={{
-                                                    width: constants.width / 4,
-                                                    height: constants.height / 6,
+                                                    width: 179,
+                                                    height: 179,
                                                     opacity: photo.id === selected.id ? 0.5 : 1
                                                 }}
                                             />
