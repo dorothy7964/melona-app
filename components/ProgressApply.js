@@ -82,10 +82,12 @@ const ProgressApply = ({
                                             />
                                     :   isSelf 
                                         ?   contents.contentsReqs.map(contentsReqs => (
-                                                userName === contentsReqs.user.userName &&
                                                 <ProgressView 
                                                     key={contentsReqs.id}
                                                     stepNum={contentsReqs.confirmProgress}
+                                                    categoryText={contents.category.text}
+                                                    contentText={contents.text}
+                                                    confirmFile={contentsReqs.confirmFile}
                                                 />
                                             ))
                                         :   contents.contentsReqs.map(contentsReqs => (
