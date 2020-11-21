@@ -65,6 +65,7 @@ const ProgressCardPhoto = ({
                                         }
                                     />
                                 :   contents.contentsReqs.map(contentsReqs => (
+                                        userName === contentsReqs.user.userName &&
                                         <ImageBox 
                                             key={contentsReqs.id}
                                             source={ contentsReqs.confirmFile === "none"
