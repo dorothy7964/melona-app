@@ -3,11 +3,11 @@ import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HeaderBackButton } from '@react-navigation/stack';
 import { useNavigation } from "@react-navigation/native";
-import DaddyChat from "../screens/Chat/DaddyChat";
+import ApplyChat from "../screens/Chat/ApplyChat";
 
 const ChatNavigation = createStackNavigator();
 
-export default ({ route: { params: { ChatSelect, UserName, RoomId } } }) => {
+export default ({ route: { params: { ChatSelect, UserName, RoomId, ScreenAnother } } }) => {
     const navigation = useNavigation();  
 
     return (
@@ -17,7 +17,7 @@ export default ({ route: { params: { ChatSelect, UserName, RoomId } } }) => {
         >
             <ChatNavigation.Screen 
                 name={RoomId}
-                component={DaddyChat}
+                component={ApplyChat}
                 options={{ 
                     title: `${UserName} 채팅 하기`,
                     headerTitleStyle: {
@@ -28,7 +28,7 @@ export default ({ route: { params: { ChatSelect, UserName, RoomId } } }) => {
                         <HeaderBackButton
                             {...props}
                             onPress={() => {
-                                navigation.navigate("TabNavigation", { screen: "Daddy" });
+                                navigation.navigate("TabNavigation", { screen: ScreenAnother });
                             }}
                         />
                     ),

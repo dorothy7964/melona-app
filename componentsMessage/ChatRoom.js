@@ -82,7 +82,7 @@ const Bold = styled.Text`
 `;
 
 const ChatRoom = ({ 
-    arrowNone = false,
+    cover = false,
     chatRoomId, 
     waitLoading,
     handleView, 
@@ -143,7 +143,7 @@ const ChatRoom = ({
         return (
             <View>
                 <Header>
-                    {arrowNone
+                    {cover
                         ?   <View />
                         :   <Touchable onPress={() => handleView("")}>
                                 <NavIcon 
@@ -155,18 +155,20 @@ const ChatRoom = ({
                                 />
                             </Touchable>
                     }
-                    
                     <UserNameBox>
                         <Bold numberOfLines={1} ellipsizeMode='tail'>
                             {toUserName}
                         </Bold>
                     </UserNameBox>
-                    <Touchable onPress={() => handleDeleteRoom(chatRoomId)}>
-                        {waitLoading
-                            ?   <Loader />
-                            :   <RedText>채팅방 나가기</RedText>
-                        }    
-                    </Touchable>
+                    {cover
+                        ?   <View />
+                        :   <Touchable onPress={() => handleDeleteRoom(chatRoomId)}>
+                                {waitLoading
+                                    ?   <Loader />
+                                    :   <RedText>채팅방 나가기</RedText>
+                                }    
+                            </Touchable>
+                    }
                 </Header>
                 <Content>
                     <ScrollView 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, RefreshControl, Platform } from "react-native";
+import { ScrollView, RefreshControl } from "react-native";
 import { useMutation } from "react-apollo-hooks";
 import { Card } from "react-native-paper";
 import styled from "styled-components";
@@ -7,9 +7,7 @@ import ChatRoom from "../../componentsMessage/ChatRoom";
 import SendChat from "../../componentsMessage/SendChat";
 import {  
     CHATROOMS_QUERY, 
-    READCOUNT_MESSAGE,
     DELETE_CHATROOM,
-    CREATE_CHATROOM
 } from "../Tabs/TabsQueries";
 
 const Container = styled(Card)`
@@ -18,7 +16,7 @@ const Container = styled(Card)`
     min-height: 620px;
 `;
 
-export default ({ route, navigation }) => {
+export default ({ route }) => {
     const [refreshing, setRefreshing] = useState(false);
     const [waitLoading, setWaitLoading] = useState(false);
     const [deleteChatRoomMutaion] = useMutation(DELETE_CHATROOM);
@@ -45,7 +43,6 @@ export default ({ route, navigation }) => {
                     chatRoomId
                 }
             }); 
-            navigation.navigate("TabNavigation", { screen: "Daddy" })
         } catch(e) {
             console.log(e);
         } finally {
@@ -61,7 +58,7 @@ export default ({ route, navigation }) => {
         > 
             <Container>
                 <ChatRoom 
-                    arrowNone={true}
+                    cover={true}
                     chatRoomId={route.name}
                     waitLoading={waitLoading}
                     handleView={null}

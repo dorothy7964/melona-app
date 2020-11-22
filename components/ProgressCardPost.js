@@ -42,7 +42,7 @@ const ProgressCardPost = ({
                 avatar={avatar}
             />
             <Bold>{userName}</Bold>
-            <Touchable onPress={() => handleCreateRoom(userName)}>
+            <Touchable onPress={() => handleCreateRoom(userName, anotherPage)}>
                 <NavIcon
                     focused={false}
                     name={Platform.OS === "ios" 

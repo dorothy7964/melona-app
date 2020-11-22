@@ -120,7 +120,7 @@ const Progress = ({
         }
     };
 
-    const handleCreateRoom = async(userName) => {
+    const handleCreateRoom = async(userName, anotherPage) => {
         try {
             setWaitLoading(true);
             const {
@@ -133,12 +133,22 @@ const Progress = ({
                     userName
                 }
             });
-            handleRedCountMSg(createChatRoom.id)
-            navigation.navigate("ChatNavigation", { 
-                ChatSelect: "DaddyChat",
-                UserName: userName,
-                RoomId: createChatRoom.id
-            });
+            handleRedCountMSg(createChatRoom.id);
+            if (!anotherPage) {
+                navigation.navigate("ChatNavigation", { 
+                    ChatSelect: "ApplyChat",
+                    UserName: userName,
+                    RoomId: createChatRoom.id,
+                    ScreenAnother: "Daddy"
+                });
+            } else {
+                navigation.navigate("ChatNavigation", { 
+                    ChatSelect: "ApplyChat",
+                    UserName: userName,
+                    RoomId: createChatRoom.id,
+                    ScreenAnother: "Daughter"
+                });
+            }
         } catch(e){
             console.log(e);
         } finally {
