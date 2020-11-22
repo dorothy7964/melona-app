@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { ScrollView, RefreshControl, Platform, View } from "react-native";
 import { Card } from 'react-native-paper';
-import { useQuery } from "react-apollo-hooks";
+import { useQuery, useMutation } from "react-apollo-hooks";
+import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "./Loader";
@@ -11,6 +12,11 @@ import ProgressCardPost from "./ProgressCardPost";
 import ProgressCardUser from "./ProgressCardUser";
 import ProgressCardPhoto from "./ProgressCardPhoto";
 import { SEE_BUY_ONE } from "../SharedQueries";
+import { 
+    CREATE_CHATROOM, 
+    CHATROOMS_QUERY, 
+    READCOUNT_MESSAGE 
+} from "../screens/Tabs/TabsQueries";
 
 const Touchable = styled.TouchableOpacity``;
 
@@ -53,9 +59,13 @@ const Progress = ({
     postId,
     handleRoute
 }) => {
+    const navigation = useNavigation();
     const [view, setView] = useState("post");
     const [viewUser, setViewUser] = useState("");
     const [refreshing, setRefreshing] = useState(false);
+    const [waitLoading, setWaitLoading] = useState(false);
+    const [createChatRoomMutaion] = useMutation(CREATE_CHATROOM);
+    const [readcountMsgMutation] = useMutation(READCOUNT_MESSAGE);
     const { data, loading, refetch } = useQuery(SEE_BUY_ONE, {
         variables: { postId }
     });
@@ -92,6 +102,47 @@ const Progress = ({
             setView("post");
             setViewUser("");
             return;
+        }
+    };
+
+    const handleRedCountMSg = async(chatRoomId) => {
+        try {
+            await readcountMsgMutation({
+                refetchQueries:() => [{
+                    query: CHATROOMS_QUERY,
+                }],
+                variables: {
+                    chatRoomId
+                }
+            }); 
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const handleCreateRoom = async(userName) => {
+        try {
+            setWaitLoading(true);
+            const {
+                data: { createChatRoom }
+            } = await createChatRoomMutaion({
+                refetchQueries:() => [{
+                    query: CHATROOMS_QUERY,
+                }],
+                variables:{
+                    userName
+                }
+            });
+            handleRedCountMSg(createChatRoom.id)
+            navigation.navigate("ChatNavigation", { 
+                ChatSelect: "DaddyChat",
+                UserName: userName,
+                RoomId: createChatRoom.id
+            });
+        } catch(e){
+            console.log(e);
+        } finally {
+            setWaitLoading(false);
         }
     };
 
@@ -147,21 +198,24 @@ const Progress = ({
                     </Card.Content>
                 </Container>
                 {view === "post" && (
-                    <View>
-                        {applysRead.map(apply => (
-                            <CardPostContainer key={apply.id}>
-                                <Card.Content>
-                                    <ProgressCardPost 
-                                        avatar={apply.user.avatar}
-                                        userName={apply.user.userName}
-                                        progress={apply.progress}
-                                        anotherPage={anotherPage}
-                                        handleAction={handleAction}
-                                    />
-                                </Card.Content>
-                            </CardPostContainer>
-                        ))}
-                    </View>
+                    waitLoading
+                        ?   <Loader />
+                        :   <View>
+                                {applysRead.map(apply => (
+                                    <CardPostContainer key={apply.id}>
+                                        <Card.Content>
+                                            <ProgressCardPost 
+                                                avatar={apply.user.avatar}
+                                                userName={apply.user.userName}
+                                                progress={apply.progress}
+                                                anotherPage={anotherPage}
+                                                handleAction={handleAction}
+                                                handleCreateRoom={handleCreateRoom}
+                                            />
+                                        </Card.Content>
+                                    </CardPostContainer>
+                                ))}
+                            </View>
                 )}
                 {view === "user" && (
                     <ProgressCardUser 

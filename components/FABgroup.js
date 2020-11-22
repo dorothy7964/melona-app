@@ -10,7 +10,7 @@ const FABgroup =  ({
     SearcheSelect, 
     writeSelect 
 }) => {
-    const navigation = useNavigation();    
+    const navigation = useNavigation();
     const [open, setOpen] = useState(false);
 
     const onStateChange = ({ open })=> {

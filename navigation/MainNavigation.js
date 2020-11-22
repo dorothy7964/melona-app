@@ -7,6 +7,7 @@ import GroupNavigation from "./GroupNavigation";
 import ConfirmNavigation from "./ConfirmNavigation";
 import SearchNavigation from "./SearchNavigation";
 import WriteNavigation from "./WriteNavigation";
+import ChatNavigation from "./ChatNavigation";
 
 const MainNavigation = createStackNavigator();
 
@@ -36,6 +37,10 @@ export default () => {
                 <MainNavigation.Screen 
                     name="WriteNavigation" 
                     component={WriteNavigation} 
+                />
+                <MainNavigation.Screen 
+                    name="ChatNavigation" 
+                    component={ChatNavigation} 
                 />
             </MainNavigation.Navigator>
         </NavigationContainer>

@@ -82,6 +82,7 @@ const Bold = styled.Text`
 `;
 
 const ChatRoom = ({ 
+    arrowNone = false,
     chatRoomId, 
     waitLoading,
     handleView, 
@@ -142,15 +143,19 @@ const ChatRoom = ({
         return (
             <View>
                 <Header>
-                    <Touchable onPress={() => handleView("")}>
-                        <NavIcon 
-                            focused={false}
-                            name={Platform.OS === "ios" 
-                                ? "ios-arrow-back" 
-                                : "md-arrow-back"
-                            }
-                        />
-                    </Touchable>
+                    {arrowNone
+                        ?   <View />
+                        :   <Touchable onPress={() => handleView("")}>
+                                <NavIcon 
+                                    focused={false}
+                                    name={Platform.OS === "ios" 
+                                        ? "ios-arrow-back" 
+                                        : "md-arrow-back"
+                                    }
+                                />
+                            </Touchable>
+                    }
+                    
                     <UserNameBox>
                         <Bold numberOfLines={1} ellipsizeMode='tail'>
                             {toUserName}

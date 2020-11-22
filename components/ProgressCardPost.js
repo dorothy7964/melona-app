@@ -33,7 +33,8 @@ const ProgressCardPost = ({
     userName,
     progress,
     anotherPage,
-    handleAction
+    handleAction,
+    handleCreateRoom
 }) => (
     <View >
         <Header>
@@ -41,7 +42,7 @@ const ProgressCardPost = ({
                 avatar={avatar}
             />
             <Bold>{userName}</Bold>
-            <Touchable onPress={() => null}>
+            <Touchable onPress={() => handleCreateRoom(userName)}>
                 <NavIcon
                     focused={false}
                     name={Platform.OS === "ios" 

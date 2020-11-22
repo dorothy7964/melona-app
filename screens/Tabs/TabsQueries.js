@@ -142,7 +142,7 @@ export const EDIT_AVATAR = gql`
     }
 `;
 
-// Message
+// Message, Progress
 export const CHATROOMS_QUERY = gql`
     query {
         seeChatRooms {
@@ -184,7 +184,7 @@ export const DELETE_CHATROOM = gql`
     }
 `;
 
-// Message
+// Message, Progress
 export const CREATE_CHATROOM = gql`
     mutation createChatRoom ($userName: String!){
         createChatRoom (userName:$userName){
