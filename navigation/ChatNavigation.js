@@ -19,7 +19,7 @@ export default ({ route: { params: { ChatSelect, UserName, RoomId, ScreenAnother
                 name={RoomId}
                 component={ApplyChat}
                 options={{ 
-                    title: `${UserName} 채팅 하기`,
+                    title: `${UserName} 채팅하기`,
                     headerTitleStyle: {
                         alignSelf: "center",
                         marginRight: "15%"

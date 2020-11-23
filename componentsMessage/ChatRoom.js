@@ -29,8 +29,8 @@ const Header = styled.View`
 
 const Content = styled.View`
     padding: 20px 0;
-    max-height: 470px;
-    min-height: 470px;
+    max-height: ${props => props.boxHeight};
+    min-height: ${props => props.boxHeight};
 `;
 
 const MessageContainer  = styled.View`
@@ -84,6 +84,7 @@ const Bold = styled.Text`
 const ChatRoom = ({ 
     cover = false,
     alignment = "50px",
+    boxHeight = "470px",
     chatRoomId, 
     waitLoading,
     handleView, 
@@ -171,7 +172,7 @@ const ChatRoom = ({
                             </Touchable>
                     }
                 </Header>
-                <Content>
+                <Content boxHeight={boxHeight}>
                     <ScrollView 
                         refreshControl={
                             <RefreshControl refreshing={refreshing} onRefresh={refresh} />

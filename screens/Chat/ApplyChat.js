@@ -60,6 +60,7 @@ export default ({ route }) => {
                 <ChatRoom 
                     cover={true}
                     alignment="0"
+                    boxHeight="530px"
                     chatRoomId={route.name}
                     waitLoading={waitLoading}
                     handleView={null}
