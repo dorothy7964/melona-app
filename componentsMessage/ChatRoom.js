@@ -15,7 +15,7 @@ const Touchable = styled.TouchableOpacity``;
 
 const UserNameBox = styled.View`
     flex: 1;
-    margin-left: 50px;
+    margin-left: ${props => props.alignment};
     align-items: center;
 `;
 
@@ -83,10 +83,11 @@ const Bold = styled.Text`
 
 const ChatRoom = ({ 
     cover = false,
+    alignment = "50px",
     chatRoomId, 
     waitLoading,
     handleView, 
-    handleDeleteRoom 
+    handleDeleteRoom
 }) => {
     const [refreshing, setRefreshing] = useState(false);
     const { data, loading, refetch } = useQuery(SEE_CHATROOM, {
@@ -155,7 +156,7 @@ const ChatRoom = ({
                                 />
                             </Touchable>
                     }
-                    <UserNameBox>
+                    <UserNameBox alignment={alignment}>
                         <Bold numberOfLines={1} ellipsizeMode='tail'>
                             {toUserName}
                         </Bold>

@@ -59,6 +59,7 @@ export default ({ route }) => {
             <Container>
                 <ChatRoom 
                     cover={true}
+                    alignment="0"
                     chatRoomId={route.name}
                     waitLoading={waitLoading}
                     handleView={null}
