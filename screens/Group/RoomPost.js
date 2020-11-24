@@ -9,7 +9,11 @@ import GroupDaddy from "../../componentsGroup/GroupDaddy";
 import GroupDaughter from "../../componentsGroup/GroupDaughter";
 import FABgroupScreen from "./FABgroupScreen";
 import { SEE_GROUPROOM, SEEBUY_GROUP, SEEBUYME_GROUP, items } from "./GroupQueries"
-                   
+
+const Wrapper = styled.View`
+    min-height: 89%;
+`;
+
 const RoomContainer = styled.View`
     margin: 15px;
     padding: 20px;
@@ -90,7 +94,7 @@ export default ({ route: { params: { groupRoomId } }}) => {
         const { seeGroupRoom } = data;
 
         return (
-            <View>
+            <Wrapper>
                 <ScrollView 
                     refreshControl={
                         <RefreshControl refreshing={refreshing} onRefresh={refresh} />
@@ -145,7 +149,7 @@ export default ({ route: { params: { groupRoomId } }}) => {
                             writeSelect="DaughterGroupWrite"
                         />
                 }
-            </View>
+            </Wrapper>
         );
     }
 };
