@@ -856,7 +856,7 @@ export default () => {
 <!-- Example Code -->
 
 ``` js
-// ~/wam-prj/prismagram-app/screens/Photo/TakePhoto.js
+// ~/wam-prj/melona-app/screens/Photo/TakePhoto.js
 
 import React, { useState, useEffect } from "react";
 import { TouchableOpacity, Platform } from "react-native";
@@ -969,7 +969,7 @@ const takePhoto = async() => {
     const photo = await cameraRef.current.takePictureAsync({
         quality: 1
     });
-		console.log(photo);
+    console.log(photo);
 };
 ```
 
@@ -985,7 +985,7 @@ const takePhoto = async() => {
 <!-- Example Code -->
 
 ``` js
-// ~/wam-prj/prismagram-app/screens/Tabs/Daddy.js
+// ~/wam-prj/melona-app/screens/Tabs/Daddy.js
 
 import React, { useState } from "react";
 import { ScrollView, RefreshControl } from "react-native";
