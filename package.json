@@ -29,7 +29,7 @@
     "expo-media-library": "~9.2.1",
     "expo-permissions": "~9.3.0",
     "graphql": "^15.0.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.31",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
